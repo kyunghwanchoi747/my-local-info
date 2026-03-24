@@ -22,11 +22,17 @@ export default function Home() {
     <div className="min-h-screen bg-orange-50 font-sans text-stone-800">
       {/* 상단 헤더 */}
       <header className="bg-white border-b border-orange-100 shadow-sm sticky top-0 z-10">
-        <div className="max-w-5xl mx-auto px-4 py-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-orange-600 tracking-tight">
-            🏡 성남시 생활 정보
-          </h1>
-          <p className="text-stone-500 mt-1 text-sm md:text-base">우리 동네 유익한 정보만 모았습니다.</p>
+        <div className="max-w-5xl mx-auto px-4 py-6 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold text-orange-600 tracking-tight">
+              🏡 성남시 생활 정보
+            </h1>
+            <p className="text-stone-500 mt-1 text-sm md:text-base">우리 동네 유익한 정보만 모았습니다.</p>
+          </div>
+          <nav className="flex gap-4 text-sm font-medium">
+            <Link href="/" className="text-orange-600 font-bold border-b-2 border-orange-400">홈</Link>
+            <Link href="/blog" className="text-stone-500 hover:text-orange-600 transition-colors">블로그</Link>
+          </nav>
         </div>
       </header>
 
@@ -61,7 +67,7 @@ export default function Home() {
                   <p className="mt-4 line-clamp-2 text-stone-500 italic">&quot;{event.summary}&quot;</p>
                 </div>
                 <Link
-                  href={`/items/${event.id}`}
+                  href="/blog"
                   className="mt-6 block text-center py-2 bg-orange-50 text-orange-600 rounded-xl font-medium text-sm hover:bg-orange-600 hover:text-white transition-colors"
                 >
                   자세히 보기
@@ -98,7 +104,7 @@ export default function Home() {
                 </div>
                 <div className="md:w-32 flex flex-col justify-end">
                   <Link
-                    href={`/items/${benefit.id}`}
+                    href="/blog"
                     className="block text-center py-2 border border-blue-200 text-blue-600 rounded-xl font-medium text-sm hover:bg-blue-600 hover:text-white transition-colors"
                   >
                     신청방법 확인
