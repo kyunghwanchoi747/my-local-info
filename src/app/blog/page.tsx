@@ -14,6 +14,7 @@ export default function BlogPage() {
           <nav className="flex gap-4 text-sm font-medium">
             <Link href="/" className="text-stone-500 hover:text-orange-600 transition-colors">홈</Link>
             <Link href="/blog" className="text-orange-600 font-bold border-b-2 border-orange-400">블로그</Link>
+            <Link href="/about" className="text-stone-500 hover:text-orange-600 transition-colors">소개</Link>
           </nav>
         </div>
       </header>

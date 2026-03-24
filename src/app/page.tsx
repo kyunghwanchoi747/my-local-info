@@ -1,5 +1,6 @@
 import Link from "next/link";
 import localData from "../../public/data/local-info.json";
+import AdBanner from "@/components/AdBanner";
 
 interface InfoItem {
   id: string;
@@ -20,6 +21,36 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-orange-50 font-sans text-stone-800">
+      {events.map(event => (
+        <script key={`event-schema-${event.id}`} type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Event",
+            "name": event.name,
+            "startDate": event.startDate,
+            "endDate": event.endDate === "상시" ? undefined : event.endDate,
+            "location": {
+              "@type": "Place",
+              "name": event.location
+            },
+            "description": event.summary
+          })
+        }} />
+      ))}
+      {benefits.map(benefit => (
+        <script key={`benefit-schema-${benefit.id}`} type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "GovernmentService",
+            "name": benefit.name,
+            "description": benefit.summary,
+            "provider": {
+              "@type": "GovernmentOrganization",
+              "name": "성남시"
+            }
+          })
+        }} />
+      ))}
       {/* 상단 헤더 */}
       <header className="bg-white border-b border-orange-100 shadow-sm sticky top-0 z-10">
         <div className="max-w-5xl mx-auto px-4 py-6 flex items-center justify-between">
@@ -32,6 +63,7 @@ export default function Home() {
           <nav className="flex gap-4 text-sm font-medium">
             <Link href="/" className="text-orange-600 font-bold border-b-2 border-orange-400">홈</Link>
             <Link href="/blog" className="text-stone-500 hover:text-orange-600 transition-colors">블로그</Link>
+            <Link href="/about" className="text-stone-500 hover:text-orange-600 transition-colors">소개</Link>
           </nav>
         </div>
       </header>
@@ -76,6 +108,9 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        {/* 광고 배너 (환경변수에 따라 렌더링) */}
+        <AdBanner />
 
         {/* 지원금/혜택 섹션 */}
         <section>
