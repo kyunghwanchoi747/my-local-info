@@ -11,8 +11,10 @@ interface Message {
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { type: "bot", text: "안녕하세요! 궁금하신 점을 선택해 주세요." }
+    { type: "bot", text: "안녕하세요! 궁금하신 점을 선택하거나 직접 물어봐 주세요." }
   ]);
+  const [inputText, setInputText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // 대화 추가 시 자동 스크롤
@@ -20,25 +22,54 @@ export default function ChatBot() {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, isLoading]);
 
   const handleQuestionClick = (question: string, answer: string) => {
-    // 사용자 질문 추가
     const userMsg: Message = { type: "user", text: question };
     setMessages((prev) => [...prev, userMsg]);
 
-    // 약간의 지연 후 봇 답변 추가 (자연스러운 느낌)
     setTimeout(() => {
       const botMsg: Message = { type: "bot", text: answer };
       setMessages((prev) => [...prev, botMsg]);
     }, 500);
   };
 
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputText.trim() || isLoading) return;
+
+    const userText = inputText.trim();
+    setInputText("");
+    const userMsg: Message = { type: "user", text: userText };
+    setMessages((prev) => [...prev, userMsg]);
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [{ role: "user", content: userText }]
+        }),
+      });
+
+      const data = await response.json();
+      const botMsg: Message = { type: "bot", text: data.response || "죄송합니다. 답변을 생성하지 못했습니다." };
+      setMessages((prev) => [...prev, botMsg]);
+    } catch (error) {
+      console.error("Chat error:", error);
+      setMessages((prev) => [...prev, { type: "bot", text: "오류가 발생했습니다. 잠시 후 다시 시도해 주세요." }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="fixed bottom-6 right-6 z-50 font-sans">
       {/* 채팅창 영역 */}
       {isOpen && (
-        <div className="fixed inset-0 md:inset-auto md:bottom-20 md:right-0 w-full md:w-[360px] h-full md:h-[500px] bg-white md:rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300">
+        <div className="fixed inset-0 md:inset-auto md:bottom-20 md:right-0 w-full md:w-[360px] h-full md:h-[550px] bg-white md:rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300">
           {/* 헤더 */}
           <div className="bg-blue-600 p-4 text-white flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -82,21 +113,53 @@ export default function ChatBot() {
                 </div>
               </div>
             ))}
+            {isLoading && (
+              <div className="flex justify-start animate-in fade-in duration-300">
+                <div className="bg-white p-3 rounded-2xl rounded-tl-none border border-gray-100 shadow-sm">
+                  <div className="flex gap-1">
+                    <span className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce"></span>
+                    <span className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+                    <span className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* 질문 버튼 영역 */}
-          <div className="p-4 bg-white border-t border-gray-100 max-h-[180px] overflow-y-auto">
-            <div className="flex flex-wrap gap-2">
+          {/* 하단 영역 (질문 버튼 + 입력창) */}
+          <div className="bg-white border-t border-gray-100">
+            {/* 질문 버튼 리스트 (가로 스크롤 가능하게 변경) */}
+            <div className="p-3 flex gap-2 overflow-x-auto scrollbar-hide">
               {chatData.map((item, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleQuestionClick(item.question, item.answer)}
-                  className="text-xs bg-gray-50 hover:bg-blue-50 hover:text-blue-600 text-gray-600 px-3 py-2 rounded-full border border-gray-200 transition-all text-left"
+                  className="whitespace-nowrap text-xs bg-gray-50 hover:bg-blue-50 hover:text-blue-600 text-gray-600 px-3 py-2 rounded-full border border-gray-200 transition-all"
                 >
                   {item.question}
                 </button>
               ))}
             </div>
+
+            {/* 텍스트 입력창 */}
+            <form onSubmit={handleSendMessage} className="p-3 flex gap-2 border-t border-gray-50">
+              <input
+                type="text"
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                placeholder="메시지를 입력하세요..."
+                className="flex-1 bg-gray-100 border-none rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500 transition-all outline-none"
+              />
+              <button
+                type="submit"
+                disabled={!inputText.trim() || isLoading}
+                className="bg-blue-600 text-white p-2 rounded-xl hover:bg-blue-700 disabled:bg-gray-300 transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+              </button>
+            </form>
           </div>
         </div>
       )}
