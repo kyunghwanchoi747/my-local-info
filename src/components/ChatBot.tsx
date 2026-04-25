@@ -15,6 +15,7 @@ export default function ChatBot() {
   ]);
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isHumanMode, setIsHumanMode] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // 대화 추가 시 자동 스크롤
@@ -23,6 +24,39 @@ export default function ChatBot() {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, isLoading]);
+
+  // 상담원 모드일 때 2초마다 새 메시지 확인 (폴링)
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isHumanMode && isOpen) {
+      interval = setInterval(async () => {
+        try {
+          const response = await fetch("/api/chat-poll");
+          const data = await response.json();
+          
+          if (data.messages && data.messages.length > 0) {
+            // 관리자가 보낸 마지막 메시지 확인
+            const adminMsgs = data.messages.filter((m: any) => m.sender === "admin");
+            if (adminMsgs.length > 0) {
+              const latestAdminMsg = adminMsgs[adminMsgs.length - 1].text;
+              
+              setMessages((prev) => {
+                const lastMsg = prev[prev.length - 1];
+                // 중복 표시 방지 (마지막 메시지와 다를 때만 추가)
+                if (lastMsg.type === "user" || lastMsg.text !== latestAdminMsg) {
+                  return [...prev, { type: "bot", text: latestAdminMsg }];
+                }
+                return prev;
+              });
+            }
+          }
+        } catch (e) {
+          console.error("Polling error:", e);
+        }
+      }, 2000);
+    }
+    return () => clearInterval(interval);
+  }, [isHumanMode, isOpen]);
 
   const handleQuestionClick = (question: string, answer: string) => {
     const userMsg: Message = { type: "user", text: question };
@@ -43,8 +77,22 @@ export default function ChatBot() {
     const userMsg: Message = { type: "user", text: userText };
     setMessages((prev) => [...prev, userMsg]);
 
-    setIsLoading(true);
+    if (isHumanMode) {
+      // 상담원 모드: 메시지 저장 API 호출
+      try {
+        await fetch("/api/chat-human", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: userText, sender: "user" }),
+        });
+      } catch (e) {
+        console.error("Human chat error:", e);
+      }
+      return;
+    }
 
+    // AI 모드: AI 답변 API 호출
+    setIsLoading(true);
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -71,16 +119,16 @@ export default function ChatBot() {
       {isOpen && (
         <div className="fixed inset-0 md:inset-auto md:bottom-20 md:right-0 w-full md:w-[360px] h-full md:h-[550px] bg-white md:rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300">
           {/* 헤더 */}
-          <div className="bg-blue-600 p-4 text-white flex items-center justify-between">
+          <div className={`${isHumanMode ? "bg-orange-500" : "bg-blue-600"} p-4 text-white flex items-center justify-between transition-colors`}>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-xl">
-                🤖
+                {isHumanMode ? "🎧" : "🤖"}
               </div>
               <div>
-                <h3 className="font-bold text-sm">AI 상담원</h3>
+                <h3 className="font-bold text-sm">{isHumanMode ? "상담원 연결됨" : "AI 상담원"}</h3>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                  <span className="text-xs text-blue-100">온라인</span>
+                  <span className="text-xs text-white/80">온라인</span>
                 </div>
               </div>
             </div>
@@ -106,7 +154,7 @@ export default function ChatBot() {
               >
                 <div className={`max-w-[80%] p-3 text-sm shadow-sm ${
                   msg.type === "user" 
-                    ? "bg-blue-600 text-white rounded-2xl rounded-tr-none" 
+                    ? (isHumanMode ? "bg-orange-500" : "bg-blue-600") + " text-white rounded-2xl rounded-tr-none" 
                     : "bg-white text-gray-800 rounded-2xl rounded-tl-none border border-gray-100"
                 }`}>
                   {msg.text}
@@ -128,32 +176,42 @@ export default function ChatBot() {
 
           {/* 하단 영역 (질문 버튼 + 입력창) */}
           <div className="bg-white border-t border-gray-100">
-            {/* 질문 버튼 리스트 (가로 스크롤 가능하게 변경) */}
-            <div className="p-3 flex gap-2 overflow-x-auto scrollbar-hide">
-              {chatData.map((item, idx) => (
+            {!isHumanMode && (
+              <div className="p-3 flex gap-2 overflow-x-auto scrollbar-hide border-b border-gray-50">
                 <button
-                  key={idx}
-                  onClick={() => handleQuestionClick(item.question, item.answer)}
-                  className="whitespace-nowrap text-xs bg-gray-50 hover:bg-blue-50 hover:text-blue-600 text-gray-600 px-3 py-2 rounded-full border border-gray-200 transition-all"
+                  onClick={() => {
+                    setIsHumanMode(true);
+                    setMessages(prev => [...prev, { type: "bot", text: "상담원에게 연결 중입니다. 메시지를 남겨주시면 곧 답변해 드리겠습니다." }]);
+                  }}
+                  className="whitespace-nowrap text-xs bg-orange-50 hover:bg-orange-100 text-orange-600 px-3 py-2 rounded-full border border-orange-200 transition-all font-bold"
                 >
-                  {item.question}
+                  🎧 상담원 연결
                 </button>
-              ))}
-            </div>
+                {chatData.map((item, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => handleQuestionClick(item.question, item.answer)}
+                    className="whitespace-nowrap text-xs bg-gray-50 hover:bg-blue-50 hover:text-blue-600 text-gray-600 px-3 py-2 rounded-full border border-gray-200 transition-all"
+                  >
+                    {item.question}
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* 텍스트 입력창 */}
-            <form onSubmit={handleSendMessage} className="p-3 flex gap-2 border-t border-gray-50">
+            <form onSubmit={handleSendMessage} className="p-3 flex gap-2">
               <input
                 type="text"
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                placeholder="메시지를 입력하세요..."
+                placeholder={isHumanMode ? "상담원에게 메시지 보내기..." : "메시지를 입력하세요..."}
                 className="flex-1 bg-gray-100 border-none rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500 transition-all outline-none"
               />
               <button
                 type="submit"
                 disabled={!inputText.trim() || isLoading}
-                className="bg-blue-600 text-white p-2 rounded-xl hover:bg-blue-700 disabled:bg-gray-300 transition-colors"
+                className={`${isHumanMode ? "bg-orange-500 hover:bg-orange-600" : "bg-blue-600 hover:bg-blue-700"} text-white p-2 rounded-xl disabled:bg-gray-300 transition-colors`}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
@@ -168,7 +226,7 @@ export default function ChatBot() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110 active:scale-95 ${
-          isOpen ? "bg-gray-100 text-gray-600" : "bg-blue-600 text-white"
+          isOpen ? "bg-gray-100 text-gray-600" : (isHumanMode ? "bg-orange-500" : "bg-blue-600") + " text-white"
         }`}
       >
         {isOpen ? (
