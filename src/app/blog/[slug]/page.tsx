@@ -67,6 +67,9 @@ export default async function BlogPostPage({ params }: PostParams) {
               <Link href="/blog/" className="text-blue-900 border-b-2 border-blue-900 pb-1 transition">
                 블로그
               </Link>
+              <Link href="/about/" className="text-slate-600 hover:text-blue-900 transition">
+                소개
+              </Link>
             </nav>
             <div className="hidden sm:block">
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
@@ -90,13 +93,18 @@ export default async function BlogPostPage({ params }: PostParams) {
         {/* 블로그 상세 아티클 */}
         <article className="bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-blue-100/70">
           <header className="pb-6 border-b border-slate-100 mb-8">
-            <div className="flex flex-wrap items-center gap-2 mb-3">
-              {post.category && (
-                <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-900">
-                  {post.category}
-                </span>
-              )}
-              <span className="text-xs font-semibold text-slate-400">{post.date}</span>
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-3 w-full">
+              <div className="flex flex-wrap items-center gap-2">
+                {post.category && (
+                  <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-900">
+                    {post.category}
+                  </span>
+                )}
+                <span className="text-xs font-semibold text-slate-400">{post.date}</span>
+              </div>
+              <span className="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">
+                최종 업데이트: {post.date}
+              </span>
             </div>
             <h1 className="text-2xl md:text-4xl font-extrabold text-slate-900 leading-tight">
               {post.title}
@@ -127,6 +135,7 @@ export default async function BlogPostPage({ params }: PostParams) {
                 ))}
               </div>
             )}
+            
             {post.link && (
               <a
                 href={post.link}
@@ -137,6 +146,20 @@ export default async function BlogPostPage({ params }: PostParams) {
                 공식 사이트에서 자세히 보기 →
               </a>
             )}
+
+            {/* 출처 및 AI 생성 정보 공개 (E-E-A-T) */}
+            <div className="bg-slate-50 rounded-xl p-4 text-xs text-slate-600 space-y-2 mt-6 border border-slate-100">
+              <p className="font-semibold text-slate-800">ℹ️ 출처 및 안내</p>
+              {post.link && (
+                <p>
+                  🔗 <strong>원문 출처:</strong>{" "}
+                  <a href={post.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline break-all">
+                    {post.link}
+                  </a>
+                </p>
+              )}
+              <p>🤖 이 글은 공공데이터포털(data.go.kr)의 정보를 바탕으로 AI가 작성하였습니다. 정확한 내용은 원문 링크를 통해 확인해주세요.</p>
+            </div>
           </div>
         </article>
       </main>

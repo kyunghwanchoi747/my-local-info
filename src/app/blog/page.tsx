@@ -26,6 +26,9 @@ export default function BlogList() {
               <Link href="/blog/" className="text-blue-900 border-b-2 border-blue-900 pb-1 transition">
                 블로그
               </Link>
+              <Link href="/about/" className="text-slate-600 hover:text-blue-900 transition">
+                소개
+              </Link>
             </nav>
             <div className="hidden sm:block">
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
