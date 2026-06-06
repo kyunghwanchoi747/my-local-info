@@ -45,8 +45,32 @@ export default async function BlogPostPage({ params }: PostParams) {
     notFound();
   }
 
+  const postJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "datePublished": post.date,
+    "description": post.summary,
+    "author": {
+      "@type": "Organization",
+      "name": "성남시 생활 정보"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "성남시 생활 정보",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://my-local-info-b82.pages.dev/favicon.ico"
+      }
+    }
+  };
+
   return (
     <div className="bg-slate-50/40 min-h-screen text-slate-800 font-sans flex flex-col justify-between">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(postJsonLd) }}
+      />
       {/* 상단 헤더 */}
       <header className="bg-white border-b border-blue-100 sticky top-0 z-10 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 py-5 flex items-center justify-between">

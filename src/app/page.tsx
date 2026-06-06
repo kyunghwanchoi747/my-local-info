@@ -93,12 +93,36 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {events.map((event) => (
-              <div 
-                key={event.id} 
-                className="bg-white rounded-xl shadow-sm border border-blue-100/70 hover:shadow-md hover:border-blue-200 transition duration-200 flex flex-col justify-between overflow-hidden"
-              >
-                <div className="p-6">
+            {events.map((event) => {
+              const eventJsonLd = {
+                "@context": "https://schema.org",
+                "@type": "Event",
+                "name": event.name || event.title,
+                "startDate": event.startDate,
+                "endDate": event.endDate,
+                "location": {
+                  "@type": "Place",
+                  "name": event.location,
+                  "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "성남시",
+                    "addressRegion": "경기도",
+                    "addressCountry": "KR"
+                  }
+                },
+                "description": event.summary
+              };
+
+              return (
+                <div 
+                  key={event.id} 
+                  className="bg-white rounded-xl shadow-sm border border-blue-100/70 hover:shadow-md hover:border-blue-200 transition duration-200 flex flex-col justify-between overflow-hidden"
+                >
+                  <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
+                  />
+                  <div className="p-6">
                   <div className="flex items-center justify-between mb-3">
                     <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-pink-50 text-pink-700 border border-pink-100">
                       📅 {event.category}
@@ -130,7 +154,8 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            ))}
+            );
+          })}
           </div>
         </section>
 
@@ -145,12 +170,29 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {benefits.map((benefit) => (
-              <div 
-                key={benefit.id} 
-                className="bg-white rounded-xl shadow-sm border border-blue-100/70 hover:shadow-md hover:border-blue-200 transition duration-200 flex flex-col justify-between overflow-hidden"
-              >
-                <div className="p-6">
+            {benefits.map((benefit) => {
+              const benefitJsonLd = {
+                "@context": "https://schema.org",
+                "@type": "GovernmentService",
+                "name": benefit.name || benefit.title,
+                "serviceName": benefit.name || benefit.title,
+                "description": benefit.summary,
+                "provider": {
+                  "@type": "GovernmentOrganization",
+                  "name": benefit.location || "성남시청"
+                }
+              };
+
+              return (
+                <div 
+                  key={benefit.id} 
+                  className="bg-white rounded-xl shadow-sm border border-blue-100/70 hover:shadow-md hover:border-blue-200 transition duration-200 flex flex-col justify-between overflow-hidden"
+                >
+                  <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(benefitJsonLd) }}
+                  />
+                  <div className="p-6">
                   <div className="flex items-center justify-between mb-3">
                     <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
                       🎁 {benefit.category}
@@ -182,7 +224,8 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            ))}
+            );
+          })}
           </div>
         </section>
       </main>
