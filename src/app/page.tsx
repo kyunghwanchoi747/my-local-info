@@ -38,7 +38,7 @@ export default function Home() {
               <Link href="/" className="text-amber-900 border-b-2 border-amber-900 pb-1 transition">
                 홈
               </Link>
-              <Link href="/blog" className="text-slate-600 hover:text-amber-900 transition">
+              <Link href="/blog/" className="text-slate-600 hover:text-amber-900 transition">
                 블로그
               </Link>
             </nav>

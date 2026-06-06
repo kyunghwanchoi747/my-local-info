@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "node -e \"const fs=require('fs');const path=require('path');function clean(dir){if(!fs.existsSync(dir))return;for(const f of fs.readdirSync(dir)){const full=path.join(dir,f);if(f.startsWith('__next')){fs.rmSync(full,{recursive:true,force:true});console.log('removed:',full);}else if(fs.statSync(full).isDirectory()){clean(full);}}}clean('out');\"",
     "start": "next start",
     "lint": "eslint"
   },

@@ -23,7 +23,7 @@ export default function BlogList() {
               <Link href="/" className="text-slate-600 hover:text-amber-900 transition">
                 홈
               </Link>
-              <Link href="/blog" className="text-amber-900 border-b-2 border-amber-900 pb-1 transition">
+              <Link href="/blog/" className="text-amber-900 border-b-2 border-amber-900 pb-1 transition">
                 블로그
               </Link>
             </nav>
@@ -68,7 +68,7 @@ export default function BlogList() {
                     )}
                     <span className="text-xs font-semibold text-slate-400">{post.date}</span>
                   </div>
-                  <Link href={`/blog/${post.slug}`}>
+                  <Link href={`/blog/${post.slug}/`}>
                     <h3 className="text-xl md:text-2xl font-bold text-slate-900 hover:text-amber-900 transition mb-3 cursor-pointer">
                       {post.title}
                     </h3>
@@ -89,7 +89,7 @@ export default function BlogList() {
                       </span>
                     ))}
                   </div>
-                  <Link href={`/blog/${post.slug}`}>
+                  <Link href={`/blog/${post.slug}/`}>
                     <span className="text-sm font-bold text-blue-600 hover:text-blue-800 cursor-pointer flex items-center gap-1">
                       자세히 읽기 →
                     </span>

@@ -44,7 +44,7 @@ export default async function BlogPostPage({ params }: PostParams) {
               <Link href="/" className="text-slate-600 hover:text-amber-900 transition">
                 홈
               </Link>
-              <Link href="/blog" className="text-amber-900 border-b-2 border-amber-900 pb-1 transition">
+              <Link href="/blog/" className="text-amber-900 border-b-2 border-amber-900 pb-1 transition">
                 블로그
               </Link>
             </nav>
@@ -61,7 +61,7 @@ export default async function BlogPostPage({ params }: PostParams) {
       {/* 메인 콘텐츠 영역 */}
       <main className="max-w-3xl mx-auto px-4 py-10 flex-1 w-full">
         {/* 뒤로가기 버튼 */}
-        <Link href="/blog">
+        <Link href="/blog/">
           <span className="inline-flex items-center text-sm font-semibold text-amber-900 hover:text-amber-700 mb-6 cursor-pointer gap-1">
             ← 목록으로 돌아가기
           </span>
@@ -93,19 +93,31 @@ export default async function BlogPostPage({ params }: PostParams) {
             </ReactMarkdown>
           </div>
 
-          {/* 하단 태그 정보 */}
-          {post.tags && post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-10 pt-6 border-t border-slate-100">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-xs text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full"
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          )}
+          {/* 하단 태그 및 공식 사이트 버튼 */}
+          <div className="mt-10 pt-6 border-t border-slate-100 space-y-4">
+            {post.tags && post.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-xs text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            )}
+            {post.link && (
+              <a
+                href={post.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition shadow-sm"
+              >
+                공식 사이트에서 자세히 보기 →
+              </a>
+            )}
+          </div>
         </article>
       </main>
 

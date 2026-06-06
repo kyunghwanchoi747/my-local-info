@@ -11,6 +11,7 @@ export interface PostData {
   summary: string;
   category: string;
   tags: string[];
+  link?: string;
   contentHtml?: string;
   content?: string;
 }
@@ -62,6 +63,7 @@ export function getSortedPostsData(): PostData[] {
         summary: matterResult.data.summary || '',
         category: matterResult.data.category || '',
         tags: Array.isArray(matterResult.data.tags) ? matterResult.data.tags : [],
+        link: matterResult.data.link || '',
         content: matterResult.content,
       } as PostData;
     });
@@ -113,6 +115,7 @@ export function getPostData(slug: string): PostData | null {
       summary: matterResult.data.summary || '',
       category: matterResult.data.category || '',
       tags: Array.isArray(matterResult.data.tags) ? matterResult.data.tags : [],
+      link: matterResult.data.link || '',
       content: matterResult.content,
     };
   } catch (e) {
