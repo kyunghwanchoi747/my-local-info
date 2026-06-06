@@ -5,30 +5,30 @@ export default function BlogList() {
   const posts = getSortedPostsData();
 
   return (
-    <div className="bg-amber-50/40 min-h-screen text-slate-800 font-sans flex flex-col justify-between">
+    <div className="bg-slate-50/40 min-h-screen text-slate-800 font-sans flex flex-col justify-between">
       {/* 상단 헤더 */}
-      <header className="bg-white border-b border-amber-100 sticky top-0 z-10 shadow-sm">
+      <header className="bg-white border-b border-blue-100 sticky top-0 z-10 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 py-5 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="text-3xl">🏡</span>
             <div>
               <Link href="/">
-                <span className="text-2xl font-bold text-amber-900 tracking-tight cursor-pointer">성남시 생활 정보</span>
+                <span className="text-2xl font-bold text-blue-900 tracking-tight cursor-pointer">성남시 생활 정보</span>
               </Link>
-              <p className="text-xs text-amber-700/80 mt-0.5">우리 동네의 생생한 축제와 맞춤 혜택을 전해드려요</p>
+              <p className="text-xs text-blue-700/80 mt-0.5">우리 동네의 생생한 축제와 맞춤 혜택을 전해드려요</p>
             </div>
           </div>
           <div className="flex items-center gap-6">
             <nav className="flex gap-4 text-sm font-bold">
-              <Link href="/" className="text-slate-600 hover:text-amber-900 transition">
+              <Link href="/" className="text-slate-600 hover:text-blue-900 transition">
                 홈
               </Link>
-              <Link href="/blog/" className="text-amber-900 border-b-2 border-amber-900 pb-1 transition">
+              <Link href="/blog/" className="text-blue-900 border-b-2 border-blue-900 pb-1 transition">
                 블로그
               </Link>
             </nav>
             <div className="hidden sm:block">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                 매일 아침 7시 자동 업데이트
               </span>
@@ -40,14 +40,14 @@ export default function BlogList() {
       {/* 메인 콘텐츠 영역 */}
       <main className="max-w-4xl mx-auto px-4 py-10 flex-1 w-full">
         <div className="mb-10 text-center">
-          <h2 className="text-3xl font-extrabold text-amber-950 mb-3">📰 동네 정보 블로그</h2>
+          <h2 className="text-3xl font-extrabold text-blue-950 mb-3">📰 동네 정보 블로그</h2>
           <p className="text-slate-600 max-w-lg mx-auto">
             성남시의 최신 트렌드, 공공 혜택 백서, 축제 후기 등 유익한 로컬 스토리들을 모아보세요.
           </p>
         </div>
 
         {posts.length === 0 ? (
-          <div className="text-center py-20 bg-white rounded-2xl border border-amber-100 shadow-sm">
+          <div className="text-center py-20 bg-white rounded-2xl border border-blue-100 shadow-sm">
             <span className="text-4xl">✍️</span>
             <h3 className="text-lg font-semibold text-slate-700 mt-4">아직 등록된 블로그 글이 없습니다</h3>
             <p className="text-sm text-slate-500 mt-1">새로운 유익한 소식들로 곧 찾아뵙겠습니다!</p>
@@ -57,19 +57,19 @@ export default function BlogList() {
             {posts.map((post) => (
               <article
                 key={post.slug}
-                className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-amber-100/70 hover:shadow-md hover:border-amber-200 transition duration-200 flex flex-col justify-between"
+                className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-blue-100/70 hover:shadow-md hover:border-blue-200 transition duration-200 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex flex-wrap items-center gap-2 mb-4">
                     {post.category && (
-                      <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900">
+                      <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-900">
                         {post.category}
                       </span>
                     )}
                     <span className="text-xs font-semibold text-slate-400">{post.date}</span>
                   </div>
                   <Link href={`/blog/${post.slug}/`}>
-                    <h3 className="text-xl md:text-2xl font-bold text-slate-900 hover:text-amber-900 transition mb-3 cursor-pointer">
+                    <h3 className="text-xl md:text-2xl font-bold text-slate-900 hover:text-blue-900 transition mb-3 cursor-pointer">
                       {post.title}
                     </h3>
                   </Link>
