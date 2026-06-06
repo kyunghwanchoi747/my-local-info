@@ -1,9 +1,11 @@
 import localInfoData from "../../public/data/local-info.json";
 import Link from "next/link";
+import { getSortedPostsData } from "@/lib/posts";
 
 interface InfoItem {
-  id: string;
-  title: string;
+  id: string | number;
+  title?: string;
+  name?: string;
   category: "행사" | "혜택";
   startDate: string;
   endDate: string;
@@ -15,9 +17,23 @@ interface InfoItem {
 
 export default function Home() {
   const items = localInfoData as InfoItem[];
+  const posts = getSortedPostsData();
   const events = items.filter((item) => item.category === "행사");
   const benefits = items.filter((item) => item.category === "혜택");
-  const todayDateString = "2026-06-03"; // 로컬 시간 기준
+  
+  const getDetailLink = (item: InfoItem) => {
+    const nameToCheck = (item.name || item.title || "").trim();
+    if (!nameToCheck) return "/blog/";
+    
+    const matchedPost = posts.find((post) => 
+      post.title.includes(nameToCheck) || 
+      nameToCheck.includes(post.title)
+    );
+    
+    return matchedPost ? `/blog/${matchedPost.slug}/` : "/blog/";
+  };
+
+  const todayDateString = "2026-06-06"; // 로컬 시간 기준
 
   return (
     <div className="bg-amber-50/40 min-h-screen text-slate-800 font-sans flex flex-col justify-between">
@@ -88,7 +104,7 @@ export default function Home() {
                       {event.startDate === event.endDate ? event.startDate : `${event.startDate} ~ ${event.endDate}`}
                     </span>
                   </div>
-                  <h4 className="text-lg font-bold text-slate-900 mb-2 line-clamp-1">{event.title}</h4>
+                  <h4 className="text-lg font-bold text-slate-900 mb-2 line-clamp-1">{event.name || event.title}</h4>
                   <p className="text-sm text-slate-600 line-clamp-3 mb-4 leading-relaxed">{event.summary}</p>
                 </div>
                 
@@ -103,7 +119,7 @@ export default function Home() {
                   </div>
                   <div className="pt-2">
                     <Link 
-                      href="/blog"
+                      href={getDetailLink(event)}
                       className="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition shadow-sm"
                     >
                       상세 정보 보기
@@ -140,7 +156,7 @@ export default function Home() {
                       상시 모집
                     </span>
                   </div>
-                  <h4 className="text-lg font-bold text-slate-900 mb-2 line-clamp-1">{benefit.title}</h4>
+                  <h4 className="text-lg font-bold text-slate-900 mb-2 line-clamp-1">{benefit.name || benefit.title}</h4>
                   <p className="text-sm text-slate-600 line-clamp-3 mb-4 leading-relaxed">{benefit.summary}</p>
                 </div>
                 
@@ -155,7 +171,7 @@ export default function Home() {
                   </div>
                   <div className="pt-2">
                     <Link 
-                      href="/blog"
+                      href={getDetailLink(benefit)}
                       className="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition shadow-sm"
                     >
                       지원 대상 확인 & 신청하기
