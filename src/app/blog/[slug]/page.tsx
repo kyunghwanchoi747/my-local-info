@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getPostData, getAllPostSlugs } from "@/lib/posts";
 import type { Metadata } from "next";
+import AdBanner from "@/components/AdBanner";
 
 interface PostParams {
   params: Promise<{
@@ -144,6 +145,9 @@ export default async function BlogPostPage({ params }: PostParams) {
               {post.content || ""}
             </ReactMarkdown>
           </div>
+
+          {/* 본문 하단 광고 */}
+          <AdBanner slot="post-bottom" />
 
           {/* 하단 태그 및 공식 사이트 버튼 */}
           <div className="mt-10 pt-6 border-t border-slate-100 space-y-4">

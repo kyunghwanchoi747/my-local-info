@@ -1,6 +1,7 @@
 import localInfoData from "../../public/data/local-info.json";
 import Link from "next/link";
 import { getSortedPostsData } from "@/lib/posts";
+import AdBanner from "@/components/AdBanner";
 
 interface InfoItem {
   id: string | number;
@@ -158,6 +159,9 @@ export default function Home() {
           })}
           </div>
         </section>
+
+        {/* 메인 페이지 중간 광고 */}
+        <AdBanner slot="home-middle" />
 
         {/* 지원금/혜택 정보 섹션 */}
         <section className="mb-8">
