@@ -27,15 +27,27 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <span className="text-3xl">🏡</span>
             <div>
-              <h1 className="text-2xl font-bold text-amber-900 tracking-tight">성남시 생활 정보</h1>
+              <Link href="/">
+                <span className="text-2xl font-bold text-amber-900 tracking-tight cursor-pointer">성남시 생활 정보</span>
+              </Link>
               <p className="text-xs text-amber-700/80 mt-0.5">우리 동네의 생생한 축제와 맞춤 혜택을 전해드려요</p>
             </div>
           </div>
-          <div className="hidden sm:block">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              매일 아침 7시 자동 업데이트
-            </span>
+          <div className="flex items-center gap-6">
+            <nav className="flex gap-4 text-sm font-bold">
+              <Link href="/" className="text-amber-900 border-b-2 border-amber-900 pb-1 transition">
+                홈
+              </Link>
+              <Link href="/blog" className="text-slate-600 hover:text-amber-900 transition">
+                블로그
+              </Link>
+            </nav>
+            <div className="hidden sm:block">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                매일 아침 7시 자동 업데이트
+              </span>
+            </div>
           </div>
         </div>
       </header>
@@ -91,7 +103,7 @@ export default function Home() {
                   </div>
                   <div className="pt-2">
                     <Link 
-                      href={`/info/${event.id}/`}
+                      href="/blog"
                       className="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition shadow-sm"
                     >
                       상세 정보 보기
@@ -143,7 +155,7 @@ export default function Home() {
                   </div>
                   <div className="pt-2">
                     <Link 
-                      href={`/info/${benefit.id}/`}
+                      href="/blog"
                       className="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition shadow-sm"
                     >
                       지원 대상 확인 & 신청하기
