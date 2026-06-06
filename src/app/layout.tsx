@@ -13,8 +13,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "우리 동네 생활 정보 - 성남시 행사/축제 & 지원금 혜택",
-  description: "성남시의 최신 행사, 축제 및 다양한 지원금과 혜택 정보를 한눈에 확인해 보세요.",
+  title: "성남시 생활 정보 | 행사·혜택·지원금 안내",
+  description: "성남시 주민을 위한 지역 행사, 축제, 지원금, 혜택 정보를 매일 업데이트합니다.",
+  openGraph: {
+    title: "성남시 생활 정보 | 행사·혜택·지원금 안내",
+    description: "성남시 주민을 위한 지역 행사, 축제, 지원금, 혜택 정보를 매일 업데이트합니다.",
+    url: "https://my-local-info-b82.pages.dev/",
+    siteName: "성남시 생활 정보",
+    locale: "ko_KR",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

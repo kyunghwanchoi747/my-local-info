@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getPostData, getAllPostSlugs } from "@/lib/posts";
+import type { Metadata } from "next";
 
 interface PostParams {
   params: Promise<{
@@ -15,6 +16,25 @@ export async function generateStaticParams() {
   return paths.map((path) => ({
     slug: path.params.slug,
   }));
+}
+
+export async function generateMetadata({ params }: PostParams): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getPostData(slug);
+  if (!post) {
+    return {};
+  }
+  return {
+    title: `${post.title} | 성남시 생활 정보`,
+    description: post.summary,
+    openGraph: {
+      title: `${post.title} | 성남시 생활 정보`,
+      description: post.summary,
+      url: `https://my-local-info-b82.pages.dev/blog/${slug}/`,
+      type: "article",
+      publishedTime: post.date,
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }: PostParams) {
