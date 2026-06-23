@@ -5,7 +5,7 @@ import chatData from "../../chat-data.json";
 
 interface Message {
   id: string;
-  sender: "user" | "bot";
+  sender: "user" | "bot" | "admin";
   text: string;
 }
 
@@ -20,7 +20,9 @@ export default function Chatbot() {
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isHumanMode, setIsHumanMode] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const pollingRef = useRef<NodeJS.Timeout | null>(null);
 
   // 자동 스크롤
   useEffect(() => {
@@ -29,8 +31,68 @@ export default function Chatbot() {
     }
   }, [messages, isOpen, isLoading]);
 
-  // 버튼형 고정 답변 처리
+  // 폴링(2초마다 관리자 답변 확인)
+  useEffect(() => {
+    if (isHumanMode && isOpen) {
+      pollingRef.current = setInterval(async () => {
+        try {
+          const response = await fetch("/api/chat-poll");
+          if (response.ok) {
+            const data = await response.json();
+            // 새로운 관리자 메시지 필터링 및 업데이트
+            if (data.messages && Array.isArray(data.messages)) {
+              setMessages((prev) => {
+                const existingIds = new Set(prev.map((m) => m.id));
+                const newMsgs = data.messages
+                  .filter((m: any) => m.sender === "admin" && !existingIds.has(m.id))
+                  .map((m: any) => ({
+                    id: m.id,
+                    sender: "admin",
+                    text: m.text,
+                  }));
+
+                if (newMsgs.length > 0) {
+                  return [...prev, ...newMsgs];
+                }
+                return prev;
+              });
+            }
+          }
+        } catch (error) {
+          console.error("폴링 오류:", error);
+        }
+      }, 2000);
+    } else {
+      if (pollingRef.current) {
+        clearInterval(pollingRef.current);
+        pollingRef.current = null;
+      }
+    }
+
+    return () => {
+      if (pollingRef.current) {
+        clearInterval(pollingRef.current);
+      }
+    };
+  }, [isHumanMode, isOpen]);
+
+  // 상담원 연결 모드 전환
+  const handleConnectHuman = () => {
+    setIsHumanMode(true);
+    const systemMsgId = `sys-${Date.now()}`;
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: systemMsgId,
+        sender: "bot",
+        text: "상담원 연결을 대기 중입니다. 질문을 남겨주시면 상담원이 순차적으로 답변을 드립니다.",
+      },
+    ]);
+  };
+
+  // 버튼형 고정 답변 처리 (AI 모드 전용)
   const handleQuestionClick = (question: string, answer: string) => {
+    if (isHumanMode) return;
     const userMessageId = `user-${Date.now()}`;
     const botMessageId = `bot-${Date.now()}`;
 
@@ -47,55 +109,77 @@ export default function Chatbot() {
     }, 400);
   };
 
-  // 실시간 AI 답변 호출 함수
+  // 메시지 전송 처리
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim() || isLoading) return;
 
     const userText = inputValue;
     const userMessageId = `user-${Date.now()}`;
+    
+    // 화면에 유저 메시지 즉시 추가
     setMessages((prev) => [
       ...prev,
       { id: userMessageId, sender: "user", text: userText },
     ]);
     setInputValue("");
-    setIsLoading(true);
 
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: userText }),
-      });
-
-      if (!response.ok) {
-        throw new Error("서버와의 통신이 실패했습니다.");
+    if (isHumanMode) {
+      // 1. 상담원 연결 모드 통신
+      try {
+        await fetch("/api/chat-human", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: userMessageId,
+            message: userText,
+            sender: "user",
+          }),
+        });
+      } catch (error) {
+        console.error("상담원 전송 실패:", error);
       }
+    } else {
+      // 2. 기존 AI RAG 모드 통신
+      setIsLoading(true);
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message: userText }),
+        });
 
-      const data = await response.json();
-      const botMessageId = `bot-${Date.now()}`;
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: botMessageId,
-          sender: "bot",
-          text: data.response || "죄송합니다. 답변을 생성하지 못했습니다.",
-        },
-      ]);
-    } catch (error: any) {
-      const botMessageId = `bot-${Date.now()}`;
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: botMessageId,
-          sender: "bot",
-          text: `오류가 발생했습니다: ${error.message || "알 수 없는 에러"}`,
-        },
-      ]);
-    } finally {
-      setIsLoading(false);
+        if (!response.ok) {
+          throw new Error("서버와의 통신이 실패했습니다.");
+        }
+
+        const data = await response.json();
+        const botMessageId = `bot-${Date.now()}`;
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: botMessageId,
+            sender: "bot",
+            text: data.response || "죄송합니다. 답변을 생성하지 못했습니다.",
+          },
+        ]);
+      } catch (error: any) {
+        const botMessageId = `bot-${Date.now()}`;
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: botMessageId,
+            sender: "bot",
+            text: `오류가 발생했습니다: ${error.message || "알 수 없는 에러"}`,
+          },
+        ]);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -115,8 +199,12 @@ export default function Chatbot() {
           <div className="flex items-center space-x-2">
             <div className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse"></div>
             <div>
-              <h3 className="font-bold text-sm">성남시봇</h3>
-              <p className="text-[11px] text-orange-100">온라인 상태</p>
+              <h3 className="font-bold text-sm">
+                {isHumanMode ? "실시간 상담원" : "성남시봇"}
+              </h3>
+              <p className="text-[11px] text-orange-100">
+                {isHumanMode ? "연결 대기 중" : "온라인 상태"}
+              </p>
             </div>
           </div>
           {/* 닫기 버튼 */}
@@ -150,9 +238,9 @@ export default function Chatbot() {
                 msg.sender === "user" ? "justify-end" : "justify-start"
               }`}
             >
-              {msg.sender === "bot" && (
+              {msg.sender !== "user" && (
                 <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mr-2 shrink-0 text-xs font-bold">
-                  봇
+                  {msg.sender === "admin" ? "사람" : "봇"}
                 </div>
               )}
               <div
@@ -167,8 +255,8 @@ export default function Chatbot() {
             </div>
           ))}
 
-          {/* 로딩 스피너 */}
-          {isLoading && (
+          {/* 로딩 스피너 (AI 모드 통신 시에만 노출) */}
+          {isLoading && !isHumanMode && (
             <div className="flex justify-start">
               <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mr-2 shrink-0 text-xs font-bold">
                 봇
@@ -183,20 +271,55 @@ export default function Chatbot() {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* 질문 추천 버튼 영역 */}
+        {/* 하단 제어 & 추천 영역 */}
         <div className="p-3 bg-white border-t border-gray-100 shrink-0">
-          <p className="text-xs text-gray-400 mb-1.5 pl-1">자주 묻는 질문</p>
-          <div className="flex flex-wrap gap-1.5 max-h-[85px] overflow-y-auto pr-1">
-            {chatData.map((item, index) => (
+          {!isHumanMode ? (
+            <>
+              <div className="flex justify-between items-center mb-1.5 px-1">
+                <p className="text-xs text-gray-400">자주 묻는 질문</p>
+                <button
+                  onClick={handleConnectHuman}
+                  className="text-[11px] font-bold text-orange-600 hover:text-orange-700 bg-orange-50 hover:bg-orange-100 px-2 py-0.5 rounded-md transition-colors"
+                >
+                  상담원 연결
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-1.5 max-h-[85px] overflow-y-auto pr-1">
+                {chatData.map((item, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleQuestionClick(item.question, item.answer)}
+                    className="px-2.5 py-1 bg-gray-50 hover:bg-orange-50 hover:text-orange-600 text-gray-700 text-[11px] rounded-lg border border-gray-100 transition-colors shrink-0 max-w-full truncate"
+                  >
+                    {item.question}
+                  </button>
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="flex items-center justify-between px-1">
+              <span className="text-[11px] text-orange-600 font-semibold flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>
+                실시간 상담 모드 작동 중
+              </span>
               <button
-                key={index}
-                onClick={() => handleQuestionClick(item.question, item.answer)}
-                className="px-2.5 py-1 bg-gray-50 hover:bg-orange-50 hover:text-orange-600 text-gray-700 text-[11px] rounded-lg border border-gray-100 transition-colors shrink-0 max-w-full truncate"
+                onClick={() => {
+                  setIsHumanMode(false);
+                  setMessages((prev) => [
+                    ...prev,
+                    {
+                      id: `sys-${Date.now()}`,
+                      sender: "bot",
+                      text: "상담을 종료하고 AI 상담 모드로 복귀합니다.",
+                    },
+                  ]);
+                }}
+                className="text-[10px] text-gray-400 hover:text-gray-600 border border-gray-200 px-2 py-0.5 rounded"
               >
-                {item.question}
+                상담 종료
               </button>
-            ))}
-          </div>
+            </div>
+          )}
         </div>
 
         {/* 메시지 직접 입력창 */}
@@ -205,13 +328,16 @@ export default function Chatbot() {
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            placeholder="성남시봇에게 물어보세요..."
-            disabled={isLoading}
+            placeholder={
+              isHumanMode
+                ? "상담원에게 전송할 메시지..."
+                : "성남시봇에게 물어보세요..."
+            }
             className="flex-1 px-4 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-orange-500 disabled:bg-gray-50 disabled:text-gray-400"
           />
           <button
             type="submit"
-            disabled={isLoading || !inputValue.trim()}
+            disabled={!inputValue.trim()}
             className="px-4 py-2 bg-orange-500 text-white rounded-xl text-sm font-semibold hover:bg-orange-600 active:scale-95 disabled:bg-gray-200 disabled:text-gray-400 transition-all cursor-pointer"
           >
             전송
