@@ -186,12 +186,12 @@ export default function Chatbot() {
         {/* 질문 추천 버튼 영역 */}
         <div className="p-3 bg-white border-t border-gray-100 shrink-0">
           <p className="text-xs text-gray-400 mb-1.5 pl-1">자주 묻는 질문</p>
-          <div className="flex flex-col gap-1.5 max-h-[100px] overflow-y-auto pr-1">
+          <div className="flex flex-wrap gap-1.5 max-h-[85px] overflow-y-auto pr-1">
             {chatData.map((item, index) => (
               <button
                 key={index}
                 onClick={() => handleQuestionClick(item.question, item.answer)}
-                className="w-full text-left px-3 py-1.5 bg-gray-50 hover:bg-orange-50 hover:text-orange-600 text-gray-700 text-xs rounded-xl border border-gray-100 transition-colors truncate"
+                className="px-2.5 py-1 bg-gray-50 hover:bg-orange-50 hover:text-orange-600 text-gray-700 text-[11px] rounded-lg border border-gray-100 transition-colors shrink-0 max-w-full truncate"
               >
                 {item.question}
               </button>
