@@ -5,7 +5,11 @@ summary: 성남시립 봉안시설인 하늘누리 추모원의 신청 절차, �
 category: 정보
 tags: [성남시, 하늘누리추모원, 봉안당, 장례문화, 성남시립장지]
 link: https://www.seongnam.go.kr
+image: https://images.pexels.com/photos/9754660/pexels-photo-9754660.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 ---
+
+![memorial](https://images.pexels.com/photos/9754660/pexels-photo-9754660.jpeg?auto=compress&cs=tinysrgb&h=650&w=940)
+
 
 안녕하세요! 오늘은 성남시민분들을 위해 성남시에서 운영하는 믿을 수 있고 합리적인 봉안시설인 **'하늘누리 추모원(봉안당)'** 이용 방법에 대해 자세히 소개해 드리려고 합니다. 갑작스러운 슬픔 속에서도 장례 절차를 차분하게 준비하실 수 있도록 신청 절차부터 비용, 구비서류까지 한눈에 보기 쉽게 정리했습니다.
 

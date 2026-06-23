@@ -5,7 +5,11 @@ summary: 세계적인 지휘자 금난새 감독과 청소년 연주자들이 �
 category: 정보
 tags: [성남시, 성남물빛정원, 금난새, 청소년오케스트라, 클래식콘서트]
 link: https://www.seongnam.go.kr/apply/view.do
+image: https://images.pexels.com/photos/2296100/pexels-photo-2296100.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 ---
+
+![orchestra](https://images.pexels.com/photos/2296100/pexels-photo-2296100.jpeg?auto=compress&cs=tinysrgb&h=650&w=940)
+
 
 안녕하세요! 초여름의 싱그러운 바람과 함께 마음을 설레게 할 아름다운 음악회 소식을 들고 왔습니다. 바로 성남시에서 펼쳐지는 특별한 클래식 축제, **'금난새의 유스 오케스트라 아카데미 콘서트'** 입니다. 
 

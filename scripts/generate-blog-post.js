@@ -74,7 +74,9 @@ tags: [태그1, 태그2, 태그3]
 
 (본문: 800자 이상, 친근한 블로그 톤, 추천 이유 3가지 포함, 신청 방법 안내)
 
-마지막 줄에 FILENAME: YYYY-MM-DD-keyword 형식으로 파일명도 출력해줘. 키워드는 영문으로.`;
+마지막 줄에 다음 형식으로 파일명과 이미지 검색용 키워드를 출력해줘:
+FILENAME: YYYY-MM-DD-keyword
+PEXELS_KEYWORD: (이 글에 가장 잘 어울리는 펙셀스 이미지 검색용 영단어 딱 1개, 예: concert, children, welfare, park 등)`;
 
     const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`;
     
@@ -107,7 +109,7 @@ tags: [태그1, 태그2, 태그3]
 
     const responseText = geminiResult.candidates[0].content.parts[0].text;
 
-    // 3단계: 파일명 파싱 및 내용 정리
+    // 3단계: 파일명 및 Pexels 키워드 파싱
     const filenameMatch = responseText.match(/FILENAME:\s*([^\r\n]+)/i);
     if (!filenameMatch) {
       throw new Error("응답에서 파일명(FILENAME:) 정보를 찾을 수 없습니다.");
@@ -118,14 +120,70 @@ tags: [태그1, 태그2, 태그3]
       targetFilename += '.md';
     }
 
-    // FILENAME 줄 제거 및 코드블록 정비
-    let postContent = responseText.replace(/FILENAME:\s*[^\r\n]+/gi, '').trim();
+    // Pexels 검색 키워드 추출 (없을 경우 기본값 'nature')
+    const pexelsKeywordMatch = responseText.match(/PEXELS_KEYWORD:\s*([^\r\n]+)/i);
+    const pexelsKeyword = pexelsKeywordMatch ? pexelsKeywordMatch[1].trim() : 'nature';
+
+    // FILENAME 및 PEXELS_KEYWORD 줄 제거 및 코드블록 정비
+    let postContent = responseText
+      .replace(/FILENAME:\s*[^\r\n]+/gi, '')
+      .replace(/PEXELS_KEYWORD:\s*[^\r\n]+/gi, '')
+      .trim();
+
     if (postContent.startsWith('```markdown')) {
       postContent = postContent.replace(/^```markdown\n/, '').replace(/\n```$/, '');
     } else if (postContent.startsWith('```')) {
       postContent = postContent.replace(/^```[a-zA-Z0-9]*\n/, '').replace(/\n```$/, '');
     }
     postContent = postContent.trim();
+
+    // 4단계: Pexels API 호출을 통해 어울리는 이미지 찾기
+    let imageUrl = '';
+    const pexelsApiKey = process.env.PEXELS_API_KEY;
+    
+    if (pexelsApiKey) {
+      try {
+        console.log(`Pexels 이미지 검색을 시작합니다. (검색어: ${pexelsKeyword})`);
+        const pexelsUrl = `https://api.pexels.com/v1/search?query=${encodeURIComponent(pexelsKeyword)}&per_page=1`;
+        
+        const responsePexels = await fetch(pexelsUrl, {
+          headers: {
+            'Authorization': pexelsApiKey
+          }
+        });
+
+        if (responsePexels.ok) {
+          const pexelsResult = await responsePexels.json();
+          if (pexelsResult.photos && pexelsResult.photos.length > 0) {
+            imageUrl = pexelsResult.photos[0].src.large;
+            console.log(`Pexels 이미지를 매칭했습니다: ${imageUrl}`);
+          } else {
+            console.log(`Pexels에서 키워드 "${pexelsKeyword}"에 대한 검색 결과가 없습니다.`);
+          }
+        } else {
+          console.log(`Pexels API 호출 오류: 상태코드 ${responsePexels.status}`);
+        }
+      } catch (err) {
+        console.log(`Pexels 이미지 가져오기 중 일시적 에러 발생 (생성을 계속 진행합니다): ${err.message}`);
+      }
+    } else {
+      console.log("PEXELS_API_KEY 환경변수가 설정되지 않아 이미지 검색을 생략합니다.");
+    }
+
+    // 5단계: 글에 이미지 주소 주입 (프론트매터 및 본문 맨 위)
+    if (imageUrl) {
+      const parts = postContent.split('---');
+      if (parts.length >= 3) {
+        // 프론트매터에 image 속성 추가 (parts[1]은 대시 사이의 메타데이터 영역)
+        parts[1] = parts[1] + `image: ${imageUrl}\n`;
+        // 본문(parts[2]) 시작 지점에 이미지 마크다운 삽입
+        parts[2] = `\n\n![${pexelsKeyword}](${imageUrl})\n` + parts[2];
+        postContent = parts.join('---');
+      } else {
+        // 예상 밖의 형식인 경우 본문 맨 위에 추가
+        postContent = `![${pexelsKeyword}](${imageUrl})\n\n` + postContent;
+      }
+    }
 
     const targetFilePath = path.join(postsDir, targetFilename);
     fs.writeFileSync(targetFilePath, postContent + '\n', 'utf8');

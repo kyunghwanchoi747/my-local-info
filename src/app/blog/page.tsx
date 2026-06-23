@@ -60,43 +60,54 @@ export default function BlogList() {
             {posts.map((post) => (
               <article
                 key={post.slug}
-                className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-blue-100/70 hover:shadow-md hover:border-blue-200 transition duration-200 flex flex-col justify-between"
+                className="bg-white rounded-2xl overflow-hidden shadow-sm border border-blue-100/70 hover:shadow-md hover:border-blue-200 transition duration-200 flex flex-col md:flex-row"
               >
-                <div>
-                  <div className="flex flex-wrap items-center gap-2 mb-4">
-                    {post.category && (
-                      <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-900">
-                        {post.category}
-                      </span>
-                    )}
-                    <span className="text-xs font-semibold text-slate-400">{post.date}</span>
+                {post.image && (
+                  <div className="md:w-1/3 h-48 md:h-auto relative shrink-0 overflow-hidden">
+                    <img 
+                      src={post.image} 
+                      alt={post.title} 
+                      className="w-full h-full object-cover hover:scale-105 transition duration-300"
+                    />
                   </div>
-                  <Link href={`/blog/${post.slug}/`}>
-                    <h3 className="text-xl md:text-2xl font-bold text-slate-900 hover:text-blue-900 transition mb-3 cursor-pointer">
-                      {post.title}
-                    </h3>
-                  </Link>
-                  <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-6">
-                    {post.summary}
-                  </p>
-                </div>
+                )}
+                <div className="p-6 md:p-8 flex-1 flex flex-col justify-between">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2 mb-4">
+                      {post.category && (
+                        <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-900">
+                          {post.category}
+                        </span>
+                      )}
+                      <span className="text-xs font-semibold text-slate-400">{post.date}</span>
+                    </div>
+                    <Link href={`/blog/${post.slug}/`}>
+                      <h3 className="text-xl md:text-2xl font-bold text-slate-900 hover:text-blue-900 transition mb-3 cursor-pointer">
+                        {post.title}
+                      </h3>
+                    </Link>
+                    <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-6">
+                      {post.summary}
+                    </p>
+                  </div>
 
-                <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-100">
-                  <div className="flex flex-wrap gap-1.5">
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-md"
-                      >
-                        #{tag}
+                  <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-100">
+                    <div className="flex flex-wrap gap-1.5">
+                      {post.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-md"
+                        >
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                    <Link href={`/blog/${post.slug}/`}>
+                      <span className="text-sm font-bold text-blue-600 hover:text-blue-800 cursor-pointer flex items-center gap-1">
+                        자세히 읽기 →
                       </span>
-                    ))}
+                    </Link>
                   </div>
-                  <Link href={`/blog/${post.slug}/`}>
-                    <span className="text-sm font-bold text-blue-600 hover:text-blue-800 cursor-pointer flex items-center gap-1">
-                      자세히 읽기 →
-                    </span>
-                  </Link>
                 </div>
               </article>
             ))}

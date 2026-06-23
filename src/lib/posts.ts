@@ -14,6 +14,7 @@ export interface PostData {
   link?: string;
   contentHtml?: string;
   content?: string;
+  image?: string;
 }
 
 function formatDate(dateVal: any): string {
@@ -65,6 +66,7 @@ export function getSortedPostsData(): PostData[] {
         tags: Array.isArray(matterResult.data.tags) ? matterResult.data.tags : [],
         link: matterResult.data.link || '',
         content: matterResult.content,
+        image: matterResult.data.image || '',
       } as PostData;
     });
 
@@ -117,6 +119,7 @@ export function getPostData(slug: string): PostData | null {
       tags: Array.isArray(matterResult.data.tags) ? matterResult.data.tags : [],
       link: matterResult.data.link || '',
       content: matterResult.content,
+      image: matterResult.data.image || '',
     };
   } catch (e) {
     return null;

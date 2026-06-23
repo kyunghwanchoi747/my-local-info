@@ -5,7 +5,11 @@ summary: 3~5세 유치원생 자녀를 둔 가정을 위한 유아학비 및 방
 category: 정보
 tags: [유아학비, 누리과정, 유치원지원, 육아정보, 학비혜택]
 link: https://www.gov.kr/portal/rcvfvrSvc/dtlEx/000000465790
+image: https://images.pexels.com/photos/12585867/pexels-photo-12585867.jpeg?auto=compress&cs=tinysrgb&h=650&w=940
 ---
+
+![preschool](https://images.pexels.com/photos/12585867/pexels-photo-12585867.jpeg?auto=compress&cs=tinysrgb&h=650&w=940)
+
 
 안녕하세요, 육아에 지친 부모님들! 매일매일 우리 아이의 성장과 행복을 위해 고군분투하시는 모든 분들께 힘이 되는 소식을 들고 왔습니다. 바로 '유아학비 (누리과정) 지원' 사업인데요, 우리 아이 유치원 학비 부담을 덜어줄 아주 반가운 혜택이랍니다!
 
