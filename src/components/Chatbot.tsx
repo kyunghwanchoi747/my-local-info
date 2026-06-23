@@ -15,9 +15,11 @@ export default function Chatbot() {
     {
       id: "welcome",
       sender: "bot",
-      text: "안녕하세요! 성남시 생활 정보 AI 상담원입니다. 아래 질문 버튼을 클릭하시면 친절하게 안내해 드리겠습니다.",
+      text: "안녕하세요! 성남시봇입니다. 아래 질문 버튼을 클릭하거나 직접 질문을 입력하시면 답변해 드리겠습니다.",
     },
   ]);
+  const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // 자동 스크롤
@@ -25,25 +27,76 @@ export default function Chatbot() {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages, isOpen]);
+  }, [messages, isOpen, isLoading]);
 
+  // 버튼형 고정 답변 처리
   const handleQuestionClick = (question: string, answer: string) => {
     const userMessageId = `user-${Date.now()}`;
     const botMessageId = `bot-${Date.now()}`;
 
-    // 1. 유저 질문 추가
     setMessages((prev) => [
       ...prev,
       { id: userMessageId, sender: "user", text: question },
     ]);
 
-    // 2. 약간의 딜레이를 주어 AI 답변이 출력되도록 함 (타이핑 느낌 제공)
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
         { id: botMessageId, sender: "bot", text: answer },
       ]);
     }, 400);
+  };
+
+  // 실시간 AI 답변 호출 함수
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputValue.trim() || isLoading) return;
+
+    const userText = inputValue;
+    const userMessageId = `user-${Date.now()}`;
+    setMessages((prev) => [
+      ...prev,
+      { id: userMessageId, sender: "user", text: userText },
+    ]);
+    setInputValue("");
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: userText }),
+      });
+
+      if (!response.ok) {
+        throw new Error("서버와의 통신이 실패했습니다.");
+      }
+
+      const data = await response.json();
+      const botMessageId = `bot-${Date.now()}`;
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: botMessageId,
+          sender: "bot",
+          text: data.response || "죄송합니다. 답변을 생성하지 못했습니다.",
+        },
+      ]);
+    } catch (error: any) {
+      const botMessageId = `bot-${Date.now()}`;
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: botMessageId,
+          sender: "bot",
+          text: `오류가 발생했습니다: ${error.message || "알 수 없는 에러"}`,
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -58,18 +111,18 @@ export default function Chatbot() {
         max-md:fixed max-md:inset-0 max-md:w-full max-md:h-full max-md:max-w-full max-md:max-h-full max-md:rounded-none max-md:bottom-0 max-md:right-0`}
       >
         {/* 상단 헤더 */}
-        <div className="bg-blue-600 text-white px-4 py-4 flex justify-between items-center shrink-0">
+        <div className="bg-orange-500 text-white px-4 py-4 flex justify-between items-center shrink-0">
           <div className="flex items-center space-x-2">
             <div className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse"></div>
             <div>
-              <h3 className="font-bold text-sm">AI 상담원</h3>
-              <p className="text-[11px] text-blue-100">온라인 상태</p>
+              <h3 className="font-bold text-sm">성남시봇</h3>
+              <p className="text-[11px] text-orange-100">온라인 상태</p>
             </div>
           </div>
           {/* 닫기 버튼 */}
           <button
             onClick={() => setIsOpen(false)}
-            className="p-1 rounded-full hover:bg-blue-700 transition-colors"
+            className="p-1 rounded-full hover:bg-orange-600 transition-colors"
             aria-label="채팅창 닫기"
           >
             <svg
@@ -98,14 +151,14 @@ export default function Chatbot() {
               }`}
             >
               {msg.sender === "bot" && (
-                <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-2 shrink-0 text-xs font-bold">
-                  AI
+                <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mr-2 shrink-0 text-xs font-bold">
+                  봇
                 </div>
               )}
               <div
                 className={`max-w-[75%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
                   msg.sender === "user"
-                    ? "bg-blue-600 text-white rounded-tr-none"
+                    ? "bg-orange-500 text-white rounded-tr-none"
                     : "bg-white text-gray-800 border border-gray-100 rounded-tl-none shadow-sm"
                 }`}
               >
@@ -113,61 +166,70 @@ export default function Chatbot() {
               </div>
             </div>
           ))}
+
+          {/* 로딩 스피너 */}
+          {isLoading && (
+            <div className="flex justify-start">
+              <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mr-2 shrink-0 text-xs font-bold">
+                봇
+              </div>
+              <div className="bg-white text-gray-800 border border-gray-100 rounded-2xl rounded-tl-none px-4 py-3 shadow-sm flex items-center space-x-1">
+                <span className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
+                <span className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
+                <span className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
+              </div>
+            </div>
+          )}
           <div ref={messagesEndRef} />
         </div>
 
         {/* 질문 추천 버튼 영역 */}
         <div className="p-3 bg-white border-t border-gray-100 shrink-0">
-          <p className="text-xs text-gray-400 mb-2 pl-1">자주 묻는 질문</p>
-          <div className="flex flex-col gap-1.5 max-h-[140px] overflow-y-auto pr-1">
+          <p className="text-xs text-gray-400 mb-1.5 pl-1">자주 묻는 질문</p>
+          <div className="flex flex-col gap-1.5 max-h-[100px] overflow-y-auto pr-1">
             {chatData.map((item, index) => (
               <button
                 key={index}
                 onClick={() => handleQuestionClick(item.question, item.answer)}
-                className="w-full text-left px-3 py-2 bg-gray-50 hover:bg-blue-50 hover:text-blue-600 text-gray-700 text-xs rounded-xl border border-gray-100 transition-colors truncate"
+                className="w-full text-left px-3 py-1.5 bg-gray-50 hover:bg-orange-50 hover:text-orange-600 text-gray-700 text-xs rounded-xl border border-gray-100 transition-colors truncate"
               >
                 {item.question}
               </button>
             ))}
           </div>
         </div>
+
+        {/* 메시지 직접 입력창 */}
+        <form onSubmit={handleSendMessage} className="p-3 bg-white border-t border-gray-100 flex gap-2 shrink-0">
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="성남시봇에게 물어보세요..."
+            disabled={isLoading}
+            className="flex-1 px-4 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-orange-500 disabled:bg-gray-50 disabled:text-gray-400"
+          />
+          <button
+            type="submit"
+            disabled={isLoading || !inputValue.trim()}
+            className="px-4 py-2 bg-orange-500 text-white rounded-xl text-sm font-semibold hover:bg-orange-600 active:scale-95 disabled:bg-gray-200 disabled:text-gray-400 transition-all cursor-pointer"
+          >
+            전송
+          </button>
+        </form>
       </div>
 
       {/* 플로팅 버튼 */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-xl hover:bg-blue-700 transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
+        className="w-14 h-14 rounded-full flex items-center justify-center shadow-xl hover:scale-110 active:scale-95 cursor-pointer overflow-hidden border-2 border-orange-500 bg-white transition-all duration-300"
         aria-label="챗봇 열기"
       >
-        {isOpen ? (
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        ) : (
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-            />
-          </svg>
-        )}
+        <img
+          src="/chatbot-button.jpg"
+          alt="성남시봇 열기"
+          className="w-full h-full object-cover"
+        />
       </button>
     </div>
   );
