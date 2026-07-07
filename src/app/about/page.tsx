@@ -1,61 +1,36 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Header, Footer } from "@/components/HeaderFooter";
+import { siteConfig } from "@/lib/site.config";
 
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title: "서비스 소개 | 성남시 생활 정보",
-  description: "성남시 생활 정보 서비스의 기획 의도, 데이터 출처 및 운영 방식을 소개합니다.",
-  openGraph: {
-    title: "서비스 소개 | 성남시 생활 정보",
-    description: "성남시 생활 정보 서비스의 기획 의도, 데이터 출처 및 운영 방식을 소개합니다.",
-    url: "https://my-local-info-b82.pages.dev/about/",
-  },
+  title: `서비스 소개 - ${siteConfig.siteName}`,
+  description: `${siteConfig.siteName} 서비스의 기획 의도, 데이터 출처 및 운영 방식을 소개합니다.`,
 };
 
 export default function AboutPage() {
   return (
     <div className="bg-slate-50/40 min-h-screen text-slate-800 font-sans flex flex-col justify-between">
-      {/* 상단 헤더 */}
-      <header className="bg-white border-b border-blue-100 sticky top-0 z-10 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 py-5 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl">🏡</span>
-            <div>
-              <Link href="/">
-                <span className="text-2xl font-bold text-blue-900 tracking-tight cursor-pointer">성남시 생활 정보</span>
-              </Link>
-              <p className="text-xs text-blue-700/80 mt-0.5">우리 동네의 생생한 축제와 맞춤 혜택을 전해드려요</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-6">
-            <nav className="flex gap-4 text-sm font-bold">
-              <Link href="/" className="text-slate-600 hover:text-blue-900 transition">
-                홈
-              </Link>
-              <Link href="/blog/" className="text-slate-600 hover:text-blue-900 transition">
-                블로그
-              </Link>
-              <Link href="/about/" className="text-blue-900 border-b-2 border-blue-900 pb-1 transition">
-                소개
-              </Link>
-            </nav>
-            <div className="hidden sm:block">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                매일 아침 7시 자동 업데이트
-              </span>
-            </div>
-          </div>
-        </div>
-      </header>
+      
+      {/* 헤더 */}
+      <Header />
 
       {/* 메인 콘텐츠 영역 */}
       <main className="max-w-3xl mx-auto px-4 py-12 flex-1 w-full">
+        
+        {/* 브레드크럼 */}
+        <nav className="text-sm text-slate-500 mb-6">
+          <Link href="/" className="hover:text-blue-600 transition">홈</Link>
+          <span className="mx-2">&gt;</span>
+          <span className="text-slate-700 font-medium">서비스 소개</span>
+        </nav>
+
         <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-blue-100/70 space-y-8">
           <div className="text-center pb-6 border-b border-slate-100">
-            <h2 className="text-3xl font-extrabold text-blue-950 mb-3">🏡 서비스 소개</h2>
-            <p className="text-slate-600 max-w-lg mx-auto text-sm md:text-base">
+            <h1 className="text-3xl font-extrabold text-blue-950 mb-3">🏡 서비스 소개</h1>
+            <p className="text-slate-600 max-w-lg mx-auto text-sm">
               성남시 주민들을 위한 맞춤형 생활 정보 제공 서비스의 기획 의도와 기술적 운영 방식을 투명하게 밝힙니다.
             </p>
           </div>
@@ -101,30 +76,11 @@ export default function AboutPage() {
               </p>
             </section>
           </div>
-
-          <div className="pt-6 border-t border-slate-100 flex justify-center">
-            <Link 
-              href="/"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl transition shadow-sm"
-            >
-              홈으로 이동하여 혜택 살펴보기
-            </Link>
-          </div>
         </div>
       </main>
 
-      {/* 하단 푸터 */}
-      <footer className="bg-slate-950 text-slate-400 text-xs py-8 border-t border-slate-900 mt-12">
-        <div className="max-w-6xl mx-auto px-4 text-center space-y-2">
-          <p>© 2026 우리 동네 생활 정보. All rights reserved.</p>
-          <p>
-            데이터 출처: 공공데이터포털(data.go.kr) Open API | 본 사이트는 구글 애드센스 및 쿠팡 파트너스 활동의 일환으로 수수료를 제공받을 수 있습니다.
-          </p>
-          <p className="text-slate-500 pt-1">
-            마지막 정보 업데이트: <span className="font-mono text-slate-400">2026-06-06</span>
-          </p>
-        </div>
-      </footer>
+      {/* 푸터 */}
+      <Footer />
     </div>
   );
 }

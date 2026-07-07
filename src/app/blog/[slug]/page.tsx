@@ -5,6 +5,8 @@ import remarkGfm from "remark-gfm";
 import { getPostData, getAllPostSlugs } from "@/lib/posts";
 import type { Metadata } from "next";
 import AdBanner from "@/components/AdBanner";
+import { Header, Footer } from "@/components/HeaderFooter";
+import { siteConfig } from "@/lib/site.config";
 
 interface PostParams {
   params: Promise<{
@@ -26,12 +28,12 @@ export async function generateMetadata({ params }: PostParams): Promise<Metadata
     return {};
   }
   return {
-    title: `${post.title} | 성남시 생활 정보`,
+    title: `${post.title} | ${siteConfig.siteName}`,
     description: post.summary,
     openGraph: {
-      title: `${post.title} | 성남시 생활 정보`,
+      title: `${post.title} | ${siteConfig.siteName}`,
       description: post.summary,
-      url: `https://my-local-info-b82.pages.dev/blog/${slug}/`,
+      url: `${siteConfig.siteUrl}/blog/${slug}/`,
       type: "article",
       publishedTime: post.date,
     },
@@ -53,15 +55,16 @@ export default async function BlogPostPage({ params }: PostParams) {
     "datePublished": post.date,
     "description": post.summary,
     "author": {
-      "@type": "Organization",
-      "name": "성남시 생활 정보"
+      "@type": "Person",
+      "name": siteConfig.owner.name,
+      "url": `${siteConfig.siteUrl}/author/`
     },
     "publisher": {
       "@type": "Organization",
-      "name": "성남시 생활 정보",
+      "name": siteConfig.siteName,
       "logo": {
         "@type": "ImageObject",
-        "url": "https://my-local-info-b82.pages.dev/favicon.ico"
+        "url": `${siteConfig.siteUrl}/favicon.ico`
       }
     }
   };
@@ -72,48 +75,21 @@ export default async function BlogPostPage({ params }: PostParams) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(postJsonLd) }}
       />
-      {/* 상단 헤더 */}
-      <header className="bg-white border-b border-blue-100 sticky top-0 z-10 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 py-5 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl">🏡</span>
-            <div>
-              <Link href="/">
-                <span className="text-2xl font-bold text-blue-900 tracking-tight cursor-pointer">성남시 생활 정보</span>
-              </Link>
-              <p className="text-xs text-blue-700/80 mt-0.5">우리 동네의 생생한 축제와 맞춤 혜택을 전해드려요</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-6">
-            <nav className="flex gap-4 text-sm font-bold">
-              <Link href="/" className="text-slate-600 hover:text-blue-900 transition">
-                홈
-              </Link>
-              <Link href="/blog/" className="text-blue-900 border-b-2 border-blue-900 pb-1 transition">
-                블로그
-              </Link>
-              <Link href="/about/" className="text-slate-600 hover:text-blue-900 transition">
-                소개
-              </Link>
-            </nav>
-            <div className="hidden sm:block">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                매일 아침 7시 자동 업데이트
-              </span>
-            </div>
-          </div>
-        </div>
-      </header>
+      
+      {/* 헤더 */}
+      <Header />
 
       {/* 메인 콘텐츠 영역 */}
       <main className="max-w-3xl mx-auto px-4 py-10 flex-1 w-full">
-        {/* 뒤로가기 버튼 */}
-        <Link href="/blog/">
-          <span className="inline-flex items-center text-sm font-semibold text-blue-900 hover:text-blue-700 mb-6 cursor-pointer gap-1">
-            ← 목록으로 돌아가기
-          </span>
-        </Link>
+        
+        {/* 브레드크럼 */}
+        <nav className="text-sm text-slate-500 mb-6">
+          <Link href="/" className="hover:text-blue-600 transition">홈</Link>
+          <span className="mx-2">&gt;</span>
+          <Link href="/blog/" className="hover:text-blue-600 transition">블로그</Link>
+          <span className="mx-2">&gt;</span>
+          <span className="text-slate-700 font-medium line-clamp-1">{post.title}</span>
+        </nav>
 
         {/* 블로그 상세 아티클 */}
         <article className="bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-blue-100/70">
@@ -131,10 +107,10 @@ export default async function BlogPostPage({ params }: PostParams) {
                 최종 업데이트: {post.date}
               </span>
             </div>
-            <h1 className="text-2xl md:text-4xl font-extrabold text-slate-900 leading-tight">
+            <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight">
               {post.title}
             </h1>
-            <p className="text-slate-500 mt-4 text-sm md:text-base leading-relaxed border-l-4 border-blue-400 pl-4 py-1">
+            <p className="text-slate-505 mt-4 text-sm md:text-base leading-relaxed border-l-4 border-blue-400 pl-4 py-1">
               {post.summary}
             </p>
           </header>
@@ -171,39 +147,52 @@ export default async function BlogPostPage({ params }: PostParams) {
                 rel="noopener noreferrer"
                 className="block text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition shadow-sm"
               >
-                공식 사이트에서 자세히 보기 →
+                공식 관공서 상세안내 보러가기 →
               </a>
             )}
 
-            {/* 출처 및 AI 생성 정보 공개 (E-E-A-T) */}
+            {/* 출처 및 AI 생성 정보 공개 (E-E-A-T 신뢰도 구축) */}
             <div className="bg-slate-50 rounded-xl p-4 text-xs text-slate-600 space-y-2 mt-6 border border-slate-100">
               <p className="font-semibold text-slate-800">ℹ️ 출처 및 안내</p>
               {post.link && (
                 <p>
-                  🔗 <strong>원문 출처:</strong>{" "}
+                  🔗 <strong>행정포털 원문 출처:</strong>{" "}
                   <a href={post.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline break-all">
                     {post.link}
                   </a>
                 </p>
               )}
-              <p>🤖 이 글은 공공데이터포털(data.go.kr)의 정보를 바탕으로 AI가 작성하였습니다. 정확한 내용은 원문 링크를 통해 확인해주세요.</p>
+              <p>🤖 이 글은 공공데이터포털(data.go.kr)의 정보를 바탕으로 시민들의 쉬운 이해를 위해 AI가 초안을 돕고 운영자가 검수한 글입니다.</p>
             </div>
+
+            {/* 운영자/편집자 박스 추가 (요구사항) */}
+            <div className="bg-slate-50/50 border border-slate-100 rounded-xl p-6 flex flex-col sm:flex-row gap-4 items-center sm:items-start mt-6">
+              <div className="w-12 h-12 rounded-full bg-blue-900 text-white flex items-center justify-center text-lg font-bold flex-shrink-0">
+                최
+              </div>
+              <div className="flex-1 text-center sm:text-left">
+                <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                  <span className="font-bold text-slate-900">글 작성 / 편집자: {siteConfig.owner.name}</span>
+                  <span className="text-xxs text-slate-400">정보 큐레이터</span>
+                </div>
+                <p className="text-xs text-slate-600 leading-relaxed mb-2">
+                  {siteConfig.owner.bio}
+                </p>
+                <Link 
+                  href="/author/" 
+                  className="text-xs font-bold text-blue-900 hover:underline inline-block"
+                >
+                  필자의 다른 연재 칼럼 더보기 &rarr;
+                </Link>
+              </div>
+            </div>
+
           </div>
         </article>
       </main>
 
-      {/* 하단 푸터 */}
-      <footer className="bg-slate-950 text-slate-400 text-xs py-8 border-t border-slate-900 mt-12">
-        <div className="max-w-6xl mx-auto px-4 text-center space-y-2">
-          <p>© 2026 우리 동네 생활 정보. All rights reserved.</p>
-          <p>
-            데이터 출처: 공공데이터포털(data.go.kr) Open API | 본 사이트는 구글 애드센스 및 쿠팡 파트너스 활동의 일환으로 수수료를 제공받을 수 있습니다.
-          </p>
-          <p className="text-slate-500 pt-1">
-            마지막 정보 업데이트: <span className="font-mono text-slate-400">2026-06-03</span>
-          </p>
-        </div>
-      </footer>
+      {/* 푸터 */}
+      <Footer />
     </div>
   );
 }

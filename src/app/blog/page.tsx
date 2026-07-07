@@ -1,51 +1,36 @@
 import Link from "next/link";
 import { getSortedPostsData } from "@/lib/posts";
+import { Header, Footer } from "@/components/HeaderFooter";
+import { siteConfig } from "@/lib/site.config";
+
+export const metadata = {
+  title: `생활 정보 블로그 - ${siteConfig.siteName}`,
+  description: `${siteConfig.siteName}의 모든 유익한 정보와 복지 혜택 안내 글 모음입니다.`,
+};
 
 export default function BlogList() {
   const posts = getSortedPostsData();
 
   return (
     <div className="bg-slate-50/40 min-h-screen text-slate-800 font-sans flex flex-col justify-between">
-      {/* 상단 헤더 */}
-      <header className="bg-white border-b border-blue-100 sticky top-0 z-10 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 py-5 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl">🏡</span>
-            <div>
-              <Link href="/">
-                <span className="text-2xl font-bold text-blue-900 tracking-tight cursor-pointer">성남시 생활 정보</span>
-              </Link>
-              <p className="text-xs text-blue-700/80 mt-0.5">우리 동네의 생생한 축제와 맞춤 혜택을 전해드려요</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-6">
-            <nav className="flex gap-4 text-sm font-bold">
-              <Link href="/" className="text-slate-600 hover:text-blue-900 transition">
-                홈
-              </Link>
-              <Link href="/blog/" className="text-blue-900 border-b-2 border-blue-900 pb-1 transition">
-                블로그
-              </Link>
-              <Link href="/about/" className="text-slate-600 hover:text-blue-900 transition">
-                소개
-              </Link>
-            </nav>
-            <div className="hidden sm:block">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                매일 아침 7시 자동 업데이트
-              </span>
-            </div>
-          </div>
-        </div>
-      </header>
+      
+      {/* 헤더 */}
+      <Header />
 
       {/* 메인 콘텐츠 영역 */}
       <main className="max-w-4xl mx-auto px-4 py-10 flex-1 w-full">
+        
+        {/* 브레드크럼 */}
+        <nav className="text-sm text-slate-500 mb-6">
+          <Link href="/" className="hover:text-blue-600 transition">홈</Link>
+          <span className="mx-2">&gt;</span>
+          <span className="text-slate-700 font-medium">블로그</span>
+        </nav>
+
         <div className="mb-10 text-center">
-          <h2 className="text-3xl font-extrabold text-blue-950 mb-3">📰 동네 정보 블로그</h2>
-          <p className="text-slate-600 max-w-lg mx-auto">
-            성남시의 최신 트렌드, 공공 혜택 백서, 축제 후기 등 유익한 로컬 스토리들을 모아보세요.
+          <h1 className="text-3xl font-extrabold text-blue-950 mb-3">📰 동네 생활 정보 블로그</h1>
+          <p className="text-slate-600 max-w-lg mx-auto text-sm">
+            성남시의 최신 복지 혜택 백서, 축제 및 행사 등 실생활에 유용한 이야기들을 모두 모았습니다.
           </p>
         </div>
 
@@ -93,7 +78,7 @@ export default function BlogList() {
 
                   <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-100">
                     <div className="flex flex-wrap gap-1.5">
-                      {post.tags.map((tag) => (
+                      {post.tags && post.tags.map((tag) => (
                         <span
                           key={tag}
                           className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-md"
@@ -104,7 +89,7 @@ export default function BlogList() {
                     </div>
                     <Link href={`/blog/${post.slug}/`}>
                       <span className="text-sm font-bold text-blue-600 hover:text-blue-800 cursor-pointer flex items-center gap-1">
-                        자세히 읽기 →
+                        자세히 읽기 &rarr;
                       </span>
                     </Link>
                   </div>
@@ -115,18 +100,8 @@ export default function BlogList() {
         )}
       </main>
 
-      {/* 하단 푸터 */}
-      <footer className="bg-slate-950 text-slate-400 text-xs py-8 border-t border-slate-900 mt-12">
-        <div className="max-w-6xl mx-auto px-4 text-center space-y-2">
-          <p>© 2026 우리 동네 생활 정보. All rights reserved.</p>
-          <p>
-            데이터 출처: 공공데이터포털(data.go.kr) Open API | 본 사이트는 구글 애드센스 및 쿠팡 파트너스 활동의 일환으로 수수료를 제공받을 수 있습니다.
-          </p>
-          <p className="text-slate-500 pt-1">
-            마지막 정보 업데이트: <span className="font-mono text-slate-400">2026-06-03</span>
-          </p>
-        </div>
-      </footer>
+      {/* 푸터 */}
+      <Footer />
     </div>
   );
 }

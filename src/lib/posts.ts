@@ -125,3 +125,98 @@ export function getPostData(slug: string): PostData | null {
     return null;
   }
 }
+
+// 칼럼 관련 폴더 및 인터페이스/함수 추가
+const columnsDirectory = path.join(process.cwd(), 'src/content/columns');
+
+export interface ColumnData {
+  slug: string;
+  title: string;
+  date: string;
+  summary: string;
+  author: string;
+  content?: string;
+  image?: string;
+}
+
+export function getSortedColumnsData(): ColumnData[] {
+  if (!fs.existsSync(columnsDirectory)) {
+    return [];
+  }
+
+  const fileNames = fs.readdirSync(columnsDirectory);
+  const allColumnsData = fileNames
+    .filter((fileName) => fileName.endsWith('.md'))
+    .map((fileName) => {
+      const slug = fileName.replace(/\.md$/, '');
+      const fullPath = path.join(columnsDirectory, fileName);
+      const fileContents = fs.readFileSync(fullPath, 'utf8');
+      const matterResult = matter(fileContents);
+
+      const rawDate = matterResult.data.date;
+      const dateStr = formatDate(rawDate);
+
+      return {
+        slug,
+        title: matterResult.data.title || '',
+        date: dateStr,
+        summary: matterResult.data.summary || '',
+        author: matterResult.data.author || '최경환',
+        content: matterResult.content,
+        image: matterResult.data.image || '',
+      } as ColumnData;
+    });
+
+  return allColumnsData.sort((a, b) => {
+    if (a.date < b.date) {
+      return 1;
+    } else if (a.date > b.date) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
+}
+
+export function getAllColumnSlugs() {
+  if (!fs.existsSync(columnsDirectory)) {
+    return [];
+  }
+  const fileNames = fs.readdirSync(columnsDirectory);
+  return fileNames
+    .filter((fileName) => fileName.endsWith('.md'))
+    .map((fileName) => {
+      return {
+        params: {
+          slug: fileName.replace(/\.md$/, ''),
+        },
+      };
+    });
+}
+
+export function getColumnData(slug: string): ColumnData | null {
+  try {
+    const fullPath = path.join(columnsDirectory, `${slug}.md`);
+    if (!fs.existsSync(fullPath)) {
+      return null;
+    }
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const matterResult = matter(fileContents);
+
+    const rawDate = matterResult.data.date;
+    const dateStr = formatDate(rawDate);
+
+    return {
+      slug,
+      title: matterResult.data.title || '',
+      date: dateStr,
+      summary: matterResult.data.summary || '',
+      author: matterResult.data.author || '최경환',
+      content: matterResult.content,
+      image: matterResult.data.image || '',
+    };
+  } catch (e) {
+    return null;
+  }
+}
+

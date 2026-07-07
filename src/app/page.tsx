@@ -1,8 +1,10 @@
 import localInfoData from "../../public/data/local-info.json";
 import Link from "next/link";
-import { getSortedPostsData } from "@/lib/posts";
+import { getSortedPostsData, getSortedColumnsData } from "@/lib/posts";
 import AdBanner from "@/components/AdBanner";
 import Chatbot from "@/components/Chatbot";
+import { Header, Footer } from "@/components/HeaderFooter";
+import { siteConfig } from "@/lib/site.config";
 
 interface InfoItem {
   id: string | number;
@@ -17,9 +19,15 @@ interface InfoItem {
   link: string;
 }
 
+export const metadata = {
+  title: `${siteConfig.siteName} - ${siteConfig.siteTagline}`,
+  description: `${siteConfig.siteName}은 성남시 공식 공공데이터를 기반으로 이웃분들께 실시간 행사, 혜택, 보조금 정보를 가장 친절하게 전달합니다.`,
+};
+
 export default function Home() {
   const items = localInfoData as InfoItem[];
   const posts = getSortedPostsData();
+  const columns = getSortedColumnsData();
   const events = items.filter((item) => item.category === "행사");
   const benefits = items.filter((item) => item.category === "혜택");
   
@@ -27,22 +35,18 @@ export default function Home() {
     const nameToCheck = (item.name || item.title || "").trim();
     if (!nameToCheck) return null;
     
-    // 1. 단순 포함 관계 확인
     let matched = posts.find(post => post.title.includes(nameToCheck) || nameToCheck.includes(post.title));
     if (matched) return matched;
     
-    // 2. 괄호 및 특수문자 제거 후 비교
     const cleanName = nameToCheck.replace(/\([^)]*\)/g, '').replace(/[^\w\sㄱ-ㅎㅏ-ㅣ가-힣]/g, ' ').trim();
     matched = posts.find(post => post.title.includes(cleanName) || cleanName.includes(post.title));
     if (matched) return matched;
     
-    // 3. 2글자 이상 단어들 중 공통 매칭되는 단어가 있는지 확인
     const words = cleanName.split(/\s+/).filter(w => w.length >= 2);
     if (words.length === 0) return null;
     
     return posts.find((post) => {
       const matchCount = words.filter(word => post.title.includes(word)).length;
-      // 단어가 여러 개면 최소 2개 단어 일치, 단어가 1개면 1개 일치
       return matchCount >= 2 || (words.length === 1 && matchCount === 1);
     }) || null;
   };
@@ -57,64 +61,88 @@ export default function Home() {
     return matchedPost?.image || null;
   };
 
-  const todayDateString = "2026-06-06"; // 로컬 시간 기준
-
   return (
     <div className="bg-slate-50/40 min-h-screen text-slate-800 font-sans flex flex-col justify-between">
-      {/* 상단 헤더 */}
-      <header className="bg-white border-b border-blue-100 sticky top-0 z-10 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 py-5 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl">🏡</span>
-            <div>
-              <Link href="/">
-                <span className="text-2xl font-bold text-blue-900 tracking-tight cursor-pointer">성남시 생활 정보</span>
-              </Link>
-              <p className="text-xs text-blue-700/80 mt-0.5">우리 동네의 생생한 축제와 맞춤 혜택을 전해드려요</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-6">
-            <nav className="flex gap-4 text-sm font-bold">
-              <Link href="/" className="text-blue-900 border-b-2 border-blue-900 pb-1 transition">
-                홈
-              </Link>
-              <Link href="/blog/" className="text-slate-600 hover:text-blue-900 transition">
-                블로그
-              </Link>
-              <Link href="/about/" className="text-slate-600 hover:text-blue-900 transition">
-                소개
-              </Link>
-            </nav>
-            <div className="hidden sm:block">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                매일 아침 7시 자동 업데이트
-              </span>
-            </div>
-          </div>
-        </div>
-      </header>
+      
+      {/* 헤더 */}
+      <Header />
 
       {/* 메인 콘텐츠 영역 */}
       <main className="max-w-6xl mx-auto px-4 py-8 flex-1 w-full">
-        {/* 상단 웰컴 배너 */}
+        {/* 상단 웰컴 히어로 배너 */}
         <section 
           className="relative rounded-2xl overflow-hidden p-8 md:p-12 text-white shadow-lg mb-10 bg-cover bg-center"
           style={{ backgroundImage: `url('https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&w=1200')` }}
         >
-          {/* 반투명 블랙 그라데이션 필터 overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-slate-900/40 z-0"></div>
           <div className="relative z-10 max-w-2xl">
             <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/30 text-blue-200 border border-blue-400/30 mb-4">
-              📍 우리 동네 실시간 소식
+              📍 성남시 10년 거주민의 밀착형 정보 가이드
             </span>
-            <h2 className="text-2xl md:text-4xl font-extrabold mb-3 tracking-tight leading-tight">🎉 오늘 우리 동네 소식은 어떨까요?</h2>
-            <p className="text-sm md:text-base text-slate-200 opacity-90 leading-relaxed">
-              공공데이터포털에서 실시간으로 수집한 성남시의 각종 혜택과 행사 소식입니다. 
-              놓치기 쉬운 청년 지원금부터 이번 주말 아이들과 함께 가볼 만한 축제 정보까지 한 곳에서 편리하게 확인해 보세요!
+            <h2 className="text-2xl md:text-4xl font-extrabold mb-3 tracking-tight leading-tight">
+              🏡 성남시 이웃들을 위한 알뜰 혜택과 행사 소식
+            </h2>
+            <p className="text-sm md:text-base text-slate-200 opacity-90 leading-relaxed mb-6">
+              공공데이터포털에서 수집한 정보를 가공하여 어려운 행정 용어를 알기 쉽게 풀어 설명합니다. 
+              놓치기 쉬운 청년 지원금부터 이번 주말 아이들과 가볼 만한 탄천 소식까지 한눈에 확인하세요!
             </p>
+            <div className="flex gap-3">
+              <Link 
+                href="/about/" 
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-5 rounded-lg text-sm transition"
+              >
+                서비스 기획 의도 보기
+              </Link>
+              <Link 
+                href="/author/" 
+                className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold py-2.5 px-5 rounded-lg text-sm transition"
+              >
+                운영자 소개 & 칼럼
+              </Link>
+            </div>
           </div>
         </section>
+
+        {/* 운영자 칼럼 섹션 (미리보기) */}
+        {columns.length > 0 && (
+          <section className="mb-12 bg-white rounded-2xl p-6 md:p-8 border border-slate-100 shadow-sm">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">✍️</span>
+                <h3 className="text-xl font-bold text-slate-950">최경환 운영자의 최근 칼럼</h3>
+              </div>
+              <Link 
+                href="/columns/" 
+                className="text-xs font-bold text-blue-900 hover:underline"
+              >
+                전체 칼럼 목록 보기 &rarr;
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {columns.slice(0, 3).map((col) => (
+                <div 
+                  key={col.slug}
+                  className="bg-slate-50/50 rounded-xl p-5 border border-slate-100/70 hover:shadow-sm transition flex flex-col justify-between"
+                >
+                  <div>
+                    <span className="text-xxs text-slate-400 font-semibold block mb-1">{col.date}</span>
+                    <h4 className="text-sm font-bold text-slate-900 mb-2 line-clamp-1 hover:text-blue-900">
+                      <Link href={`/columns/${col.slug}/`}>{col.title}</Link>
+                    </h4>
+                    <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed mb-4">{col.summary}</p>
+                  </div>
+                  <Link 
+                    href={`/columns/${col.slug}/`}
+                    className="text-xxs font-bold text-blue-900 hover:underline self-start"
+                  >
+                    전문 읽기 &rarr;
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* 이번 달 행사/축제 섹션 */}
         <section className="mb-12">
@@ -127,7 +155,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {events.map((event) => {
+            {events.slice(0, 6).map((event) => {
               const eventJsonLd = {
                 "@context": "https://schema.org",
                 "@type": "Event",
@@ -220,7 +248,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {benefits.map((benefit) => {
+            {benefits.slice(0, 6).map((benefit) => {
               const benefitJsonLd = {
                 "@context": "https://schema.org",
                 "@type": "GovernmentService",
@@ -293,18 +321,8 @@ export default function Home() {
         </section>
       </main>
 
-      {/* 하단 푸터 */}
-      <footer className="bg-slate-950 text-slate-400 text-xs py-8 border-t border-slate-900 mt-12">
-        <div className="max-w-6xl mx-auto px-4 text-center space-y-2">
-          <p>© 2026 우리 동네 생활 정보. All rights reserved.</p>
-          <p>
-            데이터 출처: 공공데이터포털(data.go.kr) Open API | 본 사이트는 구글 애드센스 및 쿠팡 파트너스 활동의 일환으로 수수료를 제공받을 수 있습니다.
-          </p>
-          <p className="text-slate-500 pt-1">
-            마지막 정보 업데이트: <span className="font-mono text-slate-400">{todayDateString}</span>
-          </p>
-        </div>
-      </footer>
+      {/* 푸터 */}
+      <Footer />
 
       {/* 챗봇 추가 */}
       <Chatbot />
