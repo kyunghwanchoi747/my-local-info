@@ -57,7 +57,7 @@ export default function RootLayout({
     ]
   };
 
-  const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_ID;
+  const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_ID || "ca-pub-3288215032789198";
   const isAdsenseEnabled = adsenseId && adsenseId !== "나중에_입력" && adsenseId.trim() !== "";
 
   return (
