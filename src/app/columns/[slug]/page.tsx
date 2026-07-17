@@ -88,7 +88,7 @@ export default async function ColumnDetailPage({ params }: Props) {
         </div>
 
         {/* 본문 에디터 렌더러 */}
-        <div className="prose prose-slate max-w-none prose-headings:font-bold prose-a:text-blue-600 hover:prose-a:text-blue-800 leading-relaxed text-slate-800">
+        <div className="prose prose-slate max-w-none break-words overflow-hidden prose-headings:font-bold prose-a:text-blue-600 hover:prose-a:text-blue-800 leading-relaxed text-slate-800">
           <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
             {column.content || ""}
           </ReactMarkdown>

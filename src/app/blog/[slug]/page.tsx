@@ -118,7 +118,7 @@ export default async function BlogPostPage({ params }: PostParams) {
           </header>
 
           {/* 마크다운 본문 */}
-          <div className="prose prose-blue max-w-none prose-headings:font-bold prose-a:text-blue-600 hover:prose-a:text-blue-800 leading-relaxed text-slate-700">
+          <div className="prose prose-blue max-w-none break-words overflow-hidden prose-headings:font-bold prose-a:text-blue-600 hover:prose-a:text-blue-800 leading-relaxed text-slate-700">
             <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
               {post.content || ""}
             </ReactMarkdown>
