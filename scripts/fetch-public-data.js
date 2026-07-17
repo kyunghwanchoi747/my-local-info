@@ -54,7 +54,8 @@ async function main() {
       filteredItems = items.filter(item => containsKeyword(item, '경기'));
     }
     if (filteredItems.length === 0) {
-      filteredItems = items;
+      console.log("오늘은 추가할 지역 항목이 없습니다.");
+      process.exit(0);
     }
 
     // 2단계: 기존 데이터와 비교
