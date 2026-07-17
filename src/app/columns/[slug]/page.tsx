@@ -56,7 +56,7 @@ export default async function ColumnDetailPage({ params }: Props) {
 
         <header className="mb-8 border-b border-slate-100 pb-6">
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 mb-4 border border-emerald-100">
-            최경환의 칼럼 코너
+            성나머의 칼럼 코너
           </span>
           <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight leading-snug mb-3">
             {column.title}

@@ -111,7 +111,7 @@ export default function Home() {
             <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
               <div className="flex items-center gap-2">
                 <span className="text-2xl"></span>
-                <h3 className="text-xl font-bold text-slate-950">최경환 운영자의 최근 칼럼</h3>
+                <h3 className="text-xl font-bold text-slate-950">성나머 운영자의 최근 칼럼</h3>
               </div>
               <Link 
                 href="/columns/" 

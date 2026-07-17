@@ -44,21 +44,21 @@ export default function AuthorHubPage() {
         title: "정보 중심의 디지털 골목길을 닦으며 느끼는 소회",
         date: "2026-07-05",
         summary: "동네 이웃들의 생생한 피드백을 통해 정보 사이트 운영의 본질적인 보람과 올바른 팩트 체크 원칙을 이야기합니다.",
-        author: "최경환"
+        author: "성나머"
       },
       {
         slug: "2026-07-03-seongnam-welfare-tips",
         title: "성남시 복지 혜택과 지원 정책 200% 활용하는 비결",
         date: "2026-07-03",
         summary: "아는 만큼 챙길 수 있는 성남시의 행정 지원과 누리과정, 청년 혜택을 놓치지 않고 꼼꼼하게 점검하는 노하우를 공개합니다.",
-        author: "최경환"
+        author: "성나머"
       },
       {
         slug: "2026-07-01-local-information-importance",
         title: "동네 정보의 가치와 생활 밀착형 사이트를 시작하며",
         date: "2026-07-01",
         summary: "대형 포털 사이트가 전하지 못하는 우리 골목, 우리 동네의 세심한 소식과 그것이 주는 삶의 변화에 대해 고찰합니다.",
-        author: "최경환"
+        author: "성나머"
       }
     ];
     setColumns(defaults);

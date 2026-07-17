@@ -2,11 +2,11 @@
 title: "성남시 복지 혜택과 지원 정책 200% 활용하는 비결"
 date: "2026-07-03"
 summary: "아는 만큼 챙길 수 있는 성남시의 행정 지원과 누리과정, 청년 혜택을 놓치지 않고 꼼꼼하게 점검하는 노하우를 공개합니다."
-author: "최경환"
+author: "성나머"
 image: "https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&w=1200"
 ---
 
-안녕하세요. 최경환입니다. 두 번째 칼럼으로 성남시의 <strong className="font-bold text-slate-900">복지 정책과 지원금</strong>을 슬기롭게 챙기는 저만의 점검 프로세스를 나누고자 합니다.
+안녕하세요. 성나머입니다. 두 번째 칼럼으로 성남시의 <strong className="font-bold text-slate-900">복지 정책과 지원금</strong>을 슬기롭게 챙기는 저만의 점검 프로세스를 나누고자 합니다.
 
 많은 분들이 복지 혜택이나 지원 정책은 저소득층이나 취약계층만을 위한 제도라고 오해하곤 합니다. 하지만 실상은 소득 요건과 무관한 <strong className="font-bold text-slate-900">아동/누리과정 지원</strong>, <strong className="font-bold text-slate-900">청년 자산 형성 지원</strong>, <strong className="font-bold text-slate-900">중장년 배움 카드</strong> 등 다양한 보편 복지가 성남시 내에 촘촘하게 존재합니다.
 

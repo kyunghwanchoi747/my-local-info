@@ -2,11 +2,11 @@
 title: "동네 정보의 가치와 생활 밀착형 사이트를 시작하며"
 date: "2026-07-01"
 summary: "대형 포털 사이트가 전하지 못하는 우리 골목, 우리 동네의 세심한 소식과 그것이 주는 삶의 변화에 대해 고찰합니다."
-author: "최경환"
+author: "성나머"
 image: "https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&w=1200"
 ---
 
-안녕하세요, 성남시 인포메이션 운영자 <strong className="font-bold text-slate-900">최경환</strong>입니다.
+안녕하세요, 성남시 인포메이션 운영자 <strong className="font-bold text-slate-900">성나머</strong>입니다.
 
 인터넷 검색창에 검색을 해보면 수많은 정보들이 쏟아져 나오지만, 정작 내가 사는 바로 앞 골목의 축제 일정이나, 성남시 복지관에서 제공하는 특정 연령층을 위한 소소한 배움 혜택들은 찾기 어렵다는 생각을 한 적이 많으실 겁니다.
 

@@ -161,7 +161,7 @@ export function getSortedColumnsData(): ColumnData[] {
         title: matterResult.data.title || '',
         date: dateStr,
         summary: matterResult.data.summary || '',
-        author: matterResult.data.author || '최경환',
+        author: matterResult.data.author || '성나머',
         content: matterResult.content,
         image: matterResult.data.image || '',
       } as ColumnData;
@@ -211,7 +211,7 @@ export function getColumnData(slug: string): ColumnData | null {
       title: matterResult.data.title || '',
       date: dateStr,
       summary: matterResult.data.summary || '',
-      author: matterResult.data.author || '최경환',
+      author: matterResult.data.author || '성나머',
       content: matterResult.content,
       image: matterResult.data.image || '',
     };

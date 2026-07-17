@@ -21,7 +21,7 @@ export default function PrivacyPage() {
         
         <div className="space-y-6 text-sm text-slate-600 leading-relaxed">
           <p>
-            {siteConfig.siteName}(이하 &quot;본 사이트&quot;)는 운영자 최경환이 운영하며, 이용자의 개인정보를 매우 중요하게 생각합니다. 본 방침은 이용자가 사이트를 안심하고 이용할 수 있도록, 어떤 정보가 수집되고 어떻게 관리되는지 투명하게 알려드리기 위해 작성되었습니다.
+            {siteConfig.siteName}(이하 &quot;본 사이트&quot;)는 운영자 성나머이 운영하며, 이용자의 개인정보를 매우 중요하게 생각합니다. 본 방침은 이용자가 사이트를 안심하고 이용할 수 있도록, 어떤 정보가 수집되고 어떻게 관리되는지 투명하게 알려드리기 위해 작성되었습니다.
           </p>
 
           <h2 className="text-lg font-bold text-slate-900 mt-8 mb-3">1. 수집하는 개인정보 항목 및 방법</h2>

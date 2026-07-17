@@ -8,7 +8,7 @@ export const siteConfig = {
     subColor: "#10b981",  // Emerald
   },
   owner: {
-    name: "최경환",
+    name: "성나머",
     bio: "성남시에서 40년 이상 거주하며, 이웃들에게 꼭 필요한 정보를 선별해 알기 쉽게 설명해 드리는 정보 큐레이터입니다.",
     address: "경기도 성남시 분당구 판교백현로 65",
     phone: "07029225471",

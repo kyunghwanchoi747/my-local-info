@@ -93,7 +93,7 @@ export default async function CategoryDetailPage({ params }: Props) {
                 </div>
 
                 <div className="pt-4 border-t border-slate-50 flex items-center justify-between">
-                  <span className="text-xs text-slate-400">작성자: 최경환</span>
+                  <span className="text-xs text-slate-400">작성자: 성나머</span>
                   <Link 
                     href={`/blog/${post.slug}/`}
                     className="text-xs font-bold text-blue-900 hover:underline flex items-center gap-1"

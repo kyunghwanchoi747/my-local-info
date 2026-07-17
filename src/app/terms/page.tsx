@@ -21,7 +21,7 @@ export default function TermsPage() {
         
         <div className="space-y-6 text-sm text-slate-600 leading-relaxed">
           <p>
-            {siteConfig.siteName}(이하 &quot;본 사이트&quot;)는 운영자 최경환이 성남시민 및 지역 정보가 필요한 일반 사용자를 위해 무상으로 제공하는 정보 전달 플랫폼입니다. 본 약관은 본 사이트의 정보 제공 서비스 이용과 관련한 권리와 책임 조항을 안내합니다.
+            {siteConfig.siteName}(이하 &quot;본 사이트&quot;)는 운영자 성나머이 성남시민 및 지역 정보가 필요한 일반 사용자를 위해 무상으로 제공하는 정보 전달 플랫폼입니다. 본 약관은 본 사이트의 정보 제공 서비스 이용과 관련한 권리와 책임 조항을 안내합니다.
           </p>
 
           <h2 className="text-lg font-bold text-slate-900 mt-8 mb-3">1. 목적 및 서비스 성격</h2>
@@ -45,7 +45,7 @@ export default function TermsPage() {
 
           <h2 className="text-lg font-bold text-slate-900 mt-8 mb-3">4. 저작권 조항</h2>
           <p>
-            본 사이트에 게재된 정보 안내 텍스트, 운영자 칼럼, 독자적 요약 콘텐츠는 창작물로서 운영자 최경환에게 저작권이 귀속됩니다. 영리 목적의 무단 배포는 금지하며, 비영리 목적의 단순 공유 시에는 출처(사이트 링크)를 반드시 표기해주시기 바랍니다.
+            본 사이트에 게재된 정보 안내 텍스트, 운영자 칼럼, 독자적 요약 콘텐츠는 창작물로서 운영자 성나머에게 저작권이 귀속됩니다. 영리 목적의 무단 배포는 금지하며, 비영리 목적의 단순 공유 시에는 출처(사이트 링크)를 반드시 표기해주시기 바랍니다.
           </p>
 
           <h2 className="text-lg font-bold text-slate-900 mt-8 mb-3">5. 약관의 개정 및 문의</h2>

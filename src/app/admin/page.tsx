@@ -135,9 +135,9 @@ function AdminContent() {
 
   const loadDefaultColumns = () => {
     const defaults: ColumnItem[] = [
-      { slug: "2026-07-05-community-based-living", title: "정보 중심의 디지털 골목길을 닦으며 느끼는 소회", date: "2026-07-05", summary: "동네 이웃들의 피드백을 통해 정보 사이트 운영의 본질적인 보람과 올바른 팩트 체크 원칙을 이야기합니다.", author: "최경환" },
-      { slug: "2026-07-03-seongnam-welfare-tips", title: "성남시 복지 혜택과 지원 정책 200% 활용하는 비결", date: "2026-07-03", summary: "아는 만큼 챙길 수 있는 성남시의 행정 지원과 누리과정, 청년 혜택을 놓치지 않고 점검하는 노하우를 공유합니다.", author: "최경환" },
-      { slug: "2026-07-01-local-information-importance", title: "동네 정보의 가치와 생활 밀착형 사이트를 시작하며", date: "2026-07-01", summary: "대형 포털 사이트가 전하지 못하는 우리 골목, 우리 동네의 세심한 소식과 그것이 주는 삶의 변화에 대해 고찰합니다.", author: "최경환" }
+      { slug: "2026-07-05-community-based-living", title: "정보 중심의 디지털 골목길을 닦으며 느끼는 소회", date: "2026-07-05", summary: "동네 이웃들의 피드백을 통해 정보 사이트 운영의 본질적인 보람과 올바른 팩트 체크 원칙을 이야기합니다.", author: "성나머" },
+      { slug: "2026-07-03-seongnam-welfare-tips", title: "성남시 복지 혜택과 지원 정책 200% 활용하는 비결", date: "2026-07-03", summary: "아는 만큼 챙길 수 있는 성남시의 행정 지원과 누리과정, 청년 혜택을 놓치지 않고 점검하는 노하우를 공유합니다.", author: "성나머" },
+      { slug: "2026-07-01-local-information-importance", title: "동네 정보의 가치와 생활 밀착형 사이트를 시작하며", date: "2026-07-01", summary: "대형 포털 사이트가 전하지 못하는 우리 골목, 우리 동네의 세심한 소식과 그것이 주는 삶의 변화에 대해 고찰합니다.", author: "성나머" }
     ];
     setColumns(defaults);
     localStorage.setItem("columnsData", JSON.stringify(defaults));
@@ -898,7 +898,7 @@ function AdminContent() {
                   rows={12}
                   value={columnContent}
                   onChange={(e) => setColumnContent(e.target.value)}
-                  placeholder="운영자 최경환으로서 전하고자 하는 생각을 자유롭게 기록해 보세요."
+                  placeholder="운영자 성나머으로서 전하고자 하는 생각을 자유롭게 기록해 보세요."
                   className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-sm font-mono"
                 ></textarea>
               </div>
