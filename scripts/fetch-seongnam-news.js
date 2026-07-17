@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { PERSONA } = require('./persona');
 
 const postsDir = path.join(__dirname, '../src/content/posts');
 
@@ -174,13 +175,16 @@ async function generateBriefing(config) {
     ? `\n- 글의 맨 마지막 줄에 다음 문구를 그대로 추가해: "${config.footer}"`
     : '';
 
-  const prompt = `아래는 오늘 수집한 뉴스 ${recentNews.length}개의 제목 목록이야. 이 목록으로 뉴스 브리핑 블로그 글을 작성해줘.
+  const prompt = `${PERSONA}
+
+---
+
+아래는 오늘 수집한 뉴스 ${recentNews.length}개의 제목 목록이야. 이 목록으로 뉴스 브리핑 블로그 글을 작성해줘.
 
 뉴스 목록:
 ${newsListText}
 
 작성 규칙:
-- 차분한 존댓말로 쓰고, 광고 문구와 이모지는 절대 쓰지 마.
 - 매우 중요: 기사 본문 내용을 지어내지 마. 각 뉴스는 제목에서 알 수 있는 사실만 언급하고, 자세한 내용은 링크 기사에서 확인하라고 안내해.
 - 도입부는 오늘 브리핑을 여는 인사 2~3문장으로 시작해.
 - 각 뉴스마다: "## 뉴스 제목" 형식의 소제목을 쓰고, 그 아래에 이 소식이 성남 시민에게 어떤 의미인지 2~3문장으로 코멘트를 써.
@@ -188,7 +192,7 @@ ${newsListText}
 
 아래 형식으로만 출력하고 다른 텍스트는 붙이지 마:
 ---
-title: ${config.title}
+title: "${config.title}"
 date: ${config.date}
 summary: (오늘 브리핑을 요약하는 한 문장)
 category: ${config.category}

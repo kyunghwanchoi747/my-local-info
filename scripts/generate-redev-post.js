@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { PERSONA } = require('./persona');
 
 async function main() {
   const topicsPath = path.join(__dirname, '../public/data/redev-topics.json');
@@ -30,22 +31,24 @@ async function main() {
 
     const today = new Date().toISOString().split('T')[0];
 
-    const prompt = `아래 주제로 재건축·재개발 용어 해설 블로그 글을 작성해줘.
+    const prompt = `${PERSONA}
+
+---
+
+아래 주제로 재건축·재개발 용어 해설 블로그 글을 작성해줘.
 
 주제: ${topic}
 
 작성 규칙:
-- 차분한 존댓말로 쓰고, 광고 문구와 이모지는 절대 쓰지 마. 지어낸 개인 경험담도 금지야.
 - 오늘은 ${today}다. 계절이나 시기를 언급할 때는 반드시 이 날짜에 맞게 써.
 - 독자는 재건축 뉴스를 접했지만 용어가 낯선 분당·성남 주민이야. 어려운 용어는 풀어서 설명해.
 - 글 구조: 개념 정의 → 왜 중요한가 → 분당·성남 상황과의 연결 → 자주 묻는 질문 2~3개. 각 부분에 "## " 소제목을 붙여.
 - 분량은 1200자 이상.
-- 매우 중요: 부동산 투자 조언, 가격 전망, 특정 단지 추천은 절대 금지. 제도와 절차 설명만 해.
 - 글의 맨 마지막 줄에 반드시 다음 문구를 그대로 넣어: "재건축·재개발 관련 구체적 사항은 성남시청 및 국토교통부 공식 발표를 확인하시기 바랍니다."
 
 아래 형식으로 출력해줘. 반드시 이 형식만 출력하고 다른 텍스트는 없이:
 ---
-title: (주제를 담은 담백한 제목)
+title: "(주제를 담은 담백한 제목)"
 date: ${today}
 summary: (한 줄 요약)
 category: 재개발

@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { PERSONA } = require('./persona');
 
 async function main() {
   const localInfoPath = path.join(__dirname, '../public/data/local-info.json');
@@ -58,21 +59,27 @@ async function main() {
     const today = new Date().toISOString().split('T')[0];
     const itemText = JSON.stringify(latestItem, null, 2);
 
-    const prompt = `아래 공공서비스 정보를 바탕으로 블로그 글을 작성해줘.
+    const prompt = `${PERSONA}
+
+---
+
+아래 공공서비스 정보를 바탕으로 블로그 글을 작성해줘.
 
 정보:
 ${itemText}
 
+오늘은 ${today}다. 날짜·계절을 언급할 때 이 날짜에 맞게 써.
+
 아래 형식으로 출력해줘. 반드시 이 형식만 출력하고 다른 텍스트는 없이:
 ---
-title: (친근하고 흥미로운 제목)
+title: "(담백하고 명확한 제목. 과장 없이)"
 date: ${today}
 summary: (한 줄 요약)
 category: 정보
 tags: [태그1, 태그2, 태그3]
 ---
 
-(본문: 800자 이상, 친근한 블로그 톤, 추천 이유 3가지 포함, 신청 방법 안내)
+(본문: 800자 이상. 페르소나의 세 가지 질문(무엇이 달라지나 / 누가 챙겨야 하나 / 오늘 무엇을 하면 되나)에 각각 소제목을 붙여 답하고, 마지막에 신청 방법을 안내한 뒤 편집실 한줄평 블록을 넣어.)
 
 마지막 줄에 다음 형식으로 파일명과 사진 검색어를 출력해줘:
 FILENAME: YYYY-MM-DD-keyword
