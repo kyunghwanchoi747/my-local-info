@@ -38,6 +38,7 @@ jobs:
         run: node scripts/generate-blog-post.js
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
 
       - name: Commit and push changes
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'

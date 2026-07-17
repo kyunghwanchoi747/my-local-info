@@ -74,9 +74,9 @@ tags: [태그1, 태그2, 태그3]
 
 (본문: 800자 이상, 친근한 블로그 톤, 추천 이유 3가지 포함, 신청 방법 안내)
 
-마지막 줄에 다음 형식으로 파일명과 이미지 검색용 키워드를 출력해줘:
+마지막 줄에 다음 형식으로 파일명과 사진 검색어를 출력해줘:
 FILENAME: YYYY-MM-DD-keyword
-PEXELS_KEYWORD: (이 글에 가장 잘 어울리는 펙셀스 이미지 검색용 영단어 딱 1개, 예: concert, children, welfare, park 등)`;
+PHOTO: (글 주제를 대표하는 영어 사진 검색어 1~2단어. 사진 사이트에서 검색할 것이므로 구체적인 사물이나 풍경 단어로. 예: city park)`;
 
     const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`;
     
@@ -120,14 +120,14 @@ PEXELS_KEYWORD: (이 글에 가장 잘 어울리는 펙셀스 이미지 검색�
       targetFilename += '.md';
     }
 
-    // Pexels 검색 키워드 추출 (없을 경우 기본값 'nature')
-    const pexelsKeywordMatch = responseText.match(/PEXELS_KEYWORD:\s*([^\r\n]+)/i);
-    const pexelsKeyword = pexelsKeywordMatch ? pexelsKeywordMatch[1].trim() : 'nature';
+    // 사진 검색어(PHOTO:) 추출 (없으면 사진 없이 진행)
+    const photoMatch = responseText.match(/PHOTO:\s*([^\r\n]+)/i);
+    const photoKeyword = photoMatch ? photoMatch[1].trim() : '';
 
-    // FILENAME 및 PEXELS_KEYWORD 줄 제거 및 코드블록 정비
+    // FILENAME 및 PHOTO 줄 제거 및 코드블록 정비
     let postContent = responseText
       .replace(/FILENAME:\s*[^\r\n]+/gi, '')
-      .replace(/PEXELS_KEYWORD:\s*[^\r\n]+/gi, '')
+      .replace(/PHOTO:\s*[^\r\n]+/gi, '')
       .trim();
 
     if (postContent.startsWith('```markdown')) {
@@ -138,14 +138,18 @@ PEXELS_KEYWORD: (이 글에 가장 잘 어울리는 펙셀스 이미지 검색�
     postContent = postContent.trim();
 
     // 4단계: Pexels API 호출을 통해 어울리는 이미지 찾기
-    let imageUrl = '';
+    let photo = null;
     const pexelsApiKey = process.env.PEXELS_API_KEY;
-    
-    if (pexelsApiKey) {
+
+    if (!pexelsApiKey) {
+      console.log("PEXELS_API_KEY 환경변수가 설정되지 않아 이미지 검색을 생략합니다.");
+    } else if (!photoKeyword) {
+      console.log("응답에 PHOTO: 검색어가 없어 이미지 검색을 생략합니다.");
+    } else {
       try {
-        console.log(`Pexels 이미지 검색을 시작합니다. (검색어: ${pexelsKeyword})`);
-        const pexelsUrl = `https://api.pexels.com/v1/search?query=${encodeURIComponent(pexelsKeyword)}&per_page=1`;
-        
+        console.log(`Pexels 이미지 검색을 시작합니다. (검색어: ${photoKeyword})`);
+        const pexelsUrl = `https://api.pexels.com/v1/search?query=${encodeURIComponent(photoKeyword)}&per_page=1&orientation=landscape`;
+
         const responsePexels = await fetch(pexelsUrl, {
           headers: {
             'Authorization': pexelsApiKey
@@ -155,10 +159,10 @@ PEXELS_KEYWORD: (이 글에 가장 잘 어울리는 펙셀스 이미지 검색�
         if (responsePexels.ok) {
           const pexelsResult = await responsePexels.json();
           if (pexelsResult.photos && pexelsResult.photos.length > 0) {
-            imageUrl = pexelsResult.photos[0].src.large;
-            console.log(`Pexels 이미지를 매칭했습니다: ${imageUrl}`);
+            photo = pexelsResult.photos[0];
+            console.log(`Pexels 이미지를 매칭했습니다: ${photo.src.large}`);
           } else {
-            console.log(`Pexels에서 키워드 "${pexelsKeyword}"에 대한 검색 결과가 없습니다.`);
+            console.log(`Pexels에서 키워드 "${photoKeyword}"에 대한 검색 결과가 없습니다.`);
           }
         } else {
           console.log(`Pexels API 호출 오류: 상태코드 ${responsePexels.status}`);
@@ -166,22 +170,24 @@ PEXELS_KEYWORD: (이 글에 가장 잘 어울리는 펙셀스 이미지 검색�
       } catch (err) {
         console.log(`Pexels 이미지 가져오기 중 일시적 에러 발생 (생성을 계속 진행합니다): ${err.message}`);
       }
-    } else {
-      console.log("PEXELS_API_KEY 환경변수가 설정되지 않아 이미지 검색을 생략합니다.");
     }
 
-    // 5단계: 글에 이미지 주소 주입 (프론트매터 및 본문 맨 위)
-    if (imageUrl) {
+    // 5단계: 글에 이미지와 촬영자 출처 주입 (프론트매터 바로 아래, 본문 맨 위)
+    if (photo) {
+      const titleMatch = postContent.match(/^title:\s*(.+)$/m);
+      const postTitle = titleMatch ? titleMatch[1].trim() : photoKeyword;
+      const imageBlock = `![${postTitle}](${photo.src.large})\n*사진: [${photo.photographer}](${photo.photographer_url}), Pexels 제공*`;
+
       const parts = postContent.split('---');
       if (parts.length >= 3) {
         // 프론트매터에 image 속성 추가 (parts[1]은 대시 사이의 메타데이터 영역)
-        parts[1] = parts[1] + `image: ${imageUrl}\n`;
+        parts[1] = parts[1] + `image: ${photo.src.large}\n`;
         // 본문(parts[2]) 시작 지점에 이미지 마크다운 삽입
-        parts[2] = `\n\n![${pexelsKeyword}](${imageUrl})\n` + parts[2];
+        parts[2] = `\n\n${imageBlock}\n` + parts[2];
         postContent = parts.join('---');
       } else {
         // 예상 밖의 형식인 경우 본문 맨 위에 추가
-        postContent = `![${pexelsKeyword}](${imageUrl})\n\n` + postContent;
+        postContent = `${imageBlock}\n\n` + postContent;
       }
     }
 
