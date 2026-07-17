@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import { getPostData, getAllPostSlugs } from "@/lib/posts";
 import type { Metadata } from "next";
 import AdBanner from "@/components/AdBanner";
+import Comments from "@/components/Comments";
 import { Header, Footer } from "@/components/HeaderFooter";
 import { siteConfig } from "@/lib/site.config";
 
@@ -188,6 +189,13 @@ export default async function BlogPostPage({ params }: PostParams) {
             </div>
 
           </div>
+
+          {/* 댓글 (Cusdis) */}
+          <Comments
+            pageId={slug}
+            pageTitle={post.title}
+            pageUrl={`${siteConfig.siteUrl}/blog/${slug}/`}
+          />
         </article>
       </main>
 

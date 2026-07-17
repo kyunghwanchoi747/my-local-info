@@ -31,6 +31,7 @@ export default function PrivacyPage() {
           <ul className="list-disc pl-5 space-y-1 mt-2">
             <li>필수 항목: 성함 / 닉네임, 답변받으실 이메일 주소</li>
             <li>선택 항목: 문의 메시지에 포함된 기타 정보</li>
+            <li>댓글 작성 시 입력한 닉네임과 댓글 내용은 댓글 서비스 제공자(Cusdis)에 저장됩니다.</li>
           </ul>
 
           <h2 className="text-lg font-bold text-slate-900 mt-8 mb-3">2. 개인정보의 수집 및 이용 목적</h2>
