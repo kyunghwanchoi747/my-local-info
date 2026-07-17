@@ -21,7 +21,7 @@ export default function ColumnsPage() {
           <span className="text-slate-700 font-medium">칼럼</span>
         </nav>
 
-        <h1 className="text-3xl font-extrabold text-slate-900 mb-2 tracking-tight">✍️ 운영자 칼럼</h1>
+        <h1 className="text-3xl font-extrabold text-slate-900 mb-2 tracking-tight">운영자 칼럼</h1>
         <p className="text-slate-600 mb-10 leading-relaxed text-sm">
           {siteConfig.owner.name} 운영자의 개인적인 관점과 생생한 생활 팁을 나누는 소중한 연재 지면입니다. 
           일반적인 행정 나열식 정보보다 조금 더 따뜻하고 주관이 담긴 이야기를 공유합니다.
@@ -49,7 +49,7 @@ export default function ColumnsPage() {
                 )}
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2 text-xs font-semibold text-blue-800">
-                    <span>💡 칼럼 연재</span>
+                    <span>칼럼 연재</span>
                     <span className="text-slate-300">•</span>
                     <span className="text-slate-500">{column.date}</span>
                   </div>

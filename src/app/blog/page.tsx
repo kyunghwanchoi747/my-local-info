@@ -28,7 +28,7 @@ export default function BlogList() {
         </nav>
 
         <div className="mb-10 text-center">
-          <h1 className="text-3xl font-extrabold text-blue-950 mb-3">📰 동네 생활 정보 블로그</h1>
+          <h1 className="text-3xl font-extrabold text-blue-950 mb-3">동네 생활 정보 블로그</h1>
           <p className="text-slate-600 max-w-lg mx-auto text-sm">
             성남시의 최신 복지 혜택 백서, 축제 및 행사 등 실생활에 유용한 이야기들을 모두 모았습니다.
           </p>
@@ -36,7 +36,7 @@ export default function BlogList() {
 
         {posts.length === 0 ? (
           <div className="text-center py-20 bg-white rounded-2xl border border-blue-100 shadow-sm">
-            <span className="text-4xl">✍️</span>
+            <span className="text-4xl"></span>
             <h3 className="text-lg font-semibold text-slate-700 mt-4">아직 등록된 블로그 글이 없습니다</h3>
             <p className="text-sm text-slate-500 mt-1">새로운 유익한 소식들로 곧 찾아뵙겠습니다!</p>
           </div>

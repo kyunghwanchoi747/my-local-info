@@ -24,7 +24,7 @@ export default function SitemapPage() {
           <span className="text-slate-700 font-medium">사이트맵</span>
         </nav>
 
-        <h1 className="text-3xl font-extrabold text-slate-900 mb-4 tracking-tight">🗺️ HTML 사이트맵</h1>
+        <h1 className="text-3xl font-extrabold text-slate-900 mb-4 tracking-tight">HTML 사이트맵</h1>
         <p className="text-slate-600 mb-10 leading-relaxed text-sm">
           성남시 인포메이션에서 다루고 있는 모든 핵심 페이지와 발행물들의 목록입니다. 
           원하시는 카테고리나 최신 칼럼 정보를 아래 구조화된 목록을 통해 빠르게 탐색해 보세요.
@@ -35,7 +35,7 @@ export default function SitemapPage() {
           {/* 주요 사이트 메뉴 */}
           <div className="space-y-6">
             <div>
-              <h2 className="text-lg font-bold text-blue-900 border-b border-blue-100 pb-2 mb-3">📍 기본 서비스 페이지</h2>
+              <h2 className="text-lg font-bold text-blue-900 border-b border-blue-100 pb-2 mb-3">기본 서비스 페이지</h2>
               <ul className="space-y-2.5 text-sm font-medium">
                 <li><Link href="/" className="text-slate-700 hover:text-blue-600 transition">• 홈 화면 (실시간 소식)</Link></li>
                 <li><Link href="/about/" className="text-slate-700 hover:text-blue-600 transition">• 사이트 소개 (About)</Link></li>
@@ -49,7 +49,7 @@ export default function SitemapPage() {
             </div>
 
             <div>
-              <h2 className="text-lg font-bold text-blue-900 border-b border-blue-100 pb-2 mb-3">⚖️ 법적 고지 및 신뢰 정보</h2>
+              <h2 className="text-lg font-bold text-blue-900 border-b border-blue-100 pb-2 mb-3">법적 고지 및 신뢰 정보</h2>
               <ul className="space-y-2.5 text-sm text-slate-600 font-medium">
                 <li><Link href="/privacy/" className="hover:text-blue-600 transition">• 개인정보처리방침</Link></li>
                 <li><Link href="/terms/" className="hover:text-blue-600 transition">• 이용약관</Link></li>
@@ -58,7 +58,7 @@ export default function SitemapPage() {
             </div>
 
             <div>
-              <h2 className="text-lg font-bold text-blue-900 border-b border-blue-100 pb-2 mb-3">📂 카테고리별 탐색</h2>
+              <h2 className="text-lg font-bold text-blue-900 border-b border-blue-100 pb-2 mb-3">카테고리별 탐색</h2>
               <ul className="space-y-2.5 text-sm font-medium text-slate-700">
                 {categories.map((cat, idx) => (
                   <li key={idx}>
@@ -74,7 +74,7 @@ export default function SitemapPage() {
           {/* 블로그 글 및 칼럼 리스트 */}
           <div className="space-y-8">
             <div>
-              <h2 className="text-lg font-bold text-blue-900 border-b border-blue-100 pb-2 mb-3">✍️ 운영자 칼럼 ({columns.length}건)</h2>
+              <h2 className="text-lg font-bold text-blue-900 border-b border-blue-100 pb-2 mb-3">운영자 칼럼 ({columns.length}건)</h2>
               <ul className="space-y-2 text-xs font-medium text-slate-700">
                 {columns.map((col, idx) => (
                   <li key={idx} className="line-clamp-1">
@@ -87,7 +87,7 @@ export default function SitemapPage() {
             </div>
 
             <div>
-              <h2 className="text-lg font-bold text-blue-900 border-b border-blue-100 pb-2 mb-3">📚 전체 생활 정보 글 ({posts.length}건)</h2>
+              <h2 className="text-lg font-bold text-blue-900 border-b border-blue-100 pb-2 mb-3">전체 생활 정보 글 ({posts.length}건)</h2>
               <ul className="space-y-2 text-xs font-medium text-slate-700 max-h-[350px] overflow-y-auto pr-2">
                 {posts.map((post, idx) => (
                   <li key={idx} className="line-clamp-1">

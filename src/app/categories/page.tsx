@@ -25,13 +25,13 @@ export default function CategoriesPage() {
   // 카테고리 테마 색상 및 아이콘 매핑
   const categoryMeta: Record<string, { icon: string; bg: string; text: string }> = {
     "행사": { icon: "🎉", bg: "bg-pink-50", text: "text-pink-700" },
-    "축제": { icon: "🌸", bg: "bg-rose-50", text: "text-rose-700" },
-    "혜택": { icon: "🎁", bg: "bg-emerald-50", text: "text-emerald-700" },
-    "지원금": { icon: "💰", bg: "bg-amber-50", text: "text-amber-700" },
+    "축제": { icon: "", bg: "bg-rose-50", text: "text-rose-700" },
+    "혜택": { icon: "", bg: "bg-emerald-50", text: "text-emerald-700" },
+    "지원금": { icon: "", bg: "bg-amber-50", text: "text-amber-700" },
     "복지": { icon: "❤️", bg: "bg-blue-50", text: "text-blue-700" },
     "금융": { icon: "🏦", bg: "bg-indigo-50", text: "text-indigo-700" },
     "수산": { icon: "🐟", bg: "bg-cyan-50", text: "text-cyan-700" },
-    "기타": { icon: "💡", bg: "bg-slate-50", text: "text-slate-700" },
+    "기타": { icon: "", bg: "bg-slate-50", text: "text-slate-700" },
   };
 
   return (
@@ -45,7 +45,7 @@ export default function CategoriesPage() {
           <span className="text-slate-700 font-medium">카테고리</span>
         </nav>
 
-        <h1 className="text-3xl font-extrabold text-slate-900 mb-2 tracking-tight">📂 정보 카테고리</h1>
+        <h1 className="text-3xl font-extrabold text-slate-900 mb-2 tracking-tight">정보 카테고리</h1>
         <p className="text-slate-600 mb-10 leading-relaxed text-sm">
           성남시 인포메이션이 분류하여 제공하는 생활 지식 정보 모음입니다. 
           원하시는 카테고리를 선택하시면 관련 세부 행정 가이드와 축제 소식을 모아보실 수 있습니다.

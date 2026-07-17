@@ -154,16 +154,16 @@ export default async function BlogPostPage({ params }: PostParams) {
 
             {/* 출처 및 AI 생성 정보 공개 (E-E-A-T 신뢰도 구축) */}
             <div className="bg-slate-50 rounded-xl p-4 text-xs text-slate-600 space-y-2 mt-6 border border-slate-100">
-              <p className="font-semibold text-slate-800">ℹ️ 출처 및 안내</p>
+              <p className="font-semibold text-slate-800">출처 및 안내</p>
               {post.link && (
                 <p>
-                  🔗 <strong>행정포털 원문 출처:</strong>{" "}
+                  <strong>행정포털 원문 출처:</strong>{" "}
                   <a href={post.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline break-all">
                     {post.link}
                   </a>
                 </p>
               )}
-              <p>🤖 이 글은 공공데이터포털(data.go.kr)의 정보를 바탕으로 시민들의 쉬운 이해를 위해 AI가 초안을 돕고 운영자가 검수한 글입니다.</p>
+              <p>이 글은 공공데이터포털(data.go.kr)의 정보를 바탕으로 시민들의 쉬운 이해를 위해 AI가 초안을 돕고 운영자가 검수한 글입니다.</p>
             </div>
 
             {/* 운영자/편집자 박스 추가 (요구사항) */}

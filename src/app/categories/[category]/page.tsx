@@ -50,7 +50,7 @@ export default async function CategoryDetailPage({ params }: Props) {
         <div className="flex items-center justify-between border-b border-slate-200 pb-5 mb-8">
           <div>
             <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-              📂 {decodedCategory} 카테고리
+              {decodedCategory} 카테고리
             </h1>
             <p className="text-xs text-slate-500 mt-2">
               총 {filteredPosts.length}개의 생활 밀착형 정보가 준비되어 있습니다.

@@ -55,7 +55,7 @@ export default async function ColumnDetailPage({ params }: Props) {
 
         <header className="mb-8 border-b border-slate-100 pb-6">
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 mb-4 border border-emerald-100">
-            📝 최경환의 칼럼 코너
+            최경환의 칼럼 코너
           </span>
           <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight leading-snug mb-3">
             {column.title}
@@ -83,7 +83,7 @@ export default async function ColumnDetailPage({ params }: Props) {
 
         {/* 본문 요약 박스 */}
         <div className="bg-slate-50 rounded-xl p-5 border-l-4 border-emerald-500 mb-8 text-sm text-slate-700 leading-relaxed font-medium">
-          💡 한줄 요약: {column.summary}
+          한줄 요약: {column.summary}
         </div>
 
         {/* 본문 에디터 렌더러 */}

@@ -25,7 +25,7 @@ export default function RedevelopmentPage() {
 
         <div className="border-b border-slate-200 pb-5 mb-8">
           <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-            🏗️ 분당·성남 재개발
+            분당·성남 재개발
           </h1>
           <p className="text-sm text-slate-600 mt-3 leading-relaxed">
             1기 신도시 재건축부터 성남 재개발 소식까지, 용어 해설과 최신 동향을 정리합니다.

@@ -78,7 +78,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-slate-900/40 z-0"></div>
           <div className="relative z-10 max-w-2xl">
             <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/30 text-blue-200 border border-blue-400/30 mb-4">
-              📍 성남시 10년 거주민의 밀착형 정보 가이드
+              성남시 10년 거주민의 밀착형 정보 가이드
             </span>
             <h2 className="text-2xl md:text-4xl font-extrabold mb-3 tracking-tight leading-tight flex items-center gap-2">
               <Image src="/icon.png" alt="로고" width={40} height={40} className="rounded-md" />
@@ -110,7 +110,7 @@ export default function Home() {
           <section className="mb-12 bg-white rounded-2xl p-6 md:p-8 border border-slate-100 shadow-sm">
             <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
               <div className="flex items-center gap-2">
-                <span className="text-2xl">✍️</span>
+                <span className="text-2xl"></span>
                 <h3 className="text-xl font-bold text-slate-950">최경환 운영자의 최근 칼럼</h3>
               </div>
               <Link 
@@ -146,10 +146,61 @@ export default function Home() {
           </section>
         )}
 
+        {/* 최근 업데이트된 소식 (블로그 글) */}
+        <section className="mb-12">
+          <div className="flex items-center gap-2 mb-6 border-b border-blue-200/60 pb-3">
+            <span className="text-2xl"></span>
+            <h3 className="text-xl font-bold text-blue-950">새로 올라온 우리 동네 소식</h3>
+            <Link href="/blog/" className="ml-auto text-xs font-bold text-blue-900 hover:underline">
+              전체 보기 &rarr;
+            </Link>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {posts.slice(0, 6).map((post) => (
+              <div 
+                key={post.slug}
+                className="bg-white rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition flex flex-col justify-between overflow-hidden"
+              >
+                {post.image && (
+                  <div className="h-40 w-full overflow-hidden relative">
+                    <Image 
+                      src={post.image} 
+                      alt={post.title} 
+                      fill
+                      className="object-cover hover:scale-105 transition duration-300"
+                    />
+                  </div>
+                )}
+                <div className="p-5 flex-1 flex flex-col">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-xxs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
+                      {post.category || "정보"}
+                    </span>
+                    <span className="text-xxs text-slate-400">{post.date}</span>
+                  </div>
+                  <h4 className="text-base font-bold text-slate-900 mb-2 line-clamp-2 hover:text-blue-700">
+                    <Link href={`/blog/${post.slug}/`}>{post.title}</Link>
+                  </h4>
+                  <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed mb-4 flex-1">
+                    {post.summary}
+                  </p>
+                  <Link 
+                    href={`/blog/${post.slug}/`}
+                    className="text-xs font-bold text-blue-600 hover:text-blue-800"
+                  >
+                    자세히 보기 &rarr;
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* 이번 달 행사/축제 섹션 */}
         <section className="mb-12">
           <div className="flex items-center gap-2 mb-6 border-b border-blue-200/60 pb-3">
-            <span className="text-2xl">🌸</span>
+            <span className="text-2xl"></span>
             <h3 className="text-xl font-bold text-blue-950">이번 달 행사 / 축제</h3>
             <span className="text-sm font-medium text-blue-700/80 bg-blue-100 px-2 py-0.5 rounded-md ml-2">
               {events.length}건
@@ -201,7 +252,7 @@ export default function Home() {
                     <div className="p-6">
                       <div className="flex items-center justify-between mb-3">
                         <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-pink-50 text-pink-700 border border-pink-100">
-                          📅 {event.category}
+                          {event.category}
                         </span>
                         <span className="text-xs text-slate-600 font-bold bg-slate-100 px-2 py-1 rounded">
                           {event.startDate === event.endDate ? event.startDate : `${event.startDate} ~ ${event.endDate}`}
@@ -214,11 +265,11 @@ export default function Home() {
                   
                   <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 text-xs text-slate-500 space-y-1.5">
                     <div className="flex items-center gap-1">
-                      <span className="font-semibold text-slate-700 min-w-[45px]">📍 장소:</span>
+                      <span className="font-semibold text-slate-700 min-w-[45px]">장소:</span>
                       <span className="truncate">{event.location}</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <span className="font-semibold text-slate-700 min-w-[45px]">👥 대상:</span>
+                      <span className="font-semibold text-slate-700 min-w-[45px]">대상:</span>
                       <span className="truncate">{event.target}</span>
                     </div>
                     <div className="pt-2">
@@ -242,7 +293,7 @@ export default function Home() {
         {/* 지원금/혜택 정보 섹션 */}
         <section className="mb-8">
           <div className="flex items-center gap-2 mb-6 border-b border-blue-200/60 pb-3">
-            <span className="text-2xl">💰</span>
+            <span className="text-2xl"></span>
             <h3 className="text-xl font-bold text-blue-950">지원금 / 혜택 정보</h3>
             <span className="text-sm font-medium text-blue-700/80 bg-blue-100 px-2 py-0.5 rounded-md ml-2">
               {benefits.length}건
@@ -287,7 +338,7 @@ export default function Home() {
                     <div className="p-6">
                       <div className="flex items-center justify-between mb-3">
                         <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
-                          🎁 {benefit.category}
+                          {benefit.category}
                         </span>
                         <span className="text-xs text-slate-400 font-medium">
                           상시 모집
@@ -300,11 +351,11 @@ export default function Home() {
                   
                   <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 text-xs text-slate-500 space-y-1.5">
                     <div className="flex items-center gap-1">
-                      <span className="font-semibold text-slate-700 min-w-[55px]">📍 신청방법:</span>
+                      <span className="font-semibold text-slate-700 min-w-[55px]">신청방법:</span>
                       <span className="truncate">{benefit.location}</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <span className="font-semibold text-slate-700 min-w-[55px]">👥 대상요건:</span>
+                      <span className="font-semibold text-slate-700 min-w-[55px]">대상요건:</span>
                       <span className="truncate">{benefit.target}</span>
                     </div>
                     <div className="pt-2">

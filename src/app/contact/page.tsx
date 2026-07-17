@@ -24,7 +24,7 @@ export default function ContactPage() {
 
         {/* 안내문 */}
         <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-8 text-sm text-blue-800 leading-relaxed">
-          <p className="font-semibold mb-1">📢 참고해 주세요!</p>
+          <p className="font-semibold mb-1">참고해 주세요!</p>
           본 사이트는 현재 정적 데모 사이트로 운영 중입니다. 입력해주신 메시지는 시스템 상에 즉시 전송되지 않을 수 있으니, 
           급한 용건이나 확실한 답변을 원하시면 아래의 공식 운영 이메일 주소로 직접 문의해 주시기 바랍니다.
           <div className="mt-2 font-mono font-bold">공식 이메일: {siteConfig.owner.email}</div>

@@ -17,7 +17,7 @@ export default function TermsPage() {
           <span className="text-slate-700 font-medium">이용약관</span>
         </nav>
 
-        <h1 className="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">📝 이용약관</h1>
+        <h1 className="text-3xl font-extrabold text-slate-900 mb-6 tracking-tight">이용약관</h1>
         
         <div className="space-y-6 text-sm text-slate-600 leading-relaxed">
           <p>

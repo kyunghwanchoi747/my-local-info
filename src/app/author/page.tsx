@@ -96,7 +96,7 @@ export default function AuthorHubPage() {
                   href="/admin?tab=new-column" 
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition"
                 >
-                  ➕ 새 칼럼 작성하기 (관리자)
+                  새 칼럼 작성하기 (관리자)
                 </Link>
               ) : (
                 <span className="text-xs text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg">
@@ -111,9 +111,9 @@ export default function AuthorHubPage() {
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-500 font-medium border-t border-slate-50 pt-5">
-              <div>📍 활동 지역: 경기도 성남시 분당구 판교</div>
+              <div>활동 지역: 경기도 성남시 분당구 판교</div>
               <div>✉️ 문의 메일: {siteConfig.owner.email}</div>
-              <div>🏡 사이트 주제: {siteConfig.siteTopic}</div>
+              <div>사이트 주제: {siteConfig.siteTopic}</div>
               <div>📞 비상연락처: {siteConfig.owner.phone}</div>
             </div>
           </div>
@@ -121,7 +121,7 @@ export default function AuthorHubPage() {
 
         {/* 편집 원칙 섹션 */}
         <section className="bg-slate-100/70 rounded-2xl p-6 md:p-8 mb-10 border border-slate-200/40">
-          <h2 className="text-lg font-bold text-slate-900 mb-3">📰 편집실이 모든 글에서 답하는 세 가지 질문</h2>
+          <h2 className="text-lg font-bold text-slate-900 mb-3">편집실이 모든 글에서 답하는 세 가지 질문</h2>
           <ul className="space-y-2 text-sm text-slate-600 leading-relaxed">
             <li>• <strong>무엇이 달라지나</strong>: 이 소식으로 성남 주민의 일상에서 실제로 달라지는 것을 짚습니다.</li>
             <li>• <strong>누가 챙겨야 하나</strong>: 대상을 구·동·상황 단위로 구체화합니다. (예: &ldquo;서현동에서 전세 사는 신혼부부라면&rdquo;)</li>
@@ -136,7 +136,7 @@ export default function AuthorHubPage() {
         {/* 칼럼 목록 */}
         <section>
           <h2 className="text-xl font-bold text-slate-900 mb-6 border-b border-slate-100 pb-3">
-            ✍️ 편집실 연재 칼럼 ({columns.length}건)
+            편집실 연재 칼럼 ({columns.length}건)
           </h2>
 
           <div className="space-y-6">

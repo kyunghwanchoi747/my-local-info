@@ -384,14 +384,14 @@ function AdminContent() {
       <div className="min-h-screen flex items-center justify-center bg-slate-100 font-sans p-4">
         <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-200">
           <div className="text-center mb-6">
-            <span className="text-4xl">🔑</span>
+            <span className="text-4xl"></span>
             <h1 className="text-2xl font-bold mt-3 text-slate-900">CMS-lite 관리자 로그인</h1>
             <p className="text-xs text-slate-500 mt-1">성남시 인포메이션 관리 도구 데모</p>
           </div>
 
           {/* 한계 고지 안내 */}
           <div className="bg-amber-50 border-l-4 border-amber-500 p-3 rounded text-xs text-amber-800 mb-6 leading-relaxed">
-            <strong>⚠️ 안내:</strong> 본 사이트는 데이터베이스 서버가 없는 정적 웹 사이트 형태입니다. 
+            <strong>안내:</strong> 본 사이트는 데이터베이스 서버가 없는 정적 웹 사이트 형태입니다. 
             모든 편집 데이터는 브라우저 내부(localStorage)에 보관되므로 브라우저를 변경하거나 캐시를 지우면 데이터가 유실될 수 있습니다. 
             정식 연재 시에는 <strong>JSON 내보내기</strong> 기능을 통해 백업을 유지하세요.
           </div>
@@ -430,7 +430,7 @@ function AdminContent() {
             <h2 className="font-extrabold text-white text-base tracking-tight">{settings.siteName}</h2>
             <p className="text-xxs text-slate-500 mt-0.5">Admin Dashboard v1.0</p>
           </div>
-          <span className="text-xl">⚙️</span>
+          <span className="text-xl"></span>
         </div>
 
         <nav className="flex-1 p-4 space-y-1">
@@ -440,7 +440,7 @@ function AdminContent() {
               activeTab === "dashboard" ? "bg-blue-900 text-white" : "hover:bg-slate-800 hover:text-white"
             }`}
           >
-            📊 대시보드 요약
+            대시보드 요약
           </button>
           <button
             onClick={() => { setActiveTab("posts"); resetPostForm(); }}
@@ -448,7 +448,7 @@ function AdminContent() {
               activeTab === "posts" || activeTab === "new-post" ? "bg-blue-900 text-white" : "hover:bg-slate-800 hover:text-white"
             }`}
           >
-            📚 일반 글 관리
+            일반 글 관리
           </button>
           <button
             onClick={() => { setActiveTab("columns"); resetColumnForm(); }}
@@ -456,7 +456,7 @@ function AdminContent() {
               activeTab === "columns" || activeTab === "new-column" ? "bg-blue-900 text-white" : "hover:bg-slate-800 hover:text-white"
             }`}
           >
-            ✍️ 운영자 칼럼 관리
+            운영자 칼럼 관리
           </button>
           <button
             onClick={() => setActiveTab("settings")}
@@ -464,7 +464,7 @@ function AdminContent() {
               activeTab === "settings" ? "bg-blue-900 text-white" : "hover:bg-slate-800 hover:text-white"
             }`}
           >
-            🔧 사이트 기본 설정
+            사이트 기본 설정
           </button>
         </nav>
 
@@ -484,17 +484,17 @@ function AdminContent() {
         {/* 상단 통합 고지 바 */}
         <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-sm text-sm">
           <div className="text-blue-900 leading-relaxed">
-            <strong>📢 안내:</strong> 이 관리툴은 100% 정적 페이지 데모(CMS-lite)이며, 변경 사항은 본 브라우저 임시 저장소에 실시간 저장됩니다.
+            <strong>안내:</strong> 이 관리툴은 100% 정적 페이지 데모(CMS-lite)이며, 변경 사항은 본 브라우저 임시 저장소에 실시간 저장됩니다.
           </div>
           <div className="flex gap-2 shrink-0">
             <button 
               onClick={handleExportData}
               className="px-3 py-1.5 bg-blue-900 hover:bg-blue-950 text-white text-xs font-bold rounded-lg transition"
             >
-              📥 JSON 백업
+              JSON 백업
             </button>
             <label className="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-lg cursor-pointer transition">
-              📤 복구
+              복구
               <input type="file" accept=".json" onChange={handleImportData} className="hidden" />
             </label>
           </div>
@@ -503,7 +503,7 @@ function AdminContent() {
         {/* --- 탭 1: 대시보드 --- */}
         {activeTab === "dashboard" && (
           <div>
-            <h1 className="text-2xl font-extrabold text-slate-900 mb-6">📊 사이트 대시보드 요약</h1>
+            <h1 className="text-2xl font-extrabold text-slate-900 mb-6">사이트 대시보드 요약</h1>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
@@ -568,12 +568,12 @@ function AdminContent() {
         {activeTab === "posts" && (
           <div>
             <div className="flex justify-between items-center mb-6">
-              <h1 className="text-2xl font-extrabold text-slate-900">📚 생활 정보 글 리스트</h1>
+              <h1 className="text-2xl font-extrabold text-slate-900">생활 정보 글 리스트</h1>
               <button
                 onClick={() => { resetPostForm(); setActiveTab("new-post"); }}
                 className="px-4 py-2 bg-blue-900 hover:bg-blue-950 text-white rounded-lg text-sm font-bold shadow transition"
               >
-                ➕ 새 정보 작성하기
+                새 정보 작성하기
               </button>
             </div>
 
@@ -597,7 +597,7 @@ function AdminContent() {
                         <td className="p-4 text-xs font-semibold">{post.category}</td>
                         <td className="p-4 text-xs text-slate-400">{post.date}</td>
                         <td className="p-4 text-xs">
-                          {post.isRecommended ? "⭐ 추천" : "일반"}
+                          {post.isRecommended ? "추천" : "일반"}
                         </td>
                         <td className="p-4">
                           <span className={`px-2 py-0.5 rounded text-xxs font-bold ${
@@ -633,7 +633,7 @@ function AdminContent() {
         {activeTab === "new-post" && (
           <div className="bg-white rounded-2xl border border-slate-100 p-6 md:p-8 shadow-sm">
             <h1 className="text-xl font-extrabold text-slate-900 mb-6">
-              {editingPost ? "✍️ 정보글 편집하기" : "➕ 새 생활 정보 글 작성"}
+              {editingPost ? "정보글 편집하기" : "새 생활 정보 글 작성"}
             </h1>
 
             <form onSubmit={handleSavePost} className="space-y-6">
@@ -748,7 +748,7 @@ function AdminContent() {
 
               {/* FAQ 스키마 생성 영역 */}
               <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
-                <h3 className="text-sm font-bold text-slate-900 mb-3">❓ FAQ 스키마(구조화) 추가하기</h3>
+                <h3 className="text-sm font-bold text-slate-900 mb-3">FAQ 스키마(구조화) 추가하기</h3>
                 <div className="space-y-3">
                   <div>
                     <input
@@ -794,12 +794,12 @@ function AdminContent() {
         {activeTab === "columns" && (
           <div>
             <div className="flex justify-between items-center mb-6">
-              <h1 className="text-2xl font-extrabold text-slate-900">✍️ 칼럼 연재 관리</h1>
+              <h1 className="text-2xl font-extrabold text-slate-900">칼럼 연재 관리</h1>
               <button
                 onClick={() => { resetColumnForm(); setActiveTab("new-column"); }}
                 className="px-4 py-2 bg-blue-900 hover:bg-blue-950 text-white rounded-lg text-sm font-bold shadow transition"
               >
-                ➕ 새 칼럼 연재
+                새 칼럼 연재
               </button>
             </div>
 
@@ -847,7 +847,7 @@ function AdminContent() {
         {activeTab === "new-column" && (
           <div className="bg-white rounded-2xl border border-slate-100 p-6 md:p-8 shadow-sm">
             <h1 className="text-xl font-extrabold text-slate-900 mb-6">
-              {editingColumn ? "✍️ 칼럼 수정하기" : "➕ 새 연재 칼럼 작성"}
+              {editingColumn ? "칼럼 수정하기" : "새 연재 칼럼 작성"}
             </h1>
 
             <form onSubmit={handleSaveColumn} className="space-y-6">
@@ -925,7 +925,7 @@ function AdminContent() {
         {/* --- 탭 6: 사이트 기본 설정 수정 --- */}
         {activeTab === "settings" && (
           <div className="bg-white rounded-2xl border border-slate-100 p-6 md:p-8 shadow-sm">
-            <h1 className="text-xl font-extrabold text-slate-900 mb-6">🔧 사이트 기본 환경 설정</h1>
+            <h1 className="text-xl font-extrabold text-slate-900 mb-6">사이트 기본 환경 설정</h1>
 
             <form onSubmit={handleSaveSettings} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
