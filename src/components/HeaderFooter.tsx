@@ -23,6 +23,7 @@ export function Header() {
           <Link href="/" className="hover:text-blue-900 transition">홈</Link>
           <Link href="/blog/" className="hover:text-blue-900 transition">블로그</Link>
           <Link href="/columns/" className="hover:text-blue-900 transition">칼럼</Link>
+          <Link href="/redevelopment/" className="hover:text-blue-900 transition">재개발</Link>
           <Link href="/categories/" className="hover:text-blue-900 transition">카테고리</Link>
           <Link href="/about/" className="hover:text-blue-900 transition">소개</Link>
           <Link href="/author/" className="hover:text-blue-900 transition">운영자</Link>
