@@ -73,7 +73,7 @@ export default function AuthorHubPage() {
         <nav className="text-sm text-slate-500 mb-6">
           <Link href="/" className="hover:text-blue-600 transition">홈</Link>
           <span className="mx-2">&gt;</span>
-          <span className="text-slate-700 font-medium">운영자 프로필</span>
+          <span className="text-slate-700 font-medium">편집실 소개</span>
         </nav>
 
         {/* 상단 프로필 헤더 박스 */}
@@ -84,9 +84,9 @@ export default function AuthorHubPage() {
           <div className="flex-1">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
               <div>
-                <h1 className="text-2xl font-extrabold text-slate-900">{siteConfig.owner.name}</h1>
+                <h1 className="text-2xl font-extrabold text-slate-900">{siteConfig.owner.name} 편집장</h1>
                 <p className="text-xs text-blue-800 font-bold bg-blue-50 px-2.5 py-0.5 rounded-full inline-block mt-1">
-                  공식 정보 큐레이터 / 운영자
+                  성남생활정보 편집실
                 </p>
               </div>
               
@@ -106,8 +106,8 @@ export default function AuthorHubPage() {
             </div>
 
             <p className="text-sm text-slate-600 leading-relaxed mb-6">
-              {siteConfig.owner.bio} 성남시의 숨겨진 복지 혜택과 공공 행정 소식들을 
-              시민의 시선에서 누구나 이해하기 쉬운 한국어 텍스트로 풀어 설명하는 일을 낙으로 삼고 있습니다.
+              성남에서 오랫동안 거주해 온 운영진이 지역 정보를 생활자의 시선으로 해석합니다.
+              글은 AI 도구로 초안을 작성하고, 편집실이 직접 검수하여 발행합니다.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-500 font-medium border-t border-slate-50 pt-5">
@@ -121,19 +121,22 @@ export default function AuthorHubPage() {
 
         {/* 편집 원칙 섹션 */}
         <section className="bg-slate-100/70 rounded-2xl p-6 md:p-8 mb-10 border border-slate-200/40">
-          <h2 className="text-lg font-bold text-slate-900 mb-3">📰 성남시 인포메이션 편집 원칙</h2>
+          <h2 className="text-lg font-bold text-slate-900 mb-3">📰 편집실이 모든 글에서 답하는 세 가지 질문</h2>
           <ul className="space-y-2 text-sm text-slate-600 leading-relaxed">
-            <li>• <strong>공익성 우선</strong>: 광고 제휴보다 성남시민에게 실제 도움이 되는 행정 혜택을 우선으로 다룹니다.</li>
-            <li>• <strong>철저한 사실 검증</strong>: 지자체 공식 배포 자료 및 공공데이터포털 데이터를 철저히 대조 후 작성합니다.</li>
-            <li>• <strong>자연스러운 한국어</strong>: 인공지능이 무맥락으로 작성한 공허한 구문이나 검색 엔진 공략용 키워드 도배를 피합니다.</li>
-            <li>• <strong>주기적인 업데이트</strong>: 종료되거나 수정된 행사 및 지원 조건은 확인하는 즉시 갱신합니다.</li>
+            <li>• <strong>무엇이 달라지나</strong>: 이 소식으로 성남 주민의 일상에서 실제로 달라지는 것을 짚습니다.</li>
+            <li>• <strong>누가 챙겨야 하나</strong>: 대상을 구·동·상황 단위로 구체화합니다. (예: &ldquo;서현동에서 전세 사는 신혼부부라면&rdquo;)</li>
+            <li>• <strong>오늘 무엇을 하면 되나</strong>: 독자가 지금 바로 취할 수 있는 행동 한 가지를 안내합니다.</li>
           </ul>
+          <p className="mt-4 text-xs text-slate-500 border-t border-slate-200 pt-4">
+            모든 글은 공식 출처를 명시하며, 확인되지 않은 내용을 사실처럼 쓰지 않습니다.
+            부동산 투자 조언·가격 전망은 다루지 않습니다.
+          </p>
         </section>
 
         {/* 칼럼 목록 */}
         <section>
           <h2 className="text-xl font-bold text-slate-900 mb-6 border-b border-slate-100 pb-3">
-            ✍️ 최경환의 연재 칼럼 ({columns.length}건)
+            ✍️ 편집실 연재 칼럼 ({columns.length}건)
           </h2>
 
           <div className="space-y-6">
