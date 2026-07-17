@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { siteConfig } from "@/lib/site.config";
 import { useEffect, useState } from "react";
 
@@ -9,7 +10,9 @@ export function Header() {
     <header className="bg-white border-b border-blue-100 sticky top-0 z-10 shadow-sm">
       <div className="max-w-6xl mx-auto px-4 py-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <span className="text-3xl">🏡</span>
+          <div className="flex-shrink-0 relative w-9 h-9">
+            <Image src="/icon.png" alt="로고" fill className="object-contain rounded-md" />
+          </div>
           <div>
             <Link href="/">
               <span className="text-xl md:text-2xl font-bold text-blue-900 tracking-tight cursor-pointer">

@@ -1,5 +1,6 @@
 import localInfoData from "../../public/data/local-info.json";
 import Link from "next/link";
+import Image from "next/image";
 import { getSortedPostsData, getSortedColumnsData } from "@/lib/posts";
 import AdBanner from "@/components/AdBanner";
 import Chatbot from "@/components/Chatbot";
@@ -79,8 +80,9 @@ export default function Home() {
             <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/30 text-blue-200 border border-blue-400/30 mb-4">
               📍 성남시 10년 거주민의 밀착형 정보 가이드
             </span>
-            <h2 className="text-2xl md:text-4xl font-extrabold mb-3 tracking-tight leading-tight">
-              🏡 성남시 이웃들을 위한 알뜰 혜택과 행사 소식
+            <h2 className="text-2xl md:text-4xl font-extrabold mb-3 tracking-tight leading-tight flex items-center gap-2">
+              <Image src="/icon.png" alt="로고" width={40} height={40} className="rounded-md" />
+              성남시 이웃들을 위한 알뜰 혜택과 행사 소식
             </h2>
             <p className="text-sm md:text-base text-slate-200 opacity-90 leading-relaxed mb-6">
               공공데이터포털에서 수집한 정보를 가공하여 어려운 행정 용어를 알기 쉽게 풀어 설명합니다. 
