@@ -78,7 +78,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-slate-900/40 z-0"></div>
           <div className="relative z-10 max-w-2xl">
             <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/30 text-blue-200 border border-blue-400/30 mb-4">
-              성남시 10년 거주민의 밀착형 정보 가이드
+              📍 성남시 40년 거주민의 밀착형 정보 가이드
             </span>
             <h2 className="text-2xl md:text-4xl font-extrabold mb-3 tracking-tight leading-tight flex items-center gap-2">
               <Image src="/icon.png" alt="로고" width={40} height={40} className="rounded-md" />

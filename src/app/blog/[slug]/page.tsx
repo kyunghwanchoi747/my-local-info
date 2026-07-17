@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 import { getPostData, getAllPostSlugs } from "@/lib/posts";
 import type { Metadata } from "next";
 import AdBanner from "@/components/AdBanner";
@@ -118,7 +119,7 @@ export default async function BlogPostPage({ params }: PostParams) {
 
           {/* 마크다운 본문 */}
           <div className="prose prose-blue max-w-none prose-headings:font-bold prose-a:text-blue-600 hover:prose-a:text-blue-800 leading-relaxed text-slate-700">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
               {post.content || ""}
             </ReactMarkdown>
           </div>
