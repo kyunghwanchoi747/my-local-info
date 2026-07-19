@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { PERSONA } = require('./persona');
+const { quoteFrontmatterColons } = require('./yaml-safe');
 
 const postsDir = path.join(__dirname, '../src/content/posts');
 
@@ -214,7 +215,7 @@ tags: [${config.tags.join(', ')}]
   if (!fs.existsSync(postsDir)) {
     fs.mkdirSync(postsDir, { recursive: true });
   }
-  fs.writeFileSync(targetFilePath, postContent + '\n', 'utf8');
+  fs.writeFileSync(targetFilePath, quoteFrontmatterColons(postContent) + '\n', 'utf8');
   console.log(`성공적으로 뉴스 브리핑 글을 생성했습니다: ${config.filename}`);
 }
 

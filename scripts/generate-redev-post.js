@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { PERSONA } = require('./persona');
+const { quoteFrontmatterColons } = require('./yaml-safe');
 
 async function main() {
   const topicsPath = path.join(__dirname, '../public/data/redev-topics.json');
@@ -179,7 +180,7 @@ PHOTO: (글 주제를 대표하는 영어 사진 검색어 1~2단어. 사진 사
       fs.mkdirSync(postsDir, { recursive: true });
     }
     const targetFilePath = path.join(postsDir, targetFilename);
-    fs.writeFileSync(targetFilePath, postContent + '\n', 'utf8');
+    fs.writeFileSync(targetFilePath, quoteFrontmatterColons(postContent) + '\n', 'utf8');
     console.log(`성공적으로 재건축 해설 글을 생성했습니다: ${targetFilename}`);
 
     // 6단계: 사용한 주제를 done 처리하고 큐 저장
