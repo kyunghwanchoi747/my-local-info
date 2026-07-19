@@ -45,8 +45,8 @@ async function main() {
 - 글 구조: 개념 정의 → 왜 중요한가 → 분당·성남 상황과의 연결 → 자주 묻는 질문 2~3개. 각 부분에 "## " 소제목을 붙여.
 - 분량은 1200자 이상.
 - 맥락상 문단이 변경될 때는 반드시 줄바꿈(엔터 2번)을 해서 빈 줄을 넣어 문단을 명확히 구분해.
-- 텍스트를 강조할 때는 `**강조**` 대신 반드시 HTML 태그인 `<strong className="font-bold text-slate-900">강조할 내용</strong>`을 사용해.
-- 사진 출처(예: Pexels 제공)를 남길 때는 `<span className="text-xs text-slate-500 block text-center mb-6 mt-2">사진: (출처), Pexels 제공</span>` 형식으로 작게 표시해.
+- 텍스트를 강조할 때는 \`**강조**\` 대신 반드시 HTML 태그인 \`<strong className="font-bold text-slate-900">강조할 내용</strong>\`을 사용해.
+- 사진 출처(예: Pexels 제공)를 남길 때는 \`<span className="text-xs text-slate-500 block text-center mb-6 mt-2">사진: (출처), Pexels 제공</span>\` 형식으로 작게 표시해.
 - 글의 맨 마지막 줄에 반드시 다음 문구를 그대로 넣어: "재건축·재개발 관련 구체적 사항은 성남시청 및 국토교통부 공식 발표를 확인하시기 바랍니다."
 
 아래 형식으로 출력해줘. 반드시 이 형식만 출력하고 다른 텍스트는 없이:
