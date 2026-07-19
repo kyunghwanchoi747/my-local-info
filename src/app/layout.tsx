@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "성남시 생활 정보 | 행사·혜택·지원금 안내",
     description: "성남시 주민을 위한 지역 행사, 축제, 지원금, 혜택 정보를 매일 업데이트합니다.",
-    url: "https://my-local-info-b82.pages.dev/",
+    url: "https://sungnamer.com/",
     siteName: "성남시 생활 정보",
     locale: "ko_KR",
     type: "website",
@@ -37,7 +37,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "성남시 생활 정보",
-    "url": "https://my-local-info-b82.pages.dev/",
+    "url": "https://sungnamer.com/",
     "description": "성남시 주민을 위한 지역 행사, 축제, 지원금, 혜택 정보"
   };
 
@@ -49,13 +49,13 @@ export default function RootLayout({
         "@type": "ListItem",
         "position": 1,
         "name": "홈",
-        "item": "https://my-local-info-b82.pages.dev/"
+        "item": "https://sungnamer.com/"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "블로그",
-        "item": "https://my-local-info-b82.pages.dev/blog/"
+        "item": "https://sungnamer.com/blog/"
       }
     ]
   };

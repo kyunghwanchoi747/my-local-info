@@ -14,5 +14,5 @@ export const siteConfig = {
     phone: "07029225471",
     email: "rex39@naver.com",
   },
-  siteUrl: "https://seongnam-info.pages.dev",
+  siteUrl: "https://sungnamer.com",
 };

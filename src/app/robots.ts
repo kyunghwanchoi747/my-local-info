@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://my-local-info-b82.pages.dev/sitemap.xml',
+    sitemap: 'https://sungnamer.com/sitemap.xml',
   };
 }

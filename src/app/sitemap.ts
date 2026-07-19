@@ -6,7 +6,7 @@ import matter from 'gray-matter';
 export const dynamic = 'force-static';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://my-local-info-b82.pages.dev';
+  const baseUrl = 'https://sungnamer.com';
 
   // 1. 기본 정적 페이지 경로
   const routes: MetadataRoute.Sitemap = [
