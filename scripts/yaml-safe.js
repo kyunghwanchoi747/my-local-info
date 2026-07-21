@@ -4,9 +4,11 @@ function quoteFrontmatterColons(content) {
   const end = content.indexOf('---', 3);
   if (end === -1) return content;
   const front = content.slice(0, end);
-  const fixed = front.replace(/^(title|summary):[ \t]*([^"'\n][^\n]*)$/gm, (line, key, val) => {
-    if (!val.includes(':')) return line;
-    return `${key}: "${val.trim().replace(/"/g, '\\"')}"`;
+  const fixed = front.replace(/^(title|summary):[ \t]*(.+)$/gm, (line, key, val) => {
+    const trimmed = val.trim();
+    const alreadyQuoted = (trimmed.startsWith('"') && trimmed.endsWith('"')) || (trimmed.startsWith("'") && trimmed.endsWith("'"));
+    if (alreadyQuoted || !trimmed.includes(':')) return line;
+    return `${key}: "${trimmed.replace(/"/g, '\\"')}"`;
   });
   return fixed + content.slice(end);
 }
