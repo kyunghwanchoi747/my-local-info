@@ -121,12 +121,12 @@ export default function AuthorHubPage() {
 
         {/* 편집 원칙 섹션 */}
         <section className="bg-slate-100/70 rounded-2xl p-6 md:p-8 mb-10 border border-slate-200/40">
-          <h2 className="text-lg font-bold text-slate-900 mb-3">편집실이 모든 글에서 답하는 세 가지 질문</h2>
-          <ul className="space-y-2 text-sm text-slate-600 leading-relaxed">
-            <li>• <strong>무엇이 달라지나</strong>: 이 소식으로 성남 주민의 일상에서 실제로 달라지는 것을 짚습니다.</li>
-            <li>• <strong>누가 챙겨야 하나</strong>: 대상을 구·동·상황 단위로 구체화합니다. (예: &ldquo;서현동에서 전세 사는 신혼부부라면&rdquo;)</li>
-            <li>• <strong>오늘 무엇을 하면 되나</strong>: 독자가 지금 바로 취할 수 있는 행동 한 가지를 안내합니다.</li>
-          </ul>
+          <h2 className="text-lg font-bold text-slate-900 mb-3">편집실의 글쓰기 원칙</h2>
+          <p className="text-sm text-slate-600 leading-relaxed">
+            편집실은 소식을 그대로 옮기지 않고, 이 소식으로 성남 주민의 일상에서 실제로 무엇이 달라지는지,
+            서현동에서 전세 사는 신혼부부처럼 구체적인 상황에서는 누가 특히 챙겨봐야 하는지,
+            그리고 독자가 오늘 바로 해볼 수 있는 행동은 무엇인지를 자연스러운 글의 흐름 속에서 짚어드립니다.
+          </p>
           <p className="mt-4 text-xs text-slate-500 border-t border-slate-200 pt-4">
             모든 글은 공식 출처를 명시하며, 확인되지 않은 내용을 사실처럼 쓰지 않습니다.
             부동산 투자 조언·가격 전망은 다루지 않습니다.
