@@ -86,7 +86,7 @@ tags: [태그1, 태그2, 태그3]
 - 글의 시작 부분이나 사진 아래에 출처(예: Pexels 제공)를 남길 때는 \`<span className="text-xs text-slate-500 block text-center mb-6 mt-2">사진: (출처), Pexels 제공</span>\` 형식으로 작게 표시해.
 
 마지막 줄에 다음 형식으로 파일명과 사진 검색어를 출력해줘:
-FILENAME: YYYY-MM-DD-keyword
+FILENAME: YYYY-MM-DD-keyword (keyword는 반드시 영문 단어로만 작성해. 한글은 절대 쓰지 마)
 PHOTO: (글 주제를 대표하는 영어 사진 검색어 1~2단어. 사진 사이트에서 검색할 것이므로 구체적인 사물이나 풍경 단어로. 예: city park)`;
 
     const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`;
