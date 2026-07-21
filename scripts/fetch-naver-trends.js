@@ -80,8 +80,8 @@ async function generateWithGemini(prompt) {
   return postContent.trim();
 }
 
-// Pexels API로 사진 찾기
-async function findPexelsPhoto() {
+// Pexels API로 사진 찾기 (키워드 없으면 "modern city apartment" 기본값)
+async function findPexelsPhoto(photoKeyword = 'modern city apartment') {
   const pexelsApiKey = process.env.PEXELS_API_KEY;
   if (!pexelsApiKey) {
     console.log("PEXELS_API_KEY 환경변수가 설정되지 않아 이미지 검색을 생략합니다.");
@@ -89,7 +89,6 @@ async function findPexelsPhoto() {
   }
 
   try {
-    const photoKeyword = 'modern city apartment';
     console.log(`Pexels 이미지 검색을 시작합니다. (검색어: ${photoKeyword})`);
     const pexelsUrl = `https://api.pexels.com/v1/search?query=${encodeURIComponent(photoKeyword)}&per_page=1&orientation=landscape`;
 
@@ -187,7 +186,7 @@ ${searchContext}
 - 소제목이나 번호 매기기 없이, 2~3개의 화제를 자연스러운 문단 흐름으로 이어서 정리해.
 - 맥락상 문단이 변경될 때는 반드시 줄바꿈(엔터 2번)을 해서 빈 줄을 넣어 문단을 명확히 구분해.
 - 텍스트를 강조할 때는 \`**강조**\` 대신 반드시 HTML 태그인 \`<strong className="font-bold text-slate-900">강조할 내용</strong>\`을 사용해.
-- 사진 출처(예: Pexels 제공)를 남길 때는 \`<span className="text-xs text-slate-500 block text-center mb-6 mt-2">사진: (출처), Pexels 제공</span>\` 형식으로 작게 표시해.
+- 본문 중간, 내용상 자연스럽게 끊기는 지점에 정확히 한 번 \`[PHOTO2]\` 라는 문구를 단독 줄로 넣어. 실제 사진은 시스템이 자동으로 삽입하니, 직접 span 태그나 사진 출처 문구를 쓰지 마.
 - 글의 맨 마지막 줄에 다음 문구를 그대로 넣어: "부동산 관련 구체적인 시세나 거래는 반드시 공식 확인처와 공인중개사를 통해 확인하시기 바랍니다."
 
 아래 형식으로만 출력하고 다른 텍스트는 붙이지 마:
@@ -199,12 +198,25 @@ category: 재개발
 tags: [성남부동산, 분당재건축, 판교부동산, ${selectedKeywords[0]}, ${selectedKeywords[1]}]
 ---
 
-(위 규칙에 따른 본문)`;
+(위 규칙에 따른 본문)
 
-  let postContent = ensureFrontmatterFence(await generateWithGemini(prompt));
+마지막 줄에 다음 형식으로 사진 검색어를 출력해줘:
+PHOTO2: ([PHOTO2] 자리에 들어갈 영어 사진 검색어 1~2단어)`;
+
+  const rawResponse = await generateWithGemini(prompt);
+  const photo2Match = rawResponse.match(/PHOTO2:\s*([^\r\n]+)/i);
+  const photo2Keyword = photo2Match ? photo2Match[1].trim() : '';
+  let postContent = ensureFrontmatterFence(rawResponse.replace(/PHOTO2:\s*[^\r\n]+/gi, '').trim());
 
   const photo = await findPexelsPhoto();
   postContent = injectPhoto(postContent, photo, title);
+
+  const photo2 = photo2Keyword ? await findPexelsPhoto(photo2Keyword) : null;
+  if (photo2) {
+    const photo2Block = `![${photo2Keyword}](${photo2.src.large})\n<span className="text-xs text-slate-500 block text-center mb-6 mt-2">사진: [${photo2.photographer}](${photo2.photographer_url}), Pexels 제공</span>`;
+    postContent = postContent.replace(/\[PHOTO2\]/, photo2Block);
+  }
+  postContent = postContent.replace(/\[PHOTO2\]\n*/g, '');
 
   if (!fs.existsSync(postsDir)) {
     fs.mkdirSync(postsDir, { recursive: true });
