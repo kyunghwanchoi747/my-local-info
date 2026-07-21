@@ -13,4 +13,12 @@ function quoteFrontmatterColons(content) {
   return fixed + content.slice(end);
 }
 
-module.exports = { quoteFrontmatterColons };
+// AI 응답이 frontmatter 여는 "---"를 빠뜨리는 경우가 있어, 사진 삽입 등 이후 처리가
+// content.split('---')로 frontmatter 위치를 찾다가 엉뚱한 곳에 이미지를 끼워 넣는 사고를 막기 위한 가드
+function ensureFrontmatterFence(content) {
+  const trimmed = content.trimStart();
+  if (trimmed.startsWith('---')) return trimmed;
+  return '---\n' + trimmed;
+}
+
+module.exports = { quoteFrontmatterColons, ensureFrontmatterFence };

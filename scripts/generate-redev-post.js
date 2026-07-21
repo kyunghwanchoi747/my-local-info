@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { PERSONA } = require('./persona');
-const { quoteFrontmatterColons } = require('./yaml-safe');
+const { quoteFrontmatterColons, ensureFrontmatterFence } = require('./yaml-safe');
 
 async function main() {
   const topicsPath = path.join(__dirname, '../public/data/redev-topics.json');
@@ -122,7 +122,7 @@ PHOTO: (글 주제를 대표하는 영어 사진 검색어 1~2단어. 사진 사
     } else if (postContent.startsWith('```')) {
       postContent = postContent.replace(/^```[a-zA-Z0-9]*\n/, '').replace(/\n```$/, '');
     }
-    postContent = postContent.trim();
+    postContent = ensureFrontmatterFence(postContent.trim());
 
     // 3단계: Pexels API 호출을 통해 어울리는 이미지 찾기
     let photo = null;

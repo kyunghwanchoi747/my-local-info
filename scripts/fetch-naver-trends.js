@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { PERSONA } = require('./persona');
-const { quoteFrontmatterColons } = require('./yaml-safe');
+const { quoteFrontmatterColons, ensureFrontmatterFence } = require('./yaml-safe');
 
 const postsDir = path.join(__dirname, '../src/content/posts');
 
@@ -201,7 +201,7 @@ tags: [성남부동산, 분당재건축, 판교부동산, ${selectedKeywords[0]}
 
 (위 규칙에 따른 본문)`;
 
-  let postContent = await generateWithGemini(prompt);
+  let postContent = ensureFrontmatterFence(await generateWithGemini(prompt));
 
   const photo = await findPexelsPhoto();
   postContent = injectPhoto(postContent, photo, title);

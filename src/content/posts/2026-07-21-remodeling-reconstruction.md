@@ -1,12 +1,14 @@
-!["성남 이웃들이 궁금해하는 리모델링과 재건축의 차이"](https://images.pexels.com/photos/38000582/pexels-photo-38000582.png?auto=compress&cs=tinysrgb&h=650&w=940)
-*사진: [Phát Trương](https://www.pexels.com/@phat-tr-ng-1662052981), Pexels 제공*
-
+---
 title: "성남 이웃들이 궁금해하는 리모델링과 재건축의 차이"
 date: 2026-07-21
 summary: 성남 주민의 입장에서 리모델링과 재건축이 무엇이며, 우리 일상에 어떤 영향을 미치는지 이웃의 시선으로 차분히 설명해 드립니다.
 category: 재개발
 tags: [재건축, 리모델링, 성남 재건축, 성남 리모델링, 아파트 재개발]
+image: https://images.pexels.com/photos/38000582/pexels-photo-38000582.png?auto=compress&cs=tinysrgb&h=650&w=940
 ---
+
+!["성남 이웃들이 궁금해하는 리모델링과 재건축의 차이"](https://images.pexels.com/photos/38000582/pexels-photo-38000582.png?auto=compress&cs=tinysrgb&h=650&w=940)
+*사진: [Phát Trương](https://www.pexels.com/@phat-tr-ng-1662052981), Pexels 제공*
 
 안녕하세요, 성남에서 15년째 살며 우리 이웃들의 소식을 함께 나누는 편집자입니다. 2026년 7월 21일인 오늘, 무더위가 한창인 요즘에도 우리 성남시 곳곳에서는 주거 환경 개선에 대한 이야기가 끊이지 않고 있습니다. 특히 재건축이나 리모델링이라는 단어가 자주 들리곤 하는데요, 막상 뉴스를 접해도 정확히 무엇이 다른지, 우리 사는 모습에는 어떤 영향을 미치는지 헷갈리는 분들이 많으실 겁니다. 오늘은 제가 우리 이웃의 시선으로 이 두 가지 개념을 쉽고 차분하게 설명해 드리려고 합니다.
 
