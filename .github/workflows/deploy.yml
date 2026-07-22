@@ -5,9 +5,14 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 22 * * *' # 한국시간 아침 7시: 공공데이터 글
-    - cron: '0 3 * * *'  # 한국시간 낮 12시: 뉴스 브리핑
-    - cron: '0 9 * * *'  # 한국시간 저녁 6시: 재건축 해설 글
+    # ── 애드센스 재심사 대비 발행량 감속 (2026-07-22) ──
+    # 거절 사유가 "가치가 별로 없는 콘텐츠"였으므로, 심사 기간에는
+    # 하루 4건(아침1 + 점심1 + 저녁2) → 하루 1건으로 줄인다.
+    # 현재 전략인 '분당 재건축'에 집중 (서치콘솔에서 '분당재건축' 8위 확인).
+    # 승인 후 아래 주석을 해제해 복원할 것.
+    - cron: '0 9 * * *'  # 한국시간 저녁 6시: 재건축 해설 글 ← 유일하게 활성
+    # - cron: '0 22 * * *' # 한국시간 아침 7시: 공공데이터 글 (심사 중 중단)
+    # - cron: '0 3 * * *'  # 한국시간 낮 12시: 뉴스 브리핑 (심사 중 중단)
   workflow_dispatch:
 
 permissions:
@@ -56,8 +61,11 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
 
+      # 심사 기간 중단 (2026-07-22) — 저녁 슬롯에 스크립트가 2개 걸려 있어
+      # 하루 1건 목표를 맞추려면 재건축 해설 글만 남겨야 함.
+      # 승인 후 조건을 '0 9 * * *' 로 되돌릴 것.
       - name: Run Fetch Naver Trends script
-        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 9 * * *'
+        if: github.event_name == 'workflow_dispatch'
         run: node scripts/fetch-naver-trends.js
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
