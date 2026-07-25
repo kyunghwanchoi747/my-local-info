@@ -47,7 +47,7 @@ export default function CategoriesPage() {
 
         <h1 className="text-3xl font-extrabold text-slate-900 mb-2 tracking-tight">정보 카테고리</h1>
         <p className="text-slate-600 mb-10 leading-relaxed text-sm">
-          성남시 인포메이션이 분류하여 제공하는 생활 지식 정보 모음입니다. 
+          {siteConfig.siteName}이 분류하여 제공하는 정보 모음입니다.
           원하시는 카테고리를 선택하시면 관련 세부 행정 가이드와 축제 소식을 모아보실 수 있습니다.
         </p>
 

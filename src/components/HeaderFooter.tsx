@@ -53,7 +53,7 @@ export function Footer() {
           <div>
             <h4 className="text-white font-bold mb-3">{siteConfig.siteName}</h4>
             <p className="text-xs leading-relaxed text-slate-400">
-              성남시민을 위한 실시간 혜택 가이드 및 소소한 우리 동네 소식을 전하는 비공식 생활 정보 큐레이션 채널입니다.
+              분당·성남 재건축·재개발 사업현황과 이주·입주 정보를 중심으로, 성남 지역 생활 정보를 함께 큐레이션하는 비공식 정보 포털입니다.
             </p>
           </div>
           <div>

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { siteConfig } from "@/lib/site.config";
+
+const homeTitle = `${siteConfig.siteName} | ${siteConfig.siteTagline}`;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,16 +16,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "성남시 생활 정보 | 행사·혜택·지원금 안내",
-  description: "성남시 주민을 위한 지역 행사, 축제, 지원금, 혜택 정보를 매일 업데이트합니다.",
+  title: homeTitle,
+  description: siteConfig.siteTagline,
   other: {
     "google-adsense-account": "ca-pub-3288215032789198",
   },
   openGraph: {
-    title: "성남시 생활 정보 | 행사·혜택·지원금 안내",
-    description: "성남시 주민을 위한 지역 행사, 축제, 지원금, 혜택 정보를 매일 업데이트합니다.",
-    url: "https://sungnamer.com/",
-    siteName: "성남시 생활 정보",
+    title: homeTitle,
+    description: siteConfig.siteTagline,
+    url: `${siteConfig.siteUrl}/`,
+    siteName: siteConfig.siteName,
     locale: "ko_KR",
     type: "website",
   },
@@ -36,9 +39,9 @@ export default function RootLayout({
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "성남시 생활 정보",
-    "url": "https://sungnamer.com/",
-    "description": "성남시 주민을 위한 지역 행사, 축제, 지원금, 혜택 정보"
+    "name": siteConfig.siteName,
+    "url": `${siteConfig.siteUrl}/`,
+    "description": siteConfig.siteTagline
   };
 
   const breadcrumbJsonLd = {

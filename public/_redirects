@@ -1,1 +1,4 @@
+# www → non-www 정규화 (canonical 도메인 통일)
+https://www.sungnamer.com/* https://sungnamer.com/:splat 301!
+
 /naverffe7cc5379e1cecd8f7c5612d56eb826.html /naverffe7cc5379e1cecd8f7c5612d56eb826 200

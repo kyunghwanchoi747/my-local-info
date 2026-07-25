@@ -103,7 +103,7 @@ export default async function ColumnDetailPage({ params }: Props) {
             <div className="flex-1 text-center sm:text-left">
               <div className="flex items-center justify-center sm:justify-start gap-2 mb-1.5">
                 <span className="font-bold text-slate-900">{column.author}</span>
-                <span className="text-xs text-slate-400">성남시 인포메이션 운영자</span>
+                <span className="text-xs text-slate-400">{siteConfig.siteName} 운영자</span>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed mb-3">
                 {siteConfig.owner.bio}

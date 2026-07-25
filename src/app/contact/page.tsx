@@ -18,7 +18,7 @@ export default function ContactPage() {
 
         <h1 className="text-3xl font-extrabold text-slate-900 mb-4 tracking-tight">📬 운영자에게 문의하기</h1>
         <p className="text-slate-600 mb-8 leading-relaxed">
-          성남시 인포메이션을 이용해 주셔서 감사합니다. 사이트 콘텐츠에 대한 의견, 팩트 수정 요청, 
+          {siteConfig.siteName}을 이용해 주셔서 감사합니다. 사이트 콘텐츠에 대한 의견, 팩트 수정 요청,
           또는 소개하고 싶은 우리 동네 복지 혜택/행사 제보 등이 있으시다면 아래 폼을 통해 자유롭게 보내주세요.
         </p>
 

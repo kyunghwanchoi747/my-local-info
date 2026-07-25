@@ -26,7 +26,7 @@ export default function SitemapPage() {
 
         <h1 className="text-3xl font-extrabold text-slate-900 mb-4 tracking-tight">HTML 사이트맵</h1>
         <p className="text-slate-600 mb-10 leading-relaxed text-sm">
-          성남시 인포메이션에서 다루고 있는 모든 핵심 페이지와 발행물들의 목록입니다. 
+          {siteConfig.siteName}에서 다루고 있는 모든 핵심 페이지와 발행물들의 목록입니다.
           원하시는 카테고리나 최신 칼럼 정보를 아래 구조화된 목록을 통해 빠르게 탐색해 보세요.
         </p>
 

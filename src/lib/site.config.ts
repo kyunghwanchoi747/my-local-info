@@ -1,8 +1,8 @@
 export const siteConfig = {
-  siteName: "성남시 인포메이션",
-  siteTagline: "성남시민을 위한 실시간 생활 정보, 맞춤형 복지 혜택 가이드",
-  siteTopic: "성남시 정보 (생활 정보, 복지, 행사, 축제, 유용한 소식)",
-  targetAudience: "성남시 거주 시민, 청년, 중장년층, 생활 팁이 필요한 모든 분",
+  siteName: "분당·성남 재건축 정보",
+  siteTagline: "분당 1기신도시 재건축·재개발 실시간 정보와 입주·이주 가이드",
+  siteTopic: "분당·성남 재건축·재개발 (사업현황, 이주·입주, 아파트 시세, 정비사업 정책). 보조로 성남 지역 생활 정보.",
+  targetAudience: "분당·성남 재건축 대상 아파트 소유주·세입자, 이주·입주 예정자, 성남 부동산 관심 시민",
   theme: {
     mainColor: "#1e3a8a", // Deep Blue
     subColor: "#10b981",  // Emerald

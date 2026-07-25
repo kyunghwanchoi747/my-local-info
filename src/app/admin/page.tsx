@@ -386,7 +386,7 @@ function AdminContent() {
           <div className="text-center mb-6">
             <span className="text-4xl"></span>
             <h1 className="text-2xl font-bold mt-3 text-slate-900">CMS-lite 관리자 로그인</h1>
-            <p className="text-xs text-slate-500 mt-1">성남시 인포메이션 관리 도구 데모</p>
+            <p className="text-xs text-slate-500 mt-1">{siteConfig.siteName} 관리 도구 데모</p>
           </div>
 
           {/* 한계 고지 안내 */}
