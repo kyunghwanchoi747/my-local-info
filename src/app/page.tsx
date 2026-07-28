@@ -23,6 +23,9 @@ interface InfoItem {
 export const metadata = {
   title: `${siteConfig.siteName} - ${siteConfig.siteTagline}`,
   description: `${siteConfig.siteName}은 성남시 공식 공공데이터를 기반으로 이웃분들께 실시간 행사, 혜택, 보조금 정보를 가장 친절하게 전달합니다.`,
+  openGraph: {
+    url: `${siteConfig.siteUrl}/`,
+  },
 };
 
 export default function Home() {
@@ -80,10 +83,10 @@ export default function Home() {
             <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/30 text-blue-200 border border-blue-400/30 mb-4">
               📍 성남시 40년 거주민의 밀착형 정보 가이드
             </span>
-            <h2 className="text-2xl md:text-4xl font-extrabold mb-3 tracking-tight leading-tight flex items-center gap-2">
+            <h1 className="text-2xl md:text-4xl font-extrabold mb-3 tracking-tight leading-tight flex items-center gap-2">
               <Image src="/icon.png" alt="로고" width={40} height={40} className="rounded-md" />
               성남시 이웃들을 위한 알뜰 혜택과 행사 소식
-            </h2>
+            </h1>
             <p className="text-sm md:text-base text-slate-200 opacity-90 leading-relaxed mb-6">
               공공데이터포털에서 수집한 정보를 가공하여 어려운 행정 용어를 알기 쉽게 풀어 설명합니다. 
               놓치기 쉬운 청년 지원금부터 이번 주말 아이들과 가볼 만한 탄천 소식까지 한눈에 확인하세요!

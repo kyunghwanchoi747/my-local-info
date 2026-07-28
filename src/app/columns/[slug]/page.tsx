@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { siteConfig } from "@/lib/site.config";
 import { getColumnData, getAllColumnSlugs } from "@/lib/posts";
 import ReactMarkdown from "react-markdown";
@@ -29,6 +30,11 @@ export async function generateMetadata({ params }: Props) {
     alternates: {
       canonical: `/columns/${encodeURIComponent(column.slug)}/`,
     },
+    openGraph: {
+      url: `${siteConfig.siteUrl}/columns/${encodeURIComponent(column.slug)}/`,
+      type: "article",
+      publishedTime: column.date,
+    },
   };
 }
 
@@ -36,16 +42,72 @@ export default async function ColumnDetailPage({ params }: Props) {
   const { slug } = await params;
   const column = getColumnData(slug);
 
+  // 200 을 반환하는 소프트 404 를 만들지 않도록 실제 404 처리
   if (!column) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-slate-500">
-        칼럼을 찾을 수 없습니다.
-      </div>
-    );
+    notFound();
   }
+
+  const columnJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": column.title,
+    "datePublished": column.date,
+    "description": column.summary,
+    "author": {
+      "@type": "Person",
+      "name": column.author || siteConfig.owner.name,
+      "url": `${siteConfig.siteUrl}/author/`
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": siteConfig.siteName,
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${siteConfig.siteUrl}/icon.png`
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `${siteConfig.siteUrl}/columns/${encodeURIComponent(column.slug)}/`
+    },
+    ...(column.image ? { image: column.image } : {})
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "홈",
+        "item": `${siteConfig.siteUrl}/`
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "칼럼",
+        "item": `${siteConfig.siteUrl}/columns/`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": column.title,
+        "item": `${siteConfig.siteUrl}/columns/${encodeURIComponent(column.slug)}/`
+      }
+    ]
+  };
 
   return (
     <div className="bg-slate-50/40 min-h-screen text-slate-800 font-sans py-12 px-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(columnJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <article className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-12">
         
         {/* 상단 브레드크럼 */}

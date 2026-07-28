@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: `운영자 소개 - ${siteConfig.siteName}`,
   description: `${siteConfig.siteName} 운영자 ${siteConfig.owner.name}의 소개와 집필 칼럼 목록입니다.`,
   alternates: { canonical: "/author/" },
+  openGraph: { url: `${siteConfig.siteUrl}/author/` },
 };
 
 export default function AuthorLayout({

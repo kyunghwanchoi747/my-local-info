@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: `서비스 소개 - ${siteConfig.siteName}`,
   description: `${siteConfig.siteName} 서비스의 기획 의도, 데이터 출처 및 운영 방식을 소개합니다.`,
   alternates: { canonical: "/about/" },
+  openGraph: { url: "https://sungnamer.com/about/" },
 };
 
 export default function AboutPage() {

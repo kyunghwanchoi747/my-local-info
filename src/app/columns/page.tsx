@@ -6,6 +6,7 @@ export const metadata = {
   title: `운영자 칼럼 - ${siteConfig.siteName}`,
   description: `${siteConfig.owner.name} 운영자가 직접 집필하는 칼럼 연재 목록입니다.`,
   alternates: { canonical: "/columns/" },
+  openGraph: { url: "https://sungnamer.com/columns/" },
 };
 
 export default function ColumnsPage() {

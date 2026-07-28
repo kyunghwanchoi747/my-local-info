@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: `문의하기 - ${siteConfig.siteName}`,
   description: `${siteConfig.siteName} 운영자에게 의견, 정정 요청, 제보를 보내실 수 있습니다.`,
   alternates: { canonical: "/contact/" },
+  openGraph: { url: `${siteConfig.siteUrl}/contact/` },
 };
 
 export default function ContactLayout({

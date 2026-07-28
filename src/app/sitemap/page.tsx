@@ -6,6 +6,7 @@ export const metadata = {
   title: `사이트맵 - ${siteConfig.siteName}`,
   description: `${siteConfig.siteName}의 전체 페이지와 게시글 목록을 한눈에 찾아볼 수 있는 HTML 사이트맵입니다.`,
   alternates: { canonical: "/sitemap/" },
+  openGraph: { url: "https://sungnamer.com/sitemap/" },
 };
 
 export default function SitemapPage() {

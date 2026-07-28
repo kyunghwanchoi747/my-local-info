@@ -69,9 +69,40 @@ export default async function BlogPostPage({ params }: PostParams) {
       "name": siteConfig.siteName,
       "logo": {
         "@type": "ImageObject",
-        "url": `${siteConfig.siteUrl}/favicon.ico`
+        "url": `${siteConfig.siteUrl}/icon.png`
       }
-    }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `${siteConfig.siteUrl}/blog/${encodeURIComponent(post.slug)}/`
+    },
+    ...(post.image ? { image: post.image } : {})
+  };
+
+  // 화면에 표시되는 브레드크럼과 동일한 경로로 구성
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "홈",
+        "item": `${siteConfig.siteUrl}/`
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "블로그",
+        "item": `${siteConfig.siteUrl}/blog/`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": post.title,
+        "item": `${siteConfig.siteUrl}/blog/${encodeURIComponent(post.slug)}/`
+      }
+    ]
   };
 
   return (
@@ -79,6 +110,10 @@ export default async function BlogPostPage({ params }: PostParams) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(postJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       
       {/* 헤더 */}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { siteConfig } from "@/lib/site.config";
 import { getSortedPostsData } from "@/lib/posts";
 
@@ -25,6 +26,9 @@ export async function generateMetadata({ params }: Props) {
     alternates: {
       canonical: `/categories/${encodeURIComponent(decodedCategory)}/`,
     },
+    openGraph: {
+      url: `${siteConfig.siteUrl}/categories/${encodeURIComponent(decodedCategory)}/`,
+    },
   };
 }
 
@@ -36,6 +40,11 @@ export default async function CategoryDetailPage({ params }: Props) {
   const filteredPosts = allPosts.filter(
     (post) => (post.category || "기타") === decodedCategory
   );
+
+  // 글이 없는 카테고리는 빈 페이지가 색인되지 않도록 404 처리
+  if (filteredPosts.length === 0) {
+    notFound();
+  }
 
   return (
     <div className="bg-slate-50/40 min-h-screen text-slate-800 font-sans py-12 px-4">

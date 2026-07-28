@@ -6,6 +6,7 @@ export const metadata = {
   title: `카테고리 모음 - ${siteConfig.siteName}`,
   description: `${siteConfig.siteName}의 카테고리별 유용한 정보 목록입니다.`,
   alternates: { canonical: "/categories/" },
+  openGraph: { url: "https://sungnamer.com/categories/" },
 };
 
 export default function CategoriesPage() {
