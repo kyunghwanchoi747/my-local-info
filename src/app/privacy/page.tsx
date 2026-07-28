@@ -4,6 +4,7 @@ import { siteConfig } from "@/lib/site.config";
 export const metadata = {
   title: `개인정보처리방침 - ${siteConfig.siteName}`,
   description: `${siteConfig.siteName}의 개인정보처리방침 가이드라인을 투명하게 공개합니다.`,
+  alternates: { canonical: "/privacy/" },
 };
 
 export default function PrivacyPage() {

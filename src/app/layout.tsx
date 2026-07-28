@@ -16,8 +16,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.siteUrl),
   title: homeTitle,
   description: siteConfig.siteTagline,
+  alternates: {
+    canonical: "/",
+  },
   other: {
     "google-adsense-account": "ca-pub-3288215032789198",
   },

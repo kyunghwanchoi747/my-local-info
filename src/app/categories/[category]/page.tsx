@@ -22,6 +22,9 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `${decodedCategory} 정보 모음 - ${siteConfig.siteName}`,
     description: `${siteConfig.siteName}의 ${decodedCategory} 카테고리에 등록된 추천 생활 가이드 목록입니다.`,
+    alternates: {
+      canonical: `/categories/${encodeURIComponent(decodedCategory)}/`,
+    },
   };
 }
 

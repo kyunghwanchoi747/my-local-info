@@ -6,6 +6,7 @@ export const metadata = {
   title: `분당·성남 재개발 - ${siteConfig.siteName}`,
   description:
     "1기 신도시 재건축부터 성남 재개발 소식까지, 용어 해설과 최신 동향을 정리합니다.",
+  alternates: { canonical: "/redevelopment/" },
 };
 
 export default function RedevelopmentPage() {

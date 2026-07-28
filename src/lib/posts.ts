@@ -4,6 +4,15 @@ import matter from 'gray-matter';
 
 const postsDirectory = path.join(process.cwd(), 'src/content/posts');
 
+// 잘못된 퍼센트 인코딩이 들어와도 예외로 빌드가 깨지지 않도록 원문을 그대로 돌려줌
+function safeDecode(slug: string): string {
+  try {
+    return decodeURIComponent(slug);
+  } catch {
+    return slug;
+  }
+}
+
 export interface PostData {
   slug: string;
   title: string;
@@ -100,7 +109,9 @@ export function getAllPostSlugs() {
 
 export function getPostData(slug: string): PostData | null {
   try {
-    const fullPath = path.join(postsDirectory, `${slug}.md`);
+    // 한글 슬러그는 라우트 params가 URL 인코딩된 상태로 전달되므로 파일명과 맞추려면 디코딩 필요
+    const decodedSlug = safeDecode(slug);
+    const fullPath = path.join(postsDirectory, `${decodedSlug}.md`);
     if (!fs.existsSync(fullPath)) {
       return null;
     }
@@ -111,7 +122,7 @@ export function getPostData(slug: string): PostData | null {
     const dateStr = formatDate(rawDate);
 
     return {
-      slug,
+      slug: decodedSlug,
       title: matterResult.data.title || '',
       date: dateStr,
       summary: matterResult.data.summary || '',
@@ -196,7 +207,8 @@ export function getAllColumnSlugs() {
 
 export function getColumnData(slug: string): ColumnData | null {
   try {
-    const fullPath = path.join(columnsDirectory, `${slug}.md`);
+    const decodedSlug = safeDecode(slug);
+    const fullPath = path.join(columnsDirectory, `${decodedSlug}.md`);
     if (!fs.existsSync(fullPath)) {
       return null;
     }
@@ -207,7 +219,7 @@ export function getColumnData(slug: string): ColumnData | null {
     const dateStr = formatDate(rawDate);
 
     return {
-      slug,
+      slug: decodedSlug,
       title: matterResult.data.title || '',
       date: dateStr,
       summary: matterResult.data.summary || '',

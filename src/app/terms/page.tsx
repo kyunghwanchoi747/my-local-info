@@ -4,6 +4,7 @@ import { siteConfig } from "@/lib/site.config";
 export const metadata = {
   title: `이용약관 - ${siteConfig.siteName}`,
   description: `${siteConfig.siteName} 사이트 이용 시 유의해야 할 사항과 약관을 설명합니다.`,
+  alternates: { canonical: "/terms/" },
 };
 
 export default function TermsPage() {

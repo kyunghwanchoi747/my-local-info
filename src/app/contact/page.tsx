@@ -6,7 +6,6 @@ import { siteConfig } from "@/lib/site.config";
 export default function ContactPage() {
   return (
     <div className="bg-slate-50/40 min-h-screen text-slate-800 font-sans py-12 px-4">
-      <title>{`문의하기 - ${siteConfig.siteName}`}</title>
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-100 p-8 md:p-12">
         
         {/* 상단 브레드크럼 */}

@@ -32,10 +32,13 @@ export async function generateMetadata({ params }: PostParams): Promise<Metadata
   return {
     title: `${post.title} | ${siteConfig.siteName}`,
     description: post.summary,
+    alternates: {
+      canonical: `/blog/${encodeURIComponent(post.slug)}/`,
+    },
     openGraph: {
       title: `${post.title} | ${siteConfig.siteName}`,
       description: post.summary,
-      url: `${siteConfig.siteUrl}/blog/${slug}/`,
+      url: `${siteConfig.siteUrl}/blog/${encodeURIComponent(post.slug)}/`,
       type: "article",
       publishedTime: post.date,
     },

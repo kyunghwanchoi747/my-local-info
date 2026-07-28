@@ -26,6 +26,9 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `${column.title} - ${siteConfig.siteName}`,
     description: column.summary,
+    alternates: {
+      canonical: `/columns/${encodeURIComponent(column.slug)}/`,
+    },
   };
 }
 

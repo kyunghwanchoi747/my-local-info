@@ -6,6 +6,7 @@ import { siteConfig } from "@/lib/site.config";
 export const metadata = {
   title: `생활 정보 블로그 - ${siteConfig.siteName}`,
   description: `${siteConfig.siteName}의 모든 유익한 정보와 복지 혜택 안내 글 모음입니다.`,
+  alternates: { canonical: "/blog/" },
 };
 
 export default function BlogList() {

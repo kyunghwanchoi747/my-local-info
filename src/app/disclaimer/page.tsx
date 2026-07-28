@@ -4,6 +4,7 @@ import { siteConfig } from "@/lib/site.config";
 export const metadata = {
   title: `면책고지 - ${siteConfig.siteName}`,
   description: `${siteConfig.siteName} 사이트의 법적 면책 한계를 알려드립니다.`,
+  alternates: { canonical: "/disclaimer/" },
 };
 
 export default function DisclaimerPage() {
