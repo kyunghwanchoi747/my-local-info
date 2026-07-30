@@ -15,7 +15,7 @@ export default function Chatbot() {
     {
       id: "welcome",
       sender: "bot",
-      text: "안녕하세요! 성남시봇입니다. 아래 질문 버튼을 클릭하거나 직접 질문을 입력하시면 답변해 드리겠습니다.",
+      text: "안녕하세요! 성나머입니다. 아래 질문 버튼을 클릭하거나 직접 질문을 입력하시면 답변해 드리겠습니다.",
     },
   ]);
   const [inputValue, setInputValue] = useState("");
@@ -201,7 +201,7 @@ export default function Chatbot() {
             <div className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse"></div>
             <div>
               <h3 className="font-bold text-sm">
-                {isHumanMode ? "실시간 상담원" : "성남시봇"}
+                {isHumanMode ? "실시간 상담원" : "성나머"}
               </h3>
               <p className="text-[11px] text-orange-100">
                 {isHumanMode ? "연결 대기 중" : "온라인 상태"}
@@ -332,7 +332,7 @@ export default function Chatbot() {
             placeholder={
               isHumanMode
                 ? "상담원에게 전송할 메시지..."
-                : "성남시봇에게 물어보세요..."
+                : "성나머에게 물어보세요..."
             }
             className="flex-1 px-4 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-orange-500 disabled:bg-gray-50 disabled:text-gray-400"
           />
@@ -354,7 +354,7 @@ export default function Chatbot() {
       >
         <img
           src="/성나머1.png"
-          alt="성남시봇 열기"
+          alt="성나머 열기"
           className="w-full h-full object-cover"
         />
       </button>
