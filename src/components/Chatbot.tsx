@@ -184,15 +184,16 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 font-sans">
+    <>
       {/* 챗봇 대화창 */}
       <div
-        className={`fixed bottom-24 right-5 w-[360px] h-[500px] max-w-[calc(100vw-40px)] max-h-[calc(100vh-120px)] bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden transition-all duration-300 transform md:bottom-24 md:right-5 ${
+        className={`fixed z-[60] bg-white flex flex-col overflow-hidden transition-all duration-300 transform shadow-2xl font-sans ${
           isOpen
             ? "scale-100 opacity-100 translate-y-0 pointer-events-auto"
             : "scale-95 opacity-0 translate-y-5 pointer-events-none"
         }
-        max-md:fixed max-md:inset-0 max-md:w-full max-md:h-full max-md:max-w-full max-md:max-h-full max-md:rounded-none max-md:bottom-0 max-md:right-0`}
+        max-md:inset-0 max-md:w-full max-md:h-[100dvh] max-md:rounded-none
+        md:bottom-[100px] md:right-8 md:w-[400px] md:h-[650px] md:max-h-[calc(100vh-140px)] md:rounded-2xl md:border md:border-gray-100`}
       >
         {/* 상단 헤더 */}
         <div className="bg-orange-500 text-white px-4 py-4 flex justify-between items-center shrink-0">
@@ -323,7 +324,7 @@ export default function Chatbot() {
         </div>
 
         {/* 메시지 직접 입력창 */}
-        <form onSubmit={handleSendMessage} className="p-3 bg-white border-t border-gray-100 flex gap-2 shrink-0">
+        <form onSubmit={handleSendMessage} className="p-3 bg-white border-t border-gray-100 flex gap-2 shrink-0 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
           <input
             type="text"
             value={inputValue}
@@ -348,7 +349,7 @@ export default function Chatbot() {
       {/* 플로팅 버튼 */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 rounded-full flex items-center justify-center shadow-xl hover:scale-110 active:scale-95 cursor-pointer overflow-hidden border-2 border-orange-500 bg-white transition-all duration-300"
+        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-xl hover:scale-110 active:scale-95 cursor-pointer overflow-hidden border-2 border-orange-500 bg-white transition-all duration-300"
         aria-label="챗봇 열기"
       >
         <img
@@ -357,6 +358,6 @@ export default function Chatbot() {
           className="w-full h-full object-cover"
         />
       </button>
-    </div>
+    </>
   );
 }
