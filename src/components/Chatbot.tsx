@@ -196,14 +196,14 @@ export default function Chatbot() {
         md:bottom-[100px] md:right-8 md:w-[400px] md:h-[650px] md:max-h-[calc(100vh-140px)] md:rounded-2xl md:border md:border-gray-100`}
       >
         {/* 상단 헤더 */}
-        <div className="bg-orange-500 text-white px-4 py-4 flex justify-between items-center shrink-0">
+        <div className="bg-[#407bff] text-white px-4 py-4 flex justify-between items-center shrink-0">
           <div className="flex items-center space-x-2">
             <div className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse"></div>
             <div>
               <h3 className="font-bold text-sm">
                 {isHumanMode ? "실시간 상담원" : "성나머"}
               </h3>
-              <p className="text-[11px] text-orange-100">
+              <p className="text-[11px] text-blue-100">
                 {isHumanMode ? "연결 대기 중" : "온라인 상태"}
               </p>
             </div>
@@ -211,7 +211,7 @@ export default function Chatbot() {
           {/* 닫기 버튼 */}
           <button
             onClick={() => setIsOpen(false)}
-            className="p-1 rounded-full hover:bg-orange-600 transition-colors"
+            className="p-1 rounded-full hover:bg-blue-600 transition-colors"
             aria-label="채팅창 닫기"
           >
             <svg
@@ -240,14 +240,14 @@ export default function Chatbot() {
               }`}
             >
               {msg.sender !== "user" && (
-                <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mr-2 shrink-0 text-xs font-bold">
+                <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-2 shrink-0 text-xs font-bold">
                   {msg.sender === "admin" ? "사람" : "봇"}
                 </div>
               )}
               <div
                 className={`max-w-[75%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
                   msg.sender === "user"
-                    ? "bg-orange-500 text-white rounded-tr-none"
+                    ? "bg-[#407bff] text-white rounded-tr-none"
                     : "bg-white text-gray-800 border border-gray-100 rounded-tl-none shadow-sm"
                 }`}
               >
@@ -259,13 +259,13 @@ export default function Chatbot() {
           {/* 로딩 스피너 (AI 모드 통신 시에만 노출) */}
           {isLoading && !isHumanMode && (
             <div className="flex justify-start">
-              <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mr-2 shrink-0 text-xs font-bold">
+              <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-2 shrink-0 text-xs font-bold">
                 봇
               </div>
               <div className="bg-white text-gray-800 border border-gray-100 rounded-2xl rounded-tl-none px-4 py-3 shadow-sm flex items-center space-x-1">
-                <span className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
-                <span className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
-                <span className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
+                <span className="w-2 h-2 bg-[#407bff] rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
+                <span className="w-2 h-2 bg-[#407bff] rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
+                <span className="w-2 h-2 bg-[#407bff] rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
               </div>
             </div>
           )}
@@ -280,7 +280,7 @@ export default function Chatbot() {
                 <p className="text-xs text-gray-400">자주 묻는 질문</p>
                 <button
                   onClick={handleConnectHuman}
-                  className="text-[11px] font-bold text-orange-600 hover:text-orange-700 bg-orange-50 hover:bg-orange-100 px-2 py-0.5 rounded-md transition-colors"
+                  className="text-[11px] font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-2 py-0.5 rounded-md transition-colors"
                 >
                   상담원 연결
                 </button>
@@ -290,7 +290,7 @@ export default function Chatbot() {
                   <button
                     key={index}
                     onClick={() => handleQuestionClick(item.question, item.answer)}
-                    className="px-2.5 py-1 bg-gray-50 hover:bg-orange-50 hover:text-orange-600 text-gray-700 text-[11px] rounded-lg border border-gray-100 transition-colors shrink-0 max-w-full truncate"
+                    className="px-2.5 py-1 bg-gray-50 hover:bg-blue-50 hover:text-blue-600 text-gray-700 text-[11px] rounded-lg border border-gray-100 transition-colors shrink-0 max-w-full truncate"
                   >
                     {item.question}
                   </button>
@@ -299,8 +299,8 @@ export default function Chatbot() {
             </>
           ) : (
             <div className="flex items-center justify-between px-1">
-              <span className="text-[11px] text-orange-600 font-semibold flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>
+              <span className="text-[11px] text-blue-600 font-semibold flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#407bff] animate-pulse"></span>
                 실시간 상담 모드 작동 중
               </span>
               <button
@@ -334,12 +334,12 @@ export default function Chatbot() {
                 ? "상담원에게 전송할 메시지..."
                 : "성나머에게 물어보세요..."
             }
-            className="flex-1 px-4 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-orange-500 disabled:bg-gray-50 disabled:text-gray-400"
+            className="flex-1 px-4 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#407bff] disabled:bg-gray-50 disabled:text-gray-400"
           />
           <button
             type="submit"
             disabled={!inputValue.trim()}
-            className="px-4 py-2 bg-orange-500 text-white rounded-xl text-sm font-semibold hover:bg-orange-600 active:scale-95 disabled:bg-gray-200 disabled:text-gray-400 transition-all cursor-pointer"
+            className="px-4 py-2 bg-[#407bff] text-white rounded-xl text-sm font-semibold hover:bg-blue-600 active:scale-95 disabled:bg-gray-200 disabled:text-gray-400 transition-all cursor-pointer"
           >
             전송
           </button>
@@ -349,7 +349,7 @@ export default function Chatbot() {
       {/* 플로팅 버튼 */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-xl hover:scale-110 active:scale-95 cursor-pointer overflow-hidden border-2 border-orange-500 bg-white transition-all duration-300"
+        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-xl hover:scale-110 active:scale-95 cursor-pointer overflow-hidden border-2 border-[#407bff] bg-white transition-all duration-300"
         aria-label="챗봇 열기"
       >
         <img
