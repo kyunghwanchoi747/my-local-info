@@ -352,7 +352,7 @@ export default function Chatbot() {
         aria-label="챗봇 열기"
       >
         <img
-          src="/icon.png"
+          src="/성나머1.png"
           alt="성남시봇 열기"
           className="w-full h-full object-cover"
         />
