@@ -26,6 +26,75 @@ async function fetchPexelsPhoto(pexelsApiKey, keyword) {
   }
 }
 
+// 큐가 비었을 때만 Gemini 로 새 주제를 만들어 이어붙인다.
+// 사람이 직접 넣은 주제가 하나라도 남아 있으면 절대 호출되지 않는다.
+async function refillTopics(geminiApiKey, topics) {
+  const previous = topics.map(t => t.topic);
+  const prompt = `${PERSONA}
+
+---
+
+분당·성남 재건축·재개발을 다루는 블로그에 쓸 새 글감 10개를 뽑아줘.
+
+이미 다룬 주제 목록(절대 중복 금지):
+${previous.map(t => `- ${t}`).join('\n')}
+
+조건:
+- 위 목록과 소재가 겹치거나 표현만 바꾼 주제는 제외해.
+- 독자는 분당·성남에 사는 일반 주민이야. 실제로 궁금해할 만한 것으로.
+- 재건축·재개발 제도, 절차, 생활 영향(이주·전세·상가·학군·교통) 범위 안에서 골라.
+- 특정 단지의 시세나 투자 조언, 확정되지 않은 일정 예측은 제외해.
+- 각 주제는 25자 이내의 한국어 문장으로.
+
+반드시 아래 JSON 배열 형식만 출력해. 설명이나 코드펜스 없이:
+["주제1", "주제2", "주제3", "주제4", "주제5", "주제6", "주제7", "주제8", "주제9", "주제10"]`;
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+  });
+  if (!res.ok) {
+    throw new Error(`주제 보충용 Gemini 호출 실패: 상태코드 ${res.status}`);
+  }
+
+  const data = await res.json();
+  const raw = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!raw) {
+    throw new Error('주제 보충 응답이 비어 있습니다.');
+  }
+
+  // 모델이 코드펜스를 붙이는 경우가 있어 배열 부분만 잘라낸다
+  const sliced = raw.slice(raw.indexOf('['), raw.lastIndexOf(']') + 1);
+  let parsed;
+  try {
+    parsed = JSON.parse(sliced);
+  } catch {
+    throw new Error(`주제 보충 응답을 JSON 으로 읽지 못했습니다: ${raw.slice(0, 120)}`);
+  }
+  if (!Array.isArray(parsed)) {
+    throw new Error('주제 보충 응답이 배열이 아닙니다.');
+  }
+
+  // 기존 주제와 겹치는 것은 버린다 (프롬프트로 막았어도 코드로 한 번 더)
+  const seen = new Set(previous.map(t => t.replace(/\s/g, '')));
+  const fresh = [];
+  for (const item of parsed) {
+    if (typeof item !== 'string') continue;
+    const topic = item.trim();
+    const key = topic.replace(/\s/g, '');
+    if (!topic || topic.length > 60 || seen.has(key)) continue;
+    seen.add(key);
+    fresh.push({ topic, done: false, auto: true });
+  }
+
+  if (fresh.length === 0) {
+    throw new Error('보충할 새 주제를 얻지 못했습니다 (전부 중복이거나 형식 오류).');
+  }
+  return fresh;
+}
+
 async function main() {
   const topicsPath = path.join(__dirname, '../public/data/redev-topics.json');
   const postsDir = path.join(__dirname, '../src/content/posts');
@@ -36,22 +105,38 @@ async function main() {
       throw new Error("redev-topics.json 파일이 존재하지 않습니다.");
     }
 
-    const topics = JSON.parse(fs.readFileSync(topicsPath, 'utf8'));
-    const topicIndex = topics.findIndex(t => t.done === false);
-
-    if (topicIndex === -1) {
-      console.log("주제 큐가 비었습니다");
-      process.exit(0);
-    }
-
-    const topic = topics[topicIndex].topic;
-    console.log(`오늘의 재건축 해설 주제: ${topic}`);
-
-    // 2단계: Gemini AI로 해설 글 생성
     const geminiApiKey = process.env.GEMINI_API_KEY;
     if (!geminiApiKey) {
       throw new Error("GEMINI_API_KEY 환경변수가 설정되지 않았습니다.");
     }
+
+    const topics = JSON.parse(fs.readFileSync(topicsPath, 'utf8'));
+    let topicIndex = topics.findIndex(t => t.done === false);
+
+    // 큐가 비었으면 자동 보충. 직접 넣은 주제가 남아 있으면 여기까지 오지 않으므로
+    // 사람이 선별한 주제가 항상 먼저 소비된다.
+    if (topicIndex === -1) {
+      console.log("주제 큐가 비어 자동 보충을 시도합니다.");
+      let fresh;
+      try {
+        fresh = await refillTopics(geminiApiKey, topics);
+      } catch (e) {
+        // 보충까지 실패하면 글이 안 나가는 상태가 계속되므로 로그에서 눈에 띄게 남긴다
+        console.error(`::error::주제 자동 보충 실패 — 오늘 글이 생성되지 않았습니다: ${e.message}`);
+        console.error('직접 public/data/redev-topics.json 에 주제를 추가해 주세요.');
+        process.exit(0);
+      }
+      topics.push(...fresh);
+      fs.writeFileSync(topicsPath, JSON.stringify(topics, null, 2) + '\n', 'utf8');
+      console.log(`주제 ${fresh.length}개를 자동 보충했습니다:`);
+      fresh.forEach(t => console.log(`  - ${t.topic}`));
+      topicIndex = topics.findIndex(t => t.done === false);
+    }
+
+    const topic = topics[topicIndex].topic;
+    console.log(`오늘의 재건축 해설 주제: ${topic}${topics[topicIndex].auto ? ' (자동 보충분)' : ''}`);
+
+    // 2단계: Gemini AI로 해설 글 생성
 
     const today = new Date().toISOString().split('T')[0];
 
