@@ -32,8 +32,8 @@ export default function Home() {
   const items = localInfoData as InfoItem[];
   const posts = getSortedPostsData();
   const columns = getSortedColumnsData();
+  // '혜택' 항목은 재건축과 무관한 전국 공통 제도가 대부분이라 홈에서 제외 (2026-08-08)
   const events = items.filter((item) => item.category === "행사");
-  const benefits = items.filter((item) => item.category === "혜택");
   
   const findMatchedPost = (item: InfoItem) => {
     const nameToCheck = (item.name || item.title || "").trim();
@@ -292,89 +292,6 @@ export default function Home() {
 
         {/* 메인 페이지 중간 광고 */}
         <AdBanner slot="home-middle" />
-
-        {/* 지원금/혜택 정보 섹션 */}
-        <section className="mb-8">
-          <div className="flex items-center gap-2 mb-6 border-b border-blue-200/60 pb-3">
-            <span className="text-2xl"></span>
-            <h3 className="text-xl font-bold text-blue-950">지원금 / 혜택 정보</h3>
-            <span className="text-sm font-medium text-blue-700/80 bg-blue-100 px-2 py-0.5 rounded-md ml-2">
-              {benefits.length}건
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {benefits.slice(0, 6).map((benefit) => {
-              const benefitJsonLd = {
-                "@context": "https://schema.org",
-                "@type": "GovernmentService",
-                "name": benefit.name || benefit.title,
-                "serviceName": benefit.name || benefit.title,
-                "description": benefit.summary,
-                "provider": {
-                  "@type": "GovernmentOrganization",
-                  "name": benefit.location || "성남시청"
-                }
-              };
-
-              const imageUrl = getPostImage(benefit);
-
-              return (
-                <div 
-                  key={benefit.id} 
-                  className="bg-white rounded-xl shadow-sm border border-blue-100/70 hover:shadow-md hover:border-blue-200 transition duration-200 flex flex-col justify-between overflow-hidden"
-                >
-                  <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(benefitJsonLd) }}
-                  />
-                  <div>
-                    {imageUrl && (
-                      <div className="h-56 w-full overflow-hidden relative">
-                        <img 
-                          src={imageUrl} 
-                          alt={benefit.name || benefit.title} 
-                          className="w-full h-full object-cover hover:scale-105 transition duration-300"
-                        />
-                      </div>
-                    )}
-                    <div className="p-6">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
-                          {benefit.category}
-                        </span>
-                        <span className="text-xs text-slate-400 font-medium">
-                          상시 모집
-                        </span>
-                      </div>
-                      <h4 className="text-lg font-bold text-slate-900 mb-2 line-clamp-1">{benefit.name || benefit.title}</h4>
-                      <p className="text-sm text-slate-600 line-clamp-3 mb-4 leading-relaxed">{benefit.summary}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 text-xs text-slate-500 space-y-1.5">
-                    <div className="flex items-center gap-1">
-                      <span className="font-semibold text-slate-700 min-w-[55px]">신청방법:</span>
-                      <span className="truncate">{benefit.location}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <span className="font-semibold text-slate-700 min-w-[55px]">대상요건:</span>
-                      <span className="truncate">{benefit.target}</span>
-                    </div>
-                    <div className="pt-2">
-                      <Link 
-                        href={getDetailLink(benefit)}
-                        className="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition shadow-sm animate-none"
-                      >
-                        지원 대상 확인 & 신청하기
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
       </main>
 
       {/* 푸터 */}
