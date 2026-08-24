@@ -158,5 +158,55 @@
   {
     "topic": "재건축 조합과 주민 갈등, 이웃들이 미리 알아둘 점",
     "done": true
+  },
+  {
+    "topic": "재건축 조합 운영비, 우리 돈은 어디에 쓰이나?",
+    "done": true,
+    "auto": true
+  },
+  {
+    "topic": "재건축 분담금, 얼마나 내야 하고 어떻게 준비할까?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "성남시 재건축 공공지원, 주민들이 받을 혜택은?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 시 거주자 주차 문제, 어떻게 해결될까?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "새 아파트 설계와 커뮤니티 시설, 주민 의견 반영은?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 단계별 세금 변화, 우리 집 세금은 어떻게 될까?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 중 임시 거주시설 선택, 어떤 점을 고려해야 할까?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 후 주변 상권 변화, 우리 동네는 어떻게 바뀔까?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "고령층 재건축 참여, 특별히 챙겨야 할 것은?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 관련 분쟁 발생 시, 어디에 도움을 요청할까?",
+    "done": false,
+    "auto": true
   }
 ]
