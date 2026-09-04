@@ -208,5 +208,55 @@
     "topic": "재건축 관련 분쟁 발생 시, 어디에 도움을 요청할까?",
     "done": true,
     "auto": true
+  },
+  {
+    "topic": "재건축 추진위원회, 언제 어떻게 만들어지나요?",
+    "done": true,
+    "auto": true
+  },
+  {
+    "topic": "재개발 사업 방식, 우리 동네는 어떻게 될까?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 시공사 선정, 어떤 기준으로 뽑나요?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 감정평가, 내 집 가치는 어떻게 매겨지나?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 조합원 지위 양도, 언제까지 팔 수 있나요?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "사업시행계획인가, 우리 단지 공사는 언제쯤?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 후 새 아파트 입주, 무엇을 준비해야 할까?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 공사 소음과 민원, 어떻게 대처할까?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축으로 바뀌는 도시 기반 시설, 우리 동네는?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "성남시 재건축 정보 공개, 어디서 확인하나요?",
+    "done": false,
+    "auto": true
   }
 ]
