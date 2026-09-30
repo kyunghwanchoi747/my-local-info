@@ -308,5 +308,55 @@
     "topic": "재건축 단지 내 생활폐기물 처리, 어떻게 달라질까?",
     "done": true,
     "auto": true
+  },
+  {
+    "topic": "재건축 공사 중 생활 편의시설 이용 변화",
+    "done": true,
+    "auto": true
+  },
+  {
+    "topic": "재건축 중 단지 내 치안·안전 대비책",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 환경영향평가, 동네에 미칠 영향",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 단계별 주민 의견 수렴 방법",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재개발 다가구·다세대 주택 소유주의 준비",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 후 아파트 관리사무소 인수인계",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 후 달라질 도로·교통 체계",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 후 새로운 주민 커뮤니티 참여",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 과정 중 발생 가능한 소송 유형",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 사업 지연 원인과 주민 대응책",
+    "done": false,
+    "auto": true
   }
 ]
