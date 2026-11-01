@@ -458,5 +458,55 @@
     "topic": "재건축 주거이전비와 이사비는?",
     "done": true,
     "auto": true
+  },
+  {
+    "topic": "재건축 이주 전 전기, 수도 등 공과금 정리",
+    "done": true,
+    "auto": true
+  },
+  {
+    "topic": "재건축 후 동네 병원, 마트 이용은 어떻게?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 법률 상담, 어디서 도움받을 수 있나요?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 정비계획 수립 과정과 주민 참여",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 시공사 제안, 우리 단지에 얼마나 좋나요?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 지역 내 소상공인 지원책은?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 신탁 방식, 우리 단지에 유리할까요?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재개발 후 원주민 재정착, 어떻게 지원되나요?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 녹색 건축 인증, 우리 단지에도 적용되나요?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 사업비 절감, 주민이 할 수 있는 것은?",
+    "done": false,
+    "auto": true
   }
 ]
