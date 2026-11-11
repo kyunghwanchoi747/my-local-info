@@ -508,5 +508,55 @@
     "topic": "재건축 사업비 절감, 주민이 할 수 있는 것은?",
     "done": true,
     "auto": true
+  },
+  {
+    "topic": "재건축 반대 주민의 권리와 선택지는?",
+    "done": true,
+    "auto": true
+  },
+  {
+    "topic": "재건축 자금 마련, 이주비 외 대출은?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재개발 상가주택 소유주의 준비와 권리",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 공사 중 보행 환경과 대중교통",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "새 아파트 스마트 기술, 뭐가 달라지나요?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "새 아파트 관리비, 예전과 어떻게 달라질까?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 중 내 집 팔거나 세 놓을 때 주의점은?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재개발 추진 초기, 우리 집 포함 기준은?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 단계별 필요한 전문가는 누구?",
+    "done": false,
+    "auto": true
+  },
+  {
+    "topic": "재건축 후 달라질 동네 치안과 안전",
+    "done": false,
+    "auto": true
   }
 ]
